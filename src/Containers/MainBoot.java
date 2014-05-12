@@ -7,7 +7,7 @@ import jade.wrapper.AgentContainer;
 
 public class MainBoot {
 
-	public static String PROPERTIES_FILE = "/AgilGator_server_JADE/Ressources";
+	public static String PROPERTIES_FILE = "Ressources/prop.properties";
 	
 	/**
 	 * @param args

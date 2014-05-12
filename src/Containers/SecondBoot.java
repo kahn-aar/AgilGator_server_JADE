@@ -8,7 +8,7 @@ import jade.wrapper.ContainerController;
 
 public class SecondBoot {
 
-public static String PROPERTIES_FILE = "/AgilGator_server_JADE/propertiesSecond.properties";
+public static String PROPERTIES_FILE = "Ressources/propertiesSecond.properties";
 	
 	/**
 	 * @param args
@@ -19,6 +19,13 @@ public static String PROPERTIES_FILE = "/AgilGator_server_JADE/propertiesSecond.
 		try {
 			p = new ProfileImpl(PROPERTIES_FILE);
 			ContainerController container = rt.createAgentContainer(p);
+			AgentController serveur = container.createNewAgent("serveur",
+					"Agents.ServeurAgent", null);
+			serveur.start();
+			AgentController liaison = container.createNewAgent("liaison",
+					"Agents.LiaisonAgent", null);
+			liaison.start();
+			
 		}
 		catch (Exception e)
 		{
