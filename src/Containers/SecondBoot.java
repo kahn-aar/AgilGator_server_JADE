@@ -26,6 +26,14 @@ public static String PROPERTIES_FILE = "Ressources/propertiesSecond.properties";
 					"Agents.LiaisonAgent", null);
 			liaison.start();
 			
+			AgentController Projet = container.createNewAgent("projets",
+					"Agents.ProjetsAgent", null);
+			Projet.start();
+			
+			AgentController BDD = container.createNewAgent("BDD",
+					"Agents.BDDAgent", null);
+			BDD.start();
+			
 		}
 		catch (Exception e)
 		{
