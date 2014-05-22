@@ -1,17 +1,11 @@
 package Agents;
 
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import Messages.BDDRequestMessage;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import behaviours.BDDWaitingRequestBehaviour;
 
 /**
  * Agent gérant la base de données. Lui seul en a l'accès.
@@ -21,12 +15,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class BDDAgent extends Agent {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void setup() {
 		super.setup();
 		
-		this.addBehaviour(new WaitingRequestBehaviour());
-		
+		this.addBehaviour(new BDDWaitingRequestBehaviour());
+
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
@@ -41,86 +37,5 @@ public class BDDAgent extends Agent {
 			fe.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Behaviour de base, attends les requêtes
-	 * 
-	 * @author Nicolas
-	 *
-	 */
-	private class WaitingRequestBehaviour extends CyclicBehaviour {
 
-		@Override
-		public void action() {
-			ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
-			if (message != null) {
-				// Déséréalisation JSON
-				ObjectMapper omap = new ObjectMapper();
-				BDDRequestMessage msg = null;
-				try {
-					msg = omap.readValue(message.getContent(), BDDRequestMessage.class);
-				}
-				catch (Exception e) {
-					
-				}
-				
-				switch(msg.getType()) {
-					case INSERT:
-						break;
-					case SELECT:
-						myAgent.addBehaviour(new LunchUpdateRequestBehaviour(message.getConversationId(), msg.getRequest()));
-						break;
-					case UPDATE:
-						break;
-					default:
-						break;
-				
-				}
-				
-			}
-		}
-		
-	}
-	
-	/** 
-	 * Behaviour lançant une requête sur la base de données, qui n'attend pas de 
-	 * résultats en retour, uniquement un message de succès ou de fail
-	 * 
-	 * @author Nicolas
-	 *
-	 */
-	private class LunchUpdateRequestBehaviour extends OneShotBehaviour {
-
-		private String conversationId;
-		private String query;
-		
-		public LunchUpdateRequestBehaviour(String conversationId, String query) {
-			this.conversationId = conversationId;
-			this.query = query;
-		}
-		
-		@Override
-		public void action() {
-			System.out.println("BDD reçu = " + query);
-		}
-		
-	}
-	
-	/**
-	 * Behaviour lançant une requête sur la base de données, qui attends des 
-	 * résultats en retour.
-	 * 
-	 * @author Nicolas
-	 *
-	 */
-	private class LunchRequestBehaviour extends OneShotBehaviour {
-
-		private int conversationId;
-		
-		@Override
-		public void action() {
-			
-		}
-		
-	}
 }

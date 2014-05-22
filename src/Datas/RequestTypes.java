@@ -4,6 +4,7 @@ public enum RequestTypes {
 
 	SELECT,
 	UPDATE,
-	INSERT
+	INSERT,
+	INSCRIPTION,
 	
 }
