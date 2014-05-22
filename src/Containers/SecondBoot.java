@@ -25,14 +25,15 @@ public static String PROPERTIES_FILE = "Ressources/propertiesSecond.properties";
 			AgentController liaison = container.createNewAgent("liaison",
 					"Agents.LiaisonAgent", null);
 			liaison.start();
-			
-			AgentController Projet = container.createNewAgent("projets",
-					"Agents.ProjetsAgent", null);
-			Projet.start();
-			
 			AgentController BDD = container.createNewAgent("BDD",
 					"Agents.BDDAgent", null);
 			BDD.start();
+			AgentController Projet = container.createNewAgent("projets",
+					"Agents.ProjetsAgent", null);
+			Projet.start();
+			AgentController Utilisateurs = container.createNewAgent("Utilisateurs",
+					"Agents.UtilisateursAgent", null);
+			Utilisateurs.start();
 			
 		}
 		catch (Exception e)

@@ -1,12 +1,14 @@
 package Messages;
 
 import Datas.RequestTypes;
+import Datas.Utilisateur;
 
 
 public class RequestMessage {
 
 	private RequestTypes type;
 	private String request;
+	private Utilisateur user;
 	
 	public RequestTypes getType() {
 		return type;
@@ -22,6 +24,14 @@ public class RequestMessage {
 	
 	public void setRequest(String request) {
 		this.request = request;
+	}
+
+	public Utilisateur getUser() {
+		return user;
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 	
 	
