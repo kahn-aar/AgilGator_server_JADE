@@ -17,6 +17,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 			ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE));
 			if (message != null) {
 				System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
+				
 			}
 			
 		}
