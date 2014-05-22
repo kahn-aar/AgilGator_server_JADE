@@ -1,19 +1,19 @@
 package Messages;
 
-import Datas.RequestTypes;
+import Datas.BDDRequestTypes;
 import Datas.Utilisateur;
 
 
 public class BDDRequestMessage {
 
-	private RequestTypes type;
+	private BDDRequestTypes type;
 	private String request;
 	
-	public RequestTypes getType() {
+	public BDDRequestTypes getType() {
 		return type;
 	}
 	
-	public void setType(RequestTypes type) {
+	public void setType(BDDRequestTypes type) {
 		this.type = type;
 	}
 	

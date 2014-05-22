@@ -3,6 +3,7 @@ package behaviours;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.tools.sniffer.Message;
 import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,9 +32,10 @@ public class BDDWaitingRequestBehaviour extends CyclicBehaviour {
 				
 				switch(msg.getType()) {
 					case INSERT:
+						myAgent.addBehaviour(new BDDLunchUpdateRequestBehaviour(message.getConversationId(), msg.getRequest()));
 						break;
 					case SELECT:
-						myAgent.addBehaviour(new BDDLunchUpdateRequestBehaviour(message.getConversationId(), msg.getRequest()));
+						myAgent.addBehaviour(new BDDLunchSelectRequestBehaviour(message.getConversationId(), msg.getRequest(), message.getSender()));
 						break;
 					case UPDATE:
 						break;

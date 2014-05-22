@@ -3,7 +3,14 @@ package behaviours;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import Datas.Constantes.ConstantesTables;
+import Messages.BDDAnwserMessage;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Ce behaviour s'occupe d'une demande à la base de données.
@@ -19,6 +26,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 	private int userId;
 	private int timeStamp;
 	private int nbMessages;
+	private List<String> updates = new ArrayList<>();
 	
 	public SynchroTransactionToBDDBehaviour(String conversationId2, int userId2, int timeStamp2) {
 		this.conversationId = conversationId2;
@@ -40,6 +48,30 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)));
 			if (message != null) {
 				//On récupère la réponse de la BDD, et on l'enregistre
+				ObjectMapper omap = new ObjectMapper();
+				BDDAnwserMessage msg = null;
+				try {
+					msg = omap.readValue(message.getContent(), BDDAnwserMessage.class);
+				}
+				catch (Exception e) {
+					
+				}
+				
+				//Transformation de la réponse de la BDD en liste de requete pour le device
+				for (String aRequest : msg.getResults()) {
+					String[] eachValues = aRequest.split(" ");
+					StringBuilder update = new StringBuilder("UPDATE ")
+											.append(msg.getTable())
+											.append(" SET ");
+					for(String value : eachValues) {
+						update.append(value).append(" ");
+					}
+					update.append(";");
+					updates.add(update.toString());
+					
+				}
+				
+				
 				nbMessages--;
 				
 			}

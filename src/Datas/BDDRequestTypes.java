@@ -1,6 +1,6 @@
 package Datas;
 
-public enum RequestTypes {
+public enum BDDRequestTypes {
 
 	SELECT,
 	UPDATE,

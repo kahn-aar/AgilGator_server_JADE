@@ -7,13 +7,14 @@ import Messages.SynchroMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ *  * Ce behaviour envoie une requete de synchronisation
+ * 
+ * @author Nicolas
+ *
+ */
 public class ServeurSynchronistRequestBehaviour extends OneShotBehaviour {
-	/**
-	 *  * Ce behaviour envoie une requete de synchronisation
-	 * 
-	 * @author Nicolas
-	 *
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 		private String conversationId;

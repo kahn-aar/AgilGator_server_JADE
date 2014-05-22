@@ -7,7 +7,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import Datas.RequestTypes;
+import Datas.BDDRequestTypes;
 import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,7 +45,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 	private String createContent() {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(createRequest());
-		message.setType(RequestTypes.SELECT);
+		message.setType(BDDRequestTypes.SELECT);
 		
 		// Séréalisation JSON
 		ObjectMapper omap = new ObjectMapper();
