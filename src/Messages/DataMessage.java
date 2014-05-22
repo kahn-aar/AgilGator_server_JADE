@@ -1,19 +1,20 @@
 package Messages;
 
+import Datas.DeviceInfoTypes;
 import Datas.RequestTypes;
 import Datas.Utilisateur;
 
 public class DataMessage {
 
-	private RequestTypes type;
+	private DeviceInfoTypes type;
 	private String content;
 	private Utilisateur user;
 	
-	public RequestTypes getType() {
+	public DeviceInfoTypes getDeviceType() {
 		return type;
 	}
 	
-	public void setType(RequestTypes type) {
+	public void setDeviceType(DeviceInfoTypes type) {
 		this.type = type;
 	}
 
