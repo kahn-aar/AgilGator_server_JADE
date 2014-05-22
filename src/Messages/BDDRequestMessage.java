@@ -3,7 +3,7 @@ package Messages;
 import Datas.RequestTypes;
 
 
-public class RequestMessage {
+public class BDDRequestMessage {
 
 	private RequestTypes type;
 	private String request;

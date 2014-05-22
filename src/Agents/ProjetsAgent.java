@@ -12,7 +12,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import Datas.RequestTypes;
-import Messages.RequestMessage;
+import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,7 +72,7 @@ public class ProjetsAgent extends Agent {
 		}
 		
 		private String createContent() {
-			RequestMessage message = new RequestMessage();
+			BDDRequestMessage message = new BDDRequestMessage();
 			message.setRequest(createRequest());
 			message.setType(RequestTypes.SELECT);
 			

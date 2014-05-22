@@ -9,7 +9,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import Messages.RequestMessage;
+import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -56,9 +56,9 @@ public class BDDAgent extends Agent {
 			if (message != null) {
 				// Déséréalisation JSON
 				ObjectMapper omap = new ObjectMapper();
-				RequestMessage msg = null;
+				BDDRequestMessage msg = null;
 				try {
-					msg = omap.readValue(message.getContent(), RequestMessage.class);
+					msg = omap.readValue(message.getContent(), BDDRequestMessage.class);
 				}
 				catch (Exception e) {
 					
