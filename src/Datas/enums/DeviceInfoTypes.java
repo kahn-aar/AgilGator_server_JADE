@@ -1,4 +1,4 @@
-package Datas;
+package Datas.enums;
 
 public enum DeviceInfoTypes {
 

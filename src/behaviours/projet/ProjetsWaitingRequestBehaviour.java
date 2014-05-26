@@ -1,4 +1,4 @@
-package behaviours;
+package behaviours.projet;
 
 import jade.core.behaviours.CyclicBehaviour;
 

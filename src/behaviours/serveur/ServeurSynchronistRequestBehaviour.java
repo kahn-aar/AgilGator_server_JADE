@@ -1,4 +1,4 @@
-package behaviours;
+package behaviours.serveur;
 
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;

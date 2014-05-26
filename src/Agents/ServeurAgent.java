@@ -5,7 +5,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import behaviours.ServeurReceptionBehaviour;
+import behaviours.serveur.ServeurReceptionBehaviour;
 
 /**
  * Agent de coordination sur le serveur,

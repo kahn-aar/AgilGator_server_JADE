@@ -1,9 +1,9 @@
-package behaviours;
+package behaviours.serveur;
 
 import java.io.IOException;
 
-import Datas.DeviceInfoTypes;
 import Datas.Utilisateur;
+import Datas.enums.DeviceInfoTypes;
 import Messages.DataMessage;
 import Messages.UserMessage;
 

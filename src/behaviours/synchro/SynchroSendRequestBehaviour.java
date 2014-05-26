@@ -1,4 +1,4 @@
-package behaviours;
+package behaviours.synchro;
 
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;

@@ -1,8 +1,7 @@
 package Messages;
 
-import Datas.DeviceInfoTypes;
-import Datas.RequestTypes;
 import Datas.Utilisateur;
+import Datas.enums.DeviceInfoTypes;
 
 public class DataMessage {
 

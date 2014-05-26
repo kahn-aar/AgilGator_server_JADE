@@ -5,7 +5,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import behaviours.BDDWaitingRequestBehaviour;
+import behaviours.bdd.BDDWaitingRequestBehaviour;
 
 /**
  * Agent gérant la base de données. Lui seul en a l'accès.

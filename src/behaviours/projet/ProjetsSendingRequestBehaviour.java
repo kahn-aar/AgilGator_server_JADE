@@ -1,4 +1,4 @@
-package behaviours;
+package behaviours.projet;
 
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -7,7 +7,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import Datas.BDDRequestTypes;
+import Datas.enums.BDDRequestTypes;
 import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,7 +1,7 @@
 package Messages;
 
-import Datas.BDDRequestTypes;
 import Datas.Utilisateur;
+import Datas.enums.BDDRequestTypes;
 
 
 public class BDDRequestMessage {

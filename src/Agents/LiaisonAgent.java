@@ -1,6 +1,6 @@
 package Agents;
 
-import behaviours.LiaisonPropagateInformationBehaviour;
+import behaviours.liaison.LiaisonPropagateInformationBehaviour;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;

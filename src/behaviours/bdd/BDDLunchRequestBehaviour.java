@@ -1,4 +1,4 @@
-package behaviours;
+package behaviours.bdd;
 
 import jade.core.behaviours.OneShotBehaviour;
 

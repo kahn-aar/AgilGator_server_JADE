@@ -1,4 +1,4 @@
-package behaviours;
+package behaviours.projet;
 
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;

@@ -5,7 +5,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import behaviours.SynchroReceptionistBehaviour;
+import behaviours.synchro.SynchroReceptionistBehaviour;
 
 /**
  * Gère la synchronisation des utilisateurs lorsqu'ils se connectent
