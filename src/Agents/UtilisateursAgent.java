@@ -24,4 +24,17 @@ public class UtilisateursAgent extends Agent {
 		utilisateurConnectés = new ArrayList<>();
 	}
 	
+	public List<Utilisateur> getUtilisateursConnectés(){
+		return utilisateurConnectés;
+		
+	}
+	
+	public void addUtilisateursConnectés(Utilisateur user){
+		utilisateurConnectés.add(user);
+		
+	}
+	public void removeUtilisateursConnectés(Utilisateur user){
+		utilisateurConnectés.remove(user);
+		
+	}
 }
