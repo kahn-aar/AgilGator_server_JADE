@@ -16,6 +16,8 @@ import behaviours.serveur.ServeurReceptionBehaviour;
  */
 public class ServeurAgent extends Agent {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void setup() {
 		super.setup();

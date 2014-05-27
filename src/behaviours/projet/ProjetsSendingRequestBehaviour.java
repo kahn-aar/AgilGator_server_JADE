@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
+	private static final long serialVersionUID = 1L;
 	private int projectId;
 	private String conversationId;
 	

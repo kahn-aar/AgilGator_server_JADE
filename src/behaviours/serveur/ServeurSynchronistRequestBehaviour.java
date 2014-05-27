@@ -1,6 +1,11 @@
 package behaviours.serveur;
 
+import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import Messages.SynchroMessage;
 
@@ -32,6 +37,7 @@ public class ServeurSynchronistRequestBehaviour extends OneShotBehaviour {
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.setContent(writeMessage());
 			message.setConversationId(conversationId);
+			message.addReceiver(getSynchroAgent());
 			//Envoi de message vers Sync
 		}
 		
@@ -50,6 +56,20 @@ public class ServeurSynchronistRequestBehaviour extends OneShotBehaviour {
 			}
 			
 			return messageCorps;
+		}
+		
+		private AID getSynchroAgent() {
+			DFAgentDescription template = new DFAgentDescription();
+			ServiceDescription sd = new ServiceDescription();
+			sd.setType("Synchro");
+			template.addServices(sd);
+			try {
+				DFAgentDescription[] result = DFService.search(myAgent, template);
+				return result[0].getName();
+			} catch(FIPAException fe) {
+				fe.printStackTrace();
+			}
+			return null;
 		}
 		
 	}

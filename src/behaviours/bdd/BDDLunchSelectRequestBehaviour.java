@@ -16,6 +16,7 @@ import jade.lang.acl.ACLMessage;
  */
 public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 
+	private static final long serialVersionUID = 1L;
 	private String conversationId;
 	private String query;
 	private AID receiver;
@@ -51,7 +52,8 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		return null;
+		
+		return messageCorps;
 	}
 	
 	private Object select() {

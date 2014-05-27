@@ -3,16 +3,18 @@ package behaviours.bdd;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.tools.sniffer.Message;
 import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Behaviour de base, attends les requêtes
+ * 
+ * @author Nicolas
+ *
+ */
 public class BDDWaitingRequestBehaviour extends CyclicBehaviour {
-	/**
-	 * Behaviour de base, attends les requêtes
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 

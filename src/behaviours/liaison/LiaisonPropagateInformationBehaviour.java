@@ -1,6 +1,7 @@
 package behaviours.liaison;
 
 import jade.core.AID;
+
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -8,14 +9,14 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
+/**
+ *  Behaviour permettant de propager une information vers le serveur
+ * ou vers les différents devices
+ * 
+ * @author Nicolas
+ */
 public class LiaisonPropagateInformationBehaviour extends OneShotBehaviour {
 
-	/**
-	 *  Behaviour permettant de propager une information vers le serveur
-	 * ou vers les différents devices
-	 * 
-	 * @author Nicolas
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -24,7 +25,7 @@ public class LiaisonPropagateInformationBehaviour extends OneShotBehaviour {
 		myAgent.send(message);
 	}
 	
-	public AID getServer() {
+	private AID getServer() {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("Serveur");
@@ -38,7 +39,7 @@ public class LiaisonPropagateInformationBehaviour extends OneShotBehaviour {
 		return null;
 	}
 	
-	public ACLMessage createMessage() {
+	private ACLMessage createMessage() {
 		ACLMessage newMessage = new ACLMessage(ACLMessage.PROPAGATE);
 		
 		newMessage.addReceiver(getServer());

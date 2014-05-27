@@ -9,6 +9,8 @@ import behaviours.projet.ProjetsSendingRequestBehaviour;
 
 public class ProjetsAgent extends Agent {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void setup() {
 		super.setup();
@@ -19,7 +21,7 @@ public class ProjetsAgent extends Agent {
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("BDD");
+		sd.setType("Projet");
 		sd.setName(getLocalName());
 		dfd.addServices(sd);
 		try {

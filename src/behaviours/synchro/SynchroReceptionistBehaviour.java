@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class SynchroReceptionistBehaviour extends CyclicBehaviour {
 
+	private static final long serialVersionUID = 1L;
 	private String conversationId;
 	private int userId;
 	private int timeStamp;

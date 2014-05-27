@@ -1,6 +1,5 @@
 package Messages;
 
-import Datas.Utilisateur;
 import Datas.enums.BDDRequestTypes;
 
 

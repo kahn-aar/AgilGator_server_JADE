@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class SynchroTransactionToBDDBehaviour extends Behaviour {
 
+	private static final long serialVersionUID = 1L;
 	private int step;
 	private String conversationId;
 	private int userId;

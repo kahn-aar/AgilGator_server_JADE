@@ -16,6 +16,7 @@ import jade.lang.acl.ACLMessage;
  */
 public class SynchroSendRequestBehaviour extends OneShotBehaviour {
 
+	private static final long serialVersionUID = 1L;
 	private String conversationId;
 	private String message;
 	

@@ -1,14 +1,11 @@
 package Agents;
 
-import behaviours.liaison.LiaisonPropagateInformationBehaviour;
-import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.lang.acl.ACLMessage;
+import behaviours.liaison.LiaisonPropagateInformationBehaviour;
 
 /**
  * Agent de liaison entre l'application serveur et 
@@ -18,6 +15,8 @@ import jade.lang.acl.ACLMessage;
  *
  */
 public class LiaisonAgent extends Agent {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public void setup() {

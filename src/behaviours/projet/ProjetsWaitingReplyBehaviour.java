@@ -12,6 +12,7 @@ import jade.lang.acl.MessageTemplate;
  */
 public class ProjetsWaitingReplyBehaviour extends Behaviour {
 
+	private static final long serialVersionUID = 1L;
 	private int step = 0;
 	private String conversationId;
 	
