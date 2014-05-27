@@ -1,14 +1,19 @@
 package behaviours.utilisateurs;
 
 import java.io.IOException;
+
 import Messages.UserMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-
 import Agents.UtilisateursAgent;
 
 public class UsersUpdateListBehaviour extends CyclicBehaviour {
@@ -22,7 +27,7 @@ public class UsersUpdateListBehaviour extends CyclicBehaviour {
 
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getUtilisateursAgent())));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ObjectMapper omap = new ObjectMapper();
@@ -39,5 +44,18 @@ public class UsersUpdateListBehaviour extends CyclicBehaviour {
 				e1.printStackTrace();
 			}
 		}
+	}
+	private AID getUtilisateursAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Utilisateurs");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -32,7 +32,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 
 		@Override
 		public void action() {
-			ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getLiaisonAgent())));
 			if (message != null) {
 				System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 				ObjectMapper omap = new ObjectMapper();
@@ -144,6 +144,20 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 			DFAgentDescription template = new DFAgentDescription();
 			ServiceDescription sd = new ServiceDescription();
 			sd.setType("Utilisateurs");
+			template.addServices(sd);
+			try {
+				DFAgentDescription[] result = DFService.search(myAgent, template);
+				return result[0].getName();
+			} catch(FIPAException fe) {
+				fe.printStackTrace();
+			}
+			return null;
+		}
+		
+		private AID getLiaisonAgent() {
+			DFAgentDescription template = new DFAgentDescription();
+			ServiceDescription sd = new ServiceDescription();
+			sd.setType("Liaison");
 			template.addServices(sd);
 			try {
 				DFAgentDescription[] result = DFService.search(myAgent, template);

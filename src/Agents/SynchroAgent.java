@@ -27,8 +27,8 @@ public class SynchroAgent extends Agent {
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Serveur");
-		sd.setName("Serveur " + getLocalName());
+		sd.setType("Synchro");
+		sd.setName("Synchro " + getLocalName());
 		dfd.addServices(sd);
 		try {
 			DFService.register(this, dfd);

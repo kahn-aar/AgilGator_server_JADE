@@ -2,6 +2,10 @@ package behaviours.serveur;
 
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -35,7 +39,7 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 	@Override
 	public void action() {
 		if (step == 0) {
-			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getSynchroAgent())));
 			if (message != null) {
 				ServerSynchronistMessage propagate = new ServerSynchronistMessage();
 				ObjectMapper omap = new ObjectMapper();
@@ -65,6 +69,20 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 			return true;
 		}
 		return false;
+	}
+	
+	private AID getSynchroAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Synchro");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
 	}
 
 

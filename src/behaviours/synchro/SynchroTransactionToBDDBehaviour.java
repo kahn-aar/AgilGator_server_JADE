@@ -1,6 +1,11 @@
 package behaviours.synchro;
 
+import jade.core.AID;
 import jade.core.behaviours.Behaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -46,7 +51,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 		}
 		else if (step == 1) {
 			//Step 1 => Attente de reception des messages.
-			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getServeurAgent())));
 			if (message != null) {
 				//On récupère la réponse de la BDD, et on l'enregistre
 				ObjectMapper omap = new ObjectMapper();
@@ -104,6 +109,20 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 			return true;
 		}
 		return false;
+	}
+	
+	private AID getServeurAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Serveur");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
 	}
 
 }
