@@ -55,7 +55,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 								um.setAction("connexion");
 								um.setMonUser(user);
 								String msgConnexionContent = omapConnexion.writeValueAsString(um);
-								ACLMessage msgConnexion = new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgConnexion = new ACLMessage(ACLMessage.INFORM);
 								msgConnexion.addReceiver(getUtilisateursAgent());
 								msgConnexion.setContent(msgConnexionContent);
 								msgConnexion.setConversationId(conversationId);
@@ -77,7 +77,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 								um.setAction("deconnexion");
 								um.setMonUser(user);
 								String msgDeconnexionContent = omapConnexion.writeValueAsString(um);
-								ACLMessage msgDeconnexion = new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgDeconnexion = new ACLMessage(ACLMessage.INFORM);
 								msgDeconnexion.addReceiver(getUtilisateursAgent());
 								msgDeconnexion.setContent(msgDeconnexionContent);
 								msgDeconnexion.setConversationId(conversationId);
