@@ -64,7 +64,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 								msgConnexion.setContent(msgConnexionContent);
 								msgConnexion.setConversationId(conversationId);
 								msgConnexion.setLanguage("JSON");
-								myAgent.send(message);
+								myAgent.send(msgConnexion);
 								
 								
 							} catch (IOException e1) {
@@ -86,7 +86,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 								msgDeconnexion.setContent(msgDeconnexionContent);
 								msgDeconnexion.setConversationId(conversationId);
 								msgDeconnexion.setLanguage("JSON");
-								myAgent.send(message);
+								myAgent.send(msgDeconnexion);
 								
 							} catch (IOException e1) {
 								e1.printStackTrace();
