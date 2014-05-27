@@ -2,6 +2,10 @@ package behaviours.liaison;
 
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -20,15 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 public class LiaisonWaitingMessagesBehaviour extends CyclicBehaviour {
-
-	
 	
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public void action() {
-		// Ajouter un "MatchSender" pour le messageServeur
-		ACLMessage messageServeur = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE));
+		ACLMessage messageServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getServerAID())));
 		ACLMessage messageDevice = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		if (messageServeur != null) {
 			// On déséréalise le message
@@ -45,6 +46,11 @@ public class LiaisonWaitingMessagesBehaviour extends CyclicBehaviour {
 			// Eciture de message
 			myAgent.send(createMessageToDevices(destinataires));
 		}
+		if (messageDevice != null) {
+			// Message venant du device
+			myAgent.send(createMessageToServeur(messageServeur.getContent()));
+			
+		}
 
 	}
 	
@@ -54,7 +60,29 @@ public class LiaisonWaitingMessagesBehaviour extends CyclicBehaviour {
 			message.addReceiver(destinataire);
 		}
 		// Ajout du contenu du message.
+		message.setContent("lol");
 		return message;
+	}
+	
+	private ACLMessage createMessageToServeur(String contenu) {
+		ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
+		message.addReceiver(getServerAID());
+		message.setContent(contenu);
+		return message;
+	}
+	
+	private AID getServerAID() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Server");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
 	}
 
 }

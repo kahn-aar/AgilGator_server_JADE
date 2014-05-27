@@ -5,7 +5,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import behaviours.liaison.LiaisonPropagateInformationBehaviour;
+import behaviours.liaison.LiaisonWaitingMessagesBehaviour;
 
 /**
  * Agent de liaison entre l'application serveur et 
@@ -23,7 +23,7 @@ public class LiaisonAgent extends Agent {
 		super.setup();
 		
 		//Ajout des behaviours de base
-		this.addBehaviour(new LiaisonPropagateInformationBehaviour());
+		this.addBehaviour(new LiaisonWaitingMessagesBehaviour());
 		
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();

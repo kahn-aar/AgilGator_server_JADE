@@ -25,11 +25,13 @@ public class ServeurSynchronistRequestBehaviour extends OneShotBehaviour {
 		private String conversationId;
 		private int userId;
 		private int timeStamp;
+		private AID user;
 		
-		public ServeurSynchronistRequestBehaviour(int userId, int timeStamp) {
+		public ServeurSynchronistRequestBehaviour(int userId, int timeStamp, AID aid) {
 			this.userId = userId;
 			this.timeStamp = timeStamp;
-			conversationId = userId + "sync"+ timeStamp;
+			this.conversationId = userId + "sync"+ timeStamp;
+			this.user = aid;
 		}
 		
 		@Override
@@ -39,6 +41,10 @@ public class ServeurSynchronistRequestBehaviour extends OneShotBehaviour {
 			message.setConversationId(conversationId);
 			message.addReceiver(getSynchroAgent());
 			//Envoi de message vers Sync
+			myAgent.send(message);
+			
+			// Création du behaviour qui va attendre la réponse de la synchronisation
+			myAgent.addBehaviour(new ServerWaitingSynchronistBehaviour(conversationId, user));
 		}
 		
 		private String writeMessage() {

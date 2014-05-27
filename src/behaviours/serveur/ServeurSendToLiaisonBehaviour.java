@@ -23,7 +23,6 @@ import Messages.ServerLiaisonMessage;
  */
 public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 
-
 	private static final long serialVersionUID = 1L;
 	
 	private List<AID> destinataires;
@@ -40,6 +39,7 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 		message.addReceiver(getLiasonAgent());
 		message.setContent(writeMessage());
 
+		myAgent.send(message);
 	}
 	
 	private String writeMessage() {
