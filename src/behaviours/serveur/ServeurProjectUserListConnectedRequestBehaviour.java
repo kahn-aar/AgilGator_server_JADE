@@ -19,7 +19,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 /**
- * Ce behaviour attend un message de Liaison qui lui donne la liste des utilisateurs d'un projet.
+ * Ce behaviour attend un message de Projet qui lui donne la liste des utilisateurs d'un projet.
  * Il envoie ensuite un message à l'agent Utlisateur pour qui lui renvoie la liste des utilisateurs du projet connectés.
  * @author Léa
  *
@@ -31,7 +31,7 @@ public class ServeurProjectUserListConnectedRequestBehaviour extends OneShotBeha
 
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getProjetsAgent())));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ObjectMapper omap = new ObjectMapper();
@@ -54,6 +54,20 @@ public class ServeurProjectUserListConnectedRequestBehaviour extends OneShotBeha
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("Utilisateurs");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
+	}
+	
+	private AID getProjetsAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Projets");
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(myAgent, template);
