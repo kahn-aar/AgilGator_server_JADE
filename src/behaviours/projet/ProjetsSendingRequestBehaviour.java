@@ -122,7 +122,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case SYNCHRONIZE_UP:
-					request = requestSynchronizeUp(); //Envoie ses modifs hors ligne
+					request = requestSynchronizeUp(); //Envoie ses modifs hors lignes
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case SYNCHRONIZE_DOWN: //Récupère toutes les modifs faites
