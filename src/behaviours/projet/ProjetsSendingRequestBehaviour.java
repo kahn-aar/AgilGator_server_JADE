@@ -52,6 +52,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 	@Override
 	public void action() {
 		String request = null;
+		String request2 = null;
 		BDDRequestTypes type = null;
 		switch(demande){
 				case CREE_COMPTE: 
@@ -68,6 +69,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case CREE_PROJET:
 					request = requestCreeProjet(projet);
+					request2 = requestCreeProjet2();
 					type = BDDRequestTypes.INSERT;
 					break;
 				case EFFACE_PROJET:
@@ -100,6 +102,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case CREE_TACHE:
 					request = requestCreeTache(tache);
+					request2 = requestCreeTache2();
 					type = BDDRequestTypes.INSERT;
 					break;
 				case MODIFIE_TACHE:
@@ -112,6 +115,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case CREE_SOUS_TACHE:
 					request = requestCreeSousTache(sousTache);
+					request2 = requestCreeSousTache2();
 					type = BDDRequestTypes.INSERT;
 					break;
 				case MODIFIER_SOUS_TACHE:
@@ -138,7 +142,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			}// fin switch
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getBddAgent());
-			message.setContent(createContent(request, type, demande));
+			message.setContent(createContent(request, request2, type, demande));
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
@@ -184,7 +188,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO SubTask (id, task, name, description, current_state, current_developper, creation_date, last_update)")
 			.append("VALUES (")
-			.append(sousTache.getId())
+			.append("null")
 			.append(",")
 			.append(sousTache.getTaskId())
 			.append(",")
@@ -200,6 +204,12 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append(sousTache.getLast_update())
 			.append(");");
+		return request.toString();
+	}
+	
+	private String requestCreeSousTache2() {
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT MAX(id) FROM SubTask;");
 		return request.toString();
 	}
 
@@ -221,7 +231,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO Task (id, sprint, name, description, priority, current_state, creation_date, last_update, difficulty)")
 		.append("VALUES (")
-		.append(tache.getId())
+		.append("null")
 		.append(",")
 		.append(tache.getSprint())
 		.append(",")
@@ -239,7 +249,13 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		.append(",")
 		.append(tache.getDifficulty())
 		.append(");");
-	return request.toString();
+		return request.toString();
+	}
+	
+	private String requestCreeTache2() {
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT MAX(id) FROM Task;");
+		return request.toString();
 	}
 
 	private String requestArchiverSprint() {
@@ -290,7 +306,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO Project (id, title, subtitle, description, creation_date, last_update)")
 			.append("VALUES (")
-			.append(projet.getId())
+			.append("null")
 			.append(",")
 			.append(projet.getTitle())
 			.append(",")
@@ -302,6 +318,12 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append(projet.getLast_update())
 		.append(");");
+		return request.toString();
+	}
+	
+	private String requestCreeProjet2() {
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT MAX(id) FROM PROJECT;");
 		return request.toString();
 	}
 
@@ -323,9 +345,10 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-	private String createContent(String request, BDDRequestTypes type, DeviceInfoTypes demande) {
+	private String createContent(String request, String request2, BDDRequestTypes type, DeviceInfoTypes demande) {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(request);
+		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
 		// Séréalisation JSON

@@ -9,6 +9,7 @@ public class BDDRequestMessage {
 	private BDDRequestTypes type;
 	private DeviceInfoTypes demande;
 	private String request;
+	private String request2;
 	
 	public BDDRequestTypes getType() {
 		return type;
@@ -24,6 +25,14 @@ public class BDDRequestMessage {
 	
 	public void setRequest(String request) {
 		this.request = request;
+	}
+	
+	public String getRequest2() {
+		return request2;
+	}
+	
+	public void setRequest2(String request) {
+		this.request2 = request;
 	}
 
 	public DeviceInfoTypes getDemande() {

@@ -34,6 +34,7 @@ public class BDDWaitingRequestBehaviour extends CyclicBehaviour {
 				
 				switch(msg.getType()) {
 					case INSERT:
+						myAgent.addBehaviour(new BDDLunchInsertRequestBehaviour(message.getConversationId(), msg.getRequest(), msg.getRequest2(), message.getSender()));
 						break;
 					case SELECT:
 						myAgent.addBehaviour(new BDDLunchSelectRequestBehaviour(message.getConversationId(), msg.getRequest(), message.getSender(), msg.getDemande()));
