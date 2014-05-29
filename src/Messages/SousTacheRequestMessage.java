@@ -7,7 +7,7 @@ public class SousTacheRequestMessage {
 	private DeviceInfoTypes demande;
 	private SubTask sousTache;
 	
-	public DeviceInfoTypes getDemance() {
+	public DeviceInfoTypes getDemande() {
 		return demande;
 	}
 	
