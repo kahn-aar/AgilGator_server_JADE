@@ -49,7 +49,7 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 	}
 	
 	private String writeContent() {
-		BDDAnwserMessage corps = new BDDAnwserMessage();
+		BDDAnswerMessage corps = new BDDAnswerMessage();
 		
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

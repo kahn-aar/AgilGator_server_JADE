@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Datas.Constantes.ConstantesTables;
-import Messages.BDDAnwserMessage;
+import Messages.BDDAnswerMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -55,15 +55,15 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 			if (message != null) {
 				//On récupère la réponse de la BDD, et on l'enregistre
 				ObjectMapper omap = new ObjectMapper();
-				BDDAnwserMessage msg = null;
+				BDDAnswerMessage msg = null;
 				try {
-					msg = omap.readValue(message.getContent(), BDDAnwserMessage.class);
+					msg = omap.readValue(message.getContent(), BDDAnswerMessage.class);
 				}
 				catch (Exception e) {
 					
 				}
 				
-				//Transformation de la réponse de la BDD en liste de requete pour le device
+				/*Transformation de la réponse de la BDD en liste de requete pour le device
 				for (String aRequest : msg.getResults()) {
 					String[] eachValues = aRequest.split(" ");
 					StringBuilder update = new StringBuilder("UPDATE ")
@@ -75,7 +75,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 					update.append(";");
 					updates.add(update.toString());
 					
-				}
+				}*/
 				
 				
 				nbMessages--;
@@ -97,7 +97,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 		//On va écrire toutes les requêtes possibles sur la BDD.
 		//Tout d'abord le sprint actuel
 		String querySprint = "SELECT * " +
-				"FROM " + ConstantesTables.TABLE_SPRINT +
+				"FROM " + ConstantesTables.SPRINT +
 				" WHERE " + "dateLastUpdate > " + timeStamp + ";";
 		return querySprint;
 	}
