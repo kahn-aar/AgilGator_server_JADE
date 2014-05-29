@@ -102,20 +102,32 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 					case CREE_COMPTE:
 						break;
 					case ARCHIVER_SPRINT:
+						break;
 					case CREE_SOUS_TACHE:
+						break;
 					case CREE_SPRINT:
+						break;
 					case CREE_TACHE:
-					case EFFACE_SPINT:
+						break;
+					case EFFACE_SPRINT:
+						break;
 					case MODIFIER_SOUS_TACHE:
+						break;
 					case MODIFIE_PROJET:
+						break;
 					case MODIFIE_TACHE:
+						break;
 					case RETRAIT_MEMBRE:
+						break;
 					case SUPPRIMER_SOUS_TACHE:
+						break;
 					case SUPPRIMER_TACHE:
+						break;
 					case SYNCHRONIZE_DOWN:
 						myAgent.addBehaviour(ajoutBehaviourSynchronist(contenu, user.getAid()));
 						break;
 					case SYNCHRONIZE_UP:
+						break;
 					default:
 						break;
 					
