@@ -1,18 +1,18 @@
 package Messages;
 
-import Datas.Task;
+import Datas.Sprint;
 import Datas.enums.DeviceInfoTypes;
 
-public class TacheRequestMessage {
-	
-	private Task tache;
+public class SprintRequestMessage {
+
+	private Sprint sprint;
 	private DeviceInfoTypes demande;
 	
-	public Task getTache() {
-		return tache;
+	public Sprint getSprint() {
+		return sprint;
 	}
-	public void setTache(Task tache) {
-		this.tache = tache;
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
 	}
 	public DeviceInfoTypes getDemande() {
 		return demande;

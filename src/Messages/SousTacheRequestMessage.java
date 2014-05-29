@@ -7,11 +7,11 @@ public class SousTacheRequestMessage {
 	private DeviceInfoTypes demande;
 	private SubTask sousTache;
 	
-	public DeviceInfoTypes getDeviceType() {
+	public DeviceInfoTypes getDemande() {
 		return demande;
 	}
 	
-	public void setDeviceType(DeviceInfoTypes demande) {
+	public void setDemande(DeviceInfoTypes demande) {
 		this.demande = demande;
 	}
 
