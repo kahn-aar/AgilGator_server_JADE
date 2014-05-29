@@ -5,4 +5,5 @@ public enum BDDRequestTypes {
 	SELECT,
 	UPDATE,
 	INSERT,
+	DELETE,
 }
