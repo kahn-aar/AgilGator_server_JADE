@@ -1,6 +1,6 @@
 package Datas;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Task {
 	private int id;
@@ -9,8 +9,8 @@ public class Task {
 	private String description;
 	private int priority;
 	private int current_state;
-	private Time creation_date;
-	private Time last_update;
+	private Timestamp creation_date;
+	private Timestamp last_update;
 	private int difficulty;
 	
 	public int getId() {
@@ -43,10 +43,10 @@ public class Task {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
-	public Time getCreation_date() {
+	public Timestamp getCreation_date() {
 		return creation_date;
 	}
-	public void setCreation_date(Time creation_date) {
+	public void setCreation_date(Timestamp creation_date) {
 		this.creation_date = creation_date;
 	}
 	public int getCurrent_state() {
@@ -55,10 +55,10 @@ public class Task {
 	public void setCurrent_state(int current_state) {
 		this.current_state = current_state;
 	}
-	public Time getLast_update() {
+	public Timestamp getLast_update() {
 		return last_update;
 	}
-	public void setLast_update(Time last_update) {
+	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
 	public int getDifficulty() {

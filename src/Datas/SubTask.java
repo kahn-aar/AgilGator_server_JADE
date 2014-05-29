@@ -1,6 +1,6 @@
 package Datas;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 public class SubTask {
 	private int id ;
@@ -9,8 +9,8 @@ public class SubTask {
 	private String description ;
 	private int current_state ;
 	private int current_developer;
-	private Time creation_date ;
-	private Time last_update;
+	private Timestamp creation_date ;
+	private Timestamp last_update;
 	public int getId() {
 		return id;
 	}
@@ -29,16 +29,16 @@ public class SubTask {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Time getCreation_date() {
+	public Timestamp getCreation_date() {
 		return creation_date;
 	}
-	public void setCreation_date(Time creation_date) {
+	public void setCreation_date(Timestamp creation_date) {
 		this.creation_date = creation_date;
 	}
-	public Time getLast_update() {
+	public Timestamp getLast_update() {
 		return last_update;
 	}
-	public void setLast_update(Time last_update) {
+	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
 	public String getName() {
