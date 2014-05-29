@@ -1,18 +1,18 @@
 package Messages;
 
-import Datas.Project;
+import Datas.Task;
 import Datas.enums.DeviceInfoTypes;
 
-public class ProjetRequestMessage {
+public class TacheRequestMessage {
 	
-	private Project projet;
+	private Task tache;
 	private DeviceInfoTypes demande;
 	
-	public Project getProjet() {
-		return projet;
+	public Task getProjet() {
+		return tache;
 	}
-	public void setProjet(Project projet) {
-		this.projet = projet;
+	public void setProjet(Task tache) {
+		this.tache = tache;
 	}
 	public DeviceInfoTypes getDemande() {
 		return demande;
@@ -22,5 +22,3 @@ public class ProjetRequestMessage {
 	}
 	
 }
-	
-	

@@ -1,28 +1,25 @@
 package Messages;
 
+import Datas.Project;
+import Datas.SubTask;
+import Datas.Task;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 
 public class DataMessage {
 
-	private DeviceInfoTypes type;
-	private String content;
+	private DeviceInfoTypes demande;
 	private Utilisateur user;
+	private Project projet;
+	private Task tache;
+	private SubTask sousTache;
 	
-	public DeviceInfoTypes getDeviceType() {
-		return type;
+	public DeviceInfoTypes getDemande() {
+		return demande;
 	}
 	
-	public void setDeviceType(DeviceInfoTypes type) {
-		this.type = type;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
+	public void setDemande(DeviceInfoTypes demande) {
+		this.demande = demande;
 	}
 
 	public Utilisateur getUser() {
@@ -31,6 +28,30 @@ public class DataMessage {
 
 	public void setUser(Utilisateur user) {
 		this.user = user;
+	}
+
+	public Project getProjet() {
+		return projet;
+	}
+
+	public void setProjet(Project projet) {
+		this.projet = projet;
+	}
+
+	public Task getTache() {
+		return tache;
+	}
+
+	public void setTache(Task tache) {
+		this.tache = tache;
+	}
+
+	public SubTask getSousTache() {
+		return sousTache;
+	}
+
+	public void setSousTache(SubTask sousTache) {
+		this.sousTache = sousTache;
 	}
 	
 
