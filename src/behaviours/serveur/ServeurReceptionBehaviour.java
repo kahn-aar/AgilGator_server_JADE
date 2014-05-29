@@ -2,12 +2,17 @@ package behaviours.serveur;
 
 import java.io.IOException;
 
+import Datas.Project;
+import Datas.SubTask;
+import Datas.Task;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.DataMessage;
+import Messages.ProjetRequestMessage;
 import Messages.UserMessage;
 import Messages.clientcontent.ClientSynchronizeMessage;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jade.core.AID;
@@ -36,20 +41,24 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 			if (message != null) {
 				System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 				ObjectMapper omap = new ObjectMapper();
-				DeviceInfoTypes type = null;
+				DeviceInfoTypes demande = null;
 				Utilisateur user = null;
-				String contenu = null;
+				Project projet = null;
+				Task tache = null;
+				SubTask soustache = null;
 				try {
 					DataMessage msg = omap.readValue(message.getContent(),DataMessage.class);
-					type = msg.getDeviceType();
+					demande = msg.getDemande();
 					user = msg.getUser();
-					contenu = msg.getContent();
+					projet = msg.getProjet();
+					tache = msg.getTache();
+					soustache = msg.getSousTache();
 					
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				if(type!=null){
-					switch(type){
+				if(demande!=null){
+					switch(demande){
 					case CONNEXION:
 						// envoie à l'agent User l'utilisateur à ajouter à la liste
 						if(user!=null){
@@ -94,6 +103,24 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						}
 						break;
 					case CREE_PROJET:
+						ObjectMapper omapCreeProjet = new ObjectMapper();
+						ProjetRequestMessage projetMsg= new ProjetRequestMessage();
+						projetMsg.setDemande(demande);
+						projetMsg.setProjet(projet);
+						String content;
+						try {
+							content = omapCreeProjet.writeValueAsString(projetMsg);
+							ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
+							msgCreeProjet.addReceiver(getProjetAgent());
+							msgCreeProjet.setContent(content);
+							msgCreeProjet.setConversationId(conversationId);
+							msgCreeProjet.setLanguage("JSON");
+							myAgent.send(msgCreeProjet);
+						} catch (JsonProcessingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 						break;
 					case EFFACE_PROJET:
 						break;
@@ -124,7 +151,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 					case SUPPRIMER_TACHE:
 						break;
 					case SYNCHRONIZE_DOWN:
-						myAgent.addBehaviour(ajoutBehaviourSynchronist(contenu, user.getAid()));
+						//myAgent.addBehaviour(ajoutBehaviourSynchronist(contenu, user.getAid()));
 						break;
 					case SYNCHRONIZE_UP:
 						break;
@@ -136,6 +163,11 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 			}
 		}
 		
+		private AID getProjetAgent() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 		private ServeurSynchronistRequestBehaviour ajoutBehaviourSynchronist(String contenu, AID aid) {
 			ObjectMapper omap = new ObjectMapper();
 			int userId = 0;

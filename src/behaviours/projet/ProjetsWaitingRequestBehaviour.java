@@ -6,6 +6,7 @@ import Datas.Project;
 import Datas.SubTask;
 import Datas.Task;
 import Datas.enums.DeviceInfoTypes;
+import Messages.DataMessage;
 import Messages.ProjetRequestMessage;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -36,9 +37,9 @@ public class ProjetsWaitingRequestBehaviour extends CyclicBehaviour {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
 		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
 		ObjectMapper omap = new ObjectMapper();
-		ProjetRequestMessage requestMsg;
+		DataMessage requestMsg;
 			try {
-				requestMsg = omap.readValue(msgServeur.getContent(),ProjetRequestMessage.class);
+				requestMsg = omap.readValue(msgServeur.getContent(),DataMessage.class);
 				DeviceInfoTypes demande = requestMsg.getDemande();
 				Project projet = requestMsg.getProjet();
 				Task tache = requestMsg.getTache();
