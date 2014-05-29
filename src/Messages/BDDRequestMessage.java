@@ -1,11 +1,13 @@
 package Messages;
 
 import Datas.enums.BDDRequestTypes;
+import Datas.enums.DeviceInfoTypes;
 
 
 public class BDDRequestMessage {
 
 	private BDDRequestTypes type;
+	private DeviceInfoTypes demande;
 	private String request;
 	
 	public BDDRequestTypes getType() {
@@ -22,6 +24,14 @@ public class BDDRequestMessage {
 	
 	public void setRequest(String request) {
 		this.request = request;
+	}
+
+	public DeviceInfoTypes getDemande() {
+		return demande;
+	}
+
+	public void setDemande(DeviceInfoTypes demande) {
+		this.demande = demande;
 	}
 
 }

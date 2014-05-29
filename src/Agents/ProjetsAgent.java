@@ -14,8 +14,6 @@ public class ProjetsAgent extends Agent {
 	@Override
 	public void setup() {
 		super.setup();
-		
-		this.addBehaviour(new ProjetsSendingRequestBehaviour(50));
 
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();

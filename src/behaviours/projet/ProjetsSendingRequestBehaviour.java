@@ -137,7 +137,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			}// fin switch
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getBddAgent());
-			message.setContent(createContent(request, type));
+			message.setContent(createContent(request, type, demande));
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
@@ -322,10 +322,11 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-	private String createContent(String request, BDDRequestTypes type) {
+	private String createContent(String request, BDDRequestTypes type, DeviceInfoTypes demande) {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(request);
 		message.setType(type);
+		message.setDemande(demande);
 		// Séréalisation JSON
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;
