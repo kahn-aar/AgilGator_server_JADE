@@ -1,6 +1,7 @@
 package Messages;
 
 import Datas.Project;
+import Datas.Sprint;
 import Datas.SubTask;
 import Datas.Task;
 import Datas.Utilisateur;
@@ -13,6 +14,7 @@ public class DataMessage {
 	private Project projet;
 	private Task tache;
 	private SubTask sousTache;
+	private Sprint sprint;
 	
 	public DeviceInfoTypes getDemande() {
 		return demande;
@@ -52,6 +54,14 @@ public class DataMessage {
 
 	public void setSousTache(SubTask sousTache) {
 		this.sousTache = sousTache;
+	}
+
+	public Sprint getSprint() {
+		return sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
 	}
 	
 
