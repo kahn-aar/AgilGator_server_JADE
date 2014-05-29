@@ -63,7 +63,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 					
 				}
 				
-				//Transformation de la réponse de la BDD en liste de requete pour le device
+				/*Transformation de la réponse de la BDD en liste de requete pour le device
 				for (String aRequest : msg.getResults()) {
 					String[] eachValues = aRequest.split(" ");
 					StringBuilder update = new StringBuilder("UPDATE ")
@@ -75,7 +75,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 					update.append(";");
 					updates.add(update.toString());
 					
-				}
+				}*/
 				
 				
 				nbMessages--;

@@ -47,7 +47,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 			ObjectMapper omap = new ObjectMapper();
 			try {
 				BDDAnswerMessage answer = omap.readValue(message.getContent(),BDDAnswerMessage.class);
-				if(answer.getTable() !=null && answer.getResults() != null){
+				if(answer !=null){
 					switch(answer.getTable()){
 						case ConstantesTables.PROJECT:
 							break;
@@ -62,20 +62,10 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 						case ConstantesTables.TASK:
 							break;
 						case ConstantesTables.USERS:
-							// Récupère la liste des utilisateurs du projets (id, pseudo)
-							List<String> userListResult = answer.getResults();
-							List<Utilisateur> mesUsers = new ArrayList<Utilisateur>();
-							if(userListResult!=null){
-								for(String user : userListResult){
-									Utilisateur myUser = new Utilisateur();
-									String[] userData = user.split(",");
-									myUser.setId(Integer.parseInt(userData[0]));
-									myUser.setPseudo(userData[1]);
-									mesUsers.add(myUser);
-								}
-								myAgent.addBehaviour(new ProjetsSendingUserListBehaviour(mesUsers, conversationId));
-							}
-							break;
+						// Récupère la liste des utilisateurs du projets (id, pseudo)
+						List<Utilisateur> userListResult = answer.getMesUsers();
+						myAgent.addBehaviour(new ProjetsSendingUserListBehaviour(userListResult, conversationId));
+						break;
 						default:
 							break;
 							
