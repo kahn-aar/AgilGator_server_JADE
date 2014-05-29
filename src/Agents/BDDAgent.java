@@ -8,9 +8,9 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
 
 import behaviours.bdd.BDDWaitingRequestBehaviour;
 
@@ -68,6 +68,29 @@ public class BDDAgent extends Agent {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	//Test
+	public void testBDD()
+	{
+		Connection connect = this.connectDatabase();
+		try {
+			Statement statement = connect.createStatement();
+			ResultSet resultat = statement.executeQuery("SELECT * FROM Users;");
+			while (resultat.next()) 
+			{
+			    int id = resultat.getInt("id");
+			    String mail = resultat.getString("email");
+			    String pass = resultat.getString("password");
+			    String username = resultat.getString("pseudo");
+			    
+			    System.out.println(id + " " + mail + " " + pass + " " + username);
+			}
+			this.disconnectDatabase(connect);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

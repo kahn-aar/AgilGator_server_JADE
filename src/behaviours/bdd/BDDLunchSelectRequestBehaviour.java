@@ -1,12 +1,16 @@
 package behaviours.bdd;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import Messages.BDDAnwserMessage;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+
+import java.sql.Connection;
+
+import Agents.BDDAgent;
+import Messages.BDDAnwserMessage;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Behaviour gérant les requêtes en "select"
@@ -30,6 +34,8 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 	@Override
 	public void action() {
 		System.out.println("BDD reçu = " + query);
+		Connection connection = ((BDDAgent)myAgent).connectDatabase();
+		((BDDAgent)myAgent).disconnectDatabase(connection);
 		
 	}
 	
