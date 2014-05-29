@@ -34,133 +34,114 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	private int projectId;
+	private Project projet;
+	private Task tache;
+	private SubTask sousTache;
+	private DeviceInfoTypes demande;
+	
 	private String conversationId;
 	
-	public ProjetsSendingRequestBehaviour(int id) {
-		this.projectId = id;
-		this.conversationId = String.valueOf(id);
+	public ProjetsSendingRequestBehaviour(String conversationId, Project projet, Task tache, SubTask sousTache, DeviceInfoTypes demande) {
+		this.conversationId = conversationId;
+		this.projet = projet;
+		this.sousTache = sousTache;
+		this.tache = tache;
+		this.demande = demande;	
 	}
 	
 	@Override
 	public void action() {
-		// Attends un message de serveur qui lui demandera les actions à exécuter
-		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
-		ObjectMapper omap = new ObjectMapper();
-		try {
-			ProjetRequestMessage requestMsg = omap.readValue(msgServeur.getContent(),ProjetRequestMessage.class);
-			DeviceInfoTypes demande = requestMsg.getDemande();
-			// Récupération des différents id
-			Project projet = requestMsg.getProjet();
-			Task tache = requestMsg.getTache();
-			SubTask sousTache = requestMsg.getSousTache();
-			String request = null;
-			BDDRequestTypes type = null;
-			if (demande != null){
-				switch(demande){
-					case CREE_COMPTE: 
-						request = requestCreeCompte();
-						type = BDDRequestTypes.INSERT;
-						break;
-					case CONNEXION:
-						request = requestConnexion();
-						// type = BDDRequestTypes.INSERT; NOT SURE
-						 break;
-					case DECONNEXION: 
-						request = requestDeconnexion();
-						// type = BDDRequestTypes.INSERT; NOT SURE
-						break;
-					case CREE_PROJET:
-						request = requestCreeProjet(projet);
-						type = BDDRequestTypes.INSERT;
-						break;
-					case EFFACE_PROJET:
-						request = requestEffaceProjet(projet.getId());
-						type = BDDRequestTypes.DELETE;
-						break;
-					case MODIFIE_PROJET:
-						request = requestModifieProjet();
-						type = BDDRequestTypes.UPDATE;
-						break;
-					case AJOUT_MEMBRE:
-						request = requestAjoutMembre();
-						type = BDDRequestTypes.INSERT;
-						break;
-					case RETRAIT_MEMBRE:
-						request = requestRetraitMembre();
-						type = BDDRequestTypes.DELETE;
-						break;
-					case CREE_SPRINT:
-						request = requestCreeSprint();
-						break;
-					case EFFACE_SPRINT:
-						request = requestEffaceSprint();
-						type = BDDRequestTypes.INSERT;
-						break;
-					case ARCHIVER_SPRINT:
-						request = requestArchiverSprint();
-						//type = BDDRequestTypes.INSERT; NOT SURE
-						break;
-					case CREE_TACHE:
-						request = requestCreeTache(tache);
-						type = BDDRequestTypes.INSERT;
-						break;
-					case MODIFIE_TACHE:
-						request = requestModifieTache();
-						type = BDDRequestTypes.UPDATE;
-						break;
-					case SUPPRIMER_TACHE:
-						request = requestSupprimerTache(tache.getId());
-						type = BDDRequestTypes.DELETE;
-						break;
-					case CREE_SOUS_TACHE:
-						request = requestCreeSousTache(sousTache);
-						type = BDDRequestTypes.INSERT;
-						break;
-					case MODIFIER_SOUS_TACHE:
-						request = requestModifierSousTache();
-						type = BDDRequestTypes.UPDATE;
-					case SUPPRIMER_SOUS_TACHE:
-						request = requestSupprimerSousTache(sousTache.getId());
-						type = BDDRequestTypes.DELETE;
-						break;
-					case SYNCHRONIZE_UP:
-						request = requestSynchronizeUp();
-						// type = BDDRequestTypes.INSERT; NOT SURE
-						break;
-					case SYNCHRONIZE_DOWN:
-						request = requestSynchronizeDown();
-						// type = BDDRequestTypes.INSERT; NOT SURE
-						break;
-					case LISTE_MEMBRES:
-						request = requestListeMembres(projet.getId());
-						type = BDDRequestTypes.SELECT;
-						break;
-					default:
-						break;
-				}// fin switch
-				ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
-				message.addReceiver(getBddAgent());
-				message.setContent(createContent(request, type));
-				message.setConversationId(conversationId);
-				message.setLanguage("JSON");
-				myAgent.send(message);
-				myAgent.addBehaviour(new ProjetsWaitingReplyBehaviour(conversationId));
-			} // fin if
-				
-			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		String request = null;
+		BDDRequestTypes type = null;
+		switch(demande){
+				case CREE_COMPTE: 
+					request = requestCreeCompte();
+					type = BDDRequestTypes.INSERT;
+					break;
+				case CONNEXION:
+					request = requestConnexion();
+					// type = BDDRequestTypes.INSERT; NOT SURE
+					 break;
+				case DECONNEXION: 
+					request = requestDeconnexion();
+					// type = BDDRequestTypes.INSERT; NOT SURE
+					break;
+				case CREE_PROJET:
+					request = requestCreeProjet(projet);
+					type = BDDRequestTypes.INSERT;
+					break;
+				case EFFACE_PROJET:
+					request = requestEffaceProjet(projet.getId());
+					type = BDDRequestTypes.DELETE;
+					break;
+				case MODIFIE_PROJET:
+					request = requestModifieProjet();
+					type = BDDRequestTypes.UPDATE;
+					break;
+				case AJOUT_MEMBRE:
+					request = requestAjoutMembre();
+					type = BDDRequestTypes.INSERT;
+					break;
+				case RETRAIT_MEMBRE:
+					request = requestRetraitMembre();
+					type = BDDRequestTypes.DELETE;
+					break;
+				case CREE_SPRINT:
+					request = requestCreeSprint();
+					break;
+				case EFFACE_SPRINT:
+					request = requestEffaceSprint();
+					type = BDDRequestTypes.INSERT;
+					break;
+				case ARCHIVER_SPRINT:
+					request = requestArchiverSprint();
+					//type = BDDRequestTypes.INSERT; NOT SURE
+					break;
+				case CREE_TACHE:
+					request = requestCreeTache(tache);
+					type = BDDRequestTypes.INSERT;
+					break;
+				case MODIFIE_TACHE:
+					request = requestModifieTache();
+					type = BDDRequestTypes.UPDATE;
+					break;
+				case SUPPRIMER_TACHE:
+					request = requestSupprimerTache(tache.getId());
+					type = BDDRequestTypes.DELETE;
+					break;
+				case CREE_SOUS_TACHE:
+					request = requestCreeSousTache(sousTache);
+					type = BDDRequestTypes.INSERT;
+					break;
+				case MODIFIER_SOUS_TACHE:
+					request = requestModifierSousTache();
+					type = BDDRequestTypes.UPDATE;
+				case SUPPRIMER_SOUS_TACHE:
+					request = requestSupprimerSousTache(sousTache.getId());
+					type = BDDRequestTypes.DELETE;
+					break;
+				case SYNCHRONIZE_UP:
+					request = requestSynchronizeUp();
+					// type = BDDRequestTypes.INSERT; NOT SURE
+					break;
+				case SYNCHRONIZE_DOWN:
+					request = requestSynchronizeDown();
+					// type = BDDRequestTypes.INSERT; NOT SURE
+					break;
+				case LISTE_MEMBRES:
+					request = requestListeMembres(projet.getId());
+					type = BDDRequestTypes.SELECT;
+					break;
+				default:
+					break;
+			}// fin switch
+			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
+			message.addReceiver(getBddAgent());
+			message.setContent(createContent(request, type));
+			message.setConversationId(conversationId);
+			message.setLanguage("JSON");
+			myAgent.send(message);
+			myAgent.addBehaviour(new ProjetsWaitingReplyBehaviour(conversationId));
 	}
 
 	private String requestListeMembres(int projetId) {
@@ -369,19 +350,4 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		}
 		return null;
 	}
-	
-	private AID getServeurAgent() {
-		DFAgentDescription template = new DFAgentDescription();
-		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Serveur");
-		template.addServices(sd);
-		try {
-			DFAgentDescription[] result = DFService.search(myAgent, template);
-			return result[0].getName();
-		} catch(FIPAException fe) {
-			fe.printStackTrace();
-		}
-		return null;
-	}
-	
 }
