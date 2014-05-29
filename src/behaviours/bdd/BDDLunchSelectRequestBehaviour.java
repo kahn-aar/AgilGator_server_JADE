@@ -3,7 +3,7 @@ package behaviours.bdd;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import Messages.BDDAnwserMessage;
+import Messages.BDDAnswerMessage;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -43,7 +43,7 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 	}
 	
 	private String writeContent() {
-		BDDAnwserMessage corps = new BDDAnwserMessage();
+		BDDAnswerMessage corps = new BDDAnswerMessage();
 		
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

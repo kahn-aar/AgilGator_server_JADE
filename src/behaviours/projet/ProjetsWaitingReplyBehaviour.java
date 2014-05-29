@@ -1,12 +1,17 @@
 package behaviours.projet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Agents.UtilisateursAgent;
 import Datas.Utilisateur;
+import Datas.Constantes.ConstantesTables;
+import Messages.BDDAnswerMessage;
 import Messages.UserListMessage;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jade.core.AID;
@@ -39,18 +44,52 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent())));
 		if (message != null) {
 			// Il récupère le résultat de la requête.
-			
-			// Récupère la liste des utilisateurs du projets
-			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ObjectMapper omap = new ObjectMapper();
 			try {
-				UserListMessage userListMsg = omap.readValue(message.getContent(),UserListMessage.class);
-				List<Utilisateur> userList = userListMsg.getUserList();
-				if(userList!=null){
-					myAgent.addBehaviour(new ProjetsSendingUserListBehaviour(userList, conversationId));
+				BDDAnswerMessage answer = omap.readValue(message.getContent(),BDDAnswerMessage.class);
+				if(answer.getTable() !=null && answer.getResults() != null){
+					switch(answer.getTable()){
+						case ConstantesTables.PROJECT:
+							break;
+						case ConstantesTables.CURRENT_STATE:
+							break;
+						case ConstantesTables.MEMBER:
+							break;
+						case ConstantesTables.SPRINT:
+							break;
+						case ConstantesTables.SUBTASK:
+							break;
+						case ConstantesTables.TASK:
+							break;
+						case ConstantesTables.USERS:
+							// Récupère la liste des utilisateurs du projets (id, pseudo)
+							List<String> userListResult = answer.getResults();
+							List<Utilisateur> mesUsers = new ArrayList<Utilisateur>();
+							if(userListResult!=null){
+								for(String user : userListResult){
+									Utilisateur myUser = new Utilisateur();
+									String[] userData = user.split(",");
+									myUser.setId(Integer.parseInt(userData[0]));
+									myUser.setPseudo(userData[1]);
+									mesUsers.add(myUser);
+								}
+								myAgent.addBehaviour(new ProjetsSendingUserListBehaviour(mesUsers, conversationId));
+							}
+							break;
+						default:
+							break;
+							
+					}
 				}
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

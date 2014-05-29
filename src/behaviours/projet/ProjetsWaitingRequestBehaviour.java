@@ -21,8 +21,10 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-/*
+/**
  * Attend les messages de requête de l'agent serveur
+ * @author Léa
+ *
  */
 public class ProjetsWaitingRequestBehaviour extends CyclicBehaviour {
 

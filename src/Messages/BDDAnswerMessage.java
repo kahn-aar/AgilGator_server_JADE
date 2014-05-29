@@ -3,7 +3,7 @@ package Messages;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BDDAnwserMessage {
+public class BDDAnswerMessage {
 
 	private String table;
 	private List<String> results = new ArrayList<>();
