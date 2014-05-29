@@ -60,11 +60,11 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case CONNEXION:
 					request = requestConnexion();
-					// type = BDDRequestTypes.INSERT; NOT SURE
+					type = BDDRequestTypes.SELECT;
 					 break;
 				case DECONNEXION: 
 					request = requestDeconnexion();
-					// type = BDDRequestTypes.INSERT; NOT SURE
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case CREE_PROJET:
 					request = requestCreeProjet(projet);
@@ -72,7 +72,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case EFFACE_PROJET:
 					request = requestEffaceProjet(projet.getId());
-					type = BDDRequestTypes.DELETE;
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case MODIFIE_PROJET:
 					request = requestModifieProjet();
@@ -84,18 +84,19 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case RETRAIT_MEMBRE:
 					request = requestRetraitMembre();
-					type = BDDRequestTypes.DELETE;
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case CREE_SPRINT:
 					request = requestCreeSprint();
+					type = BDDRequestTypes.INSERT;
 					break;
 				case EFFACE_SPRINT:
 					request = requestEffaceSprint();
-					type = BDDRequestTypes.INSERT;
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case ARCHIVER_SPRINT:
 					request = requestArchiverSprint();
-					//type = BDDRequestTypes.INSERT; NOT SURE
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case CREE_TACHE:
 					request = requestCreeTache(tache);
@@ -107,7 +108,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case SUPPRIMER_TACHE:
 					request = requestSupprimerTache(tache.getId());
-					type = BDDRequestTypes.DELETE;
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case CREE_SOUS_TACHE:
 					request = requestCreeSousTache(sousTache);
@@ -118,15 +119,15 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					type = BDDRequestTypes.UPDATE;
 				case SUPPRIMER_SOUS_TACHE:
 					request = requestSupprimerSousTache(sousTache.getId());
-					type = BDDRequestTypes.DELETE;
+					type = BDDRequestTypes.UPDATE;
 					break;
 				case SYNCHRONIZE_UP:
-					request = requestSynchronizeUp();
-					// type = BDDRequestTypes.INSERT; NOT SURE
+					request = requestSynchronizeUp(); //Envoie ses modifs hors ligne
+					type = BDDRequestTypes.UPDATE;
 					break;
-				case SYNCHRONIZE_DOWN:
+				case SYNCHRONIZE_DOWN: //Récupère toutes les modifs faites
 					request = requestSynchronizeDown();
-					// type = BDDRequestTypes.INSERT; NOT SURE
+					type = BDDRequestTypes.SELECT; 
 					break;
 				case LISTE_MEMBRES:
 					request = requestListeMembres(projet.getId());
