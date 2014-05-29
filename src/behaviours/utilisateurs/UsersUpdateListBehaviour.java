@@ -19,7 +19,7 @@ import Agents.UtilisateursAgent;
 public class UsersUpdateListBehaviour extends CyclicBehaviour {
 
 	/**
-	 * L'agent attend un message de type subsribe ou inform qui indique qu'un utilisateur est connecté ou déconnecter.
+	 * L'agent attend un message de type inform qui indique qu'un utilisateur est connecté ou déconnecter.
 	 * L'objectif est de mettre à jour la liste des utilisateurs connectés.
 	 */
 	private static final long serialVersionUID = 4509112375330341972L;

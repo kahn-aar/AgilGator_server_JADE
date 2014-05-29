@@ -16,58 +16,39 @@ import Messages.ServerLiaisonMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Behaviour attendant les messages, que ce soit des devices
- * ou du serveur.
- * 
- * @author Nicolas
- *
- */
-public class LiaisonWaitingMessagesBehaviour extends CyclicBehaviour {
+public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 	
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public void action() {
 		ACLMessage messageServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getServerAID())));
-		ACLMessage messageDevice = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		if (messageServeur != null) {
 			// On déséréalise le message
 			ObjectMapper omap = new ObjectMapper();
 			List<AID> destinataires = null;
+			String content = null;
 			try {
 				ServerLiaisonMessage msg = omap.readValue(messageServeur.getContent(),ServerLiaisonMessage.class);
 				destinataires = msg.getListeDestinataires();
+				content = msg.getContent();
 				
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			
-			// Eciture de message
-			myAgent.send(createMessageToDevices(destinataires));
+			// Ecriture de message
+			myAgent.send(createMessageToDevices(destinataires, content));
 		}
-		if (messageDevice != null) {
-			// Message venant du device
-			myAgent.send(createMessageToServeur(messageServeur.getContent()));
-			
-		}
-
 	}
 	
-	private ACLMessage createMessageToDevices(List<AID> destinataires) {
+	private ACLMessage createMessageToDevices(List<AID> destinataires, String content) {
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 		for(AID destinataire : destinataires) {
 			message.addReceiver(destinataire);
 		}
 		// Ajout du contenu du message.
-		message.setContent("lol");
-		return message;
-	}
-	
-	private ACLMessage createMessageToServeur(String contenu) {
-		ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
-		message.addReceiver(getServerAID());
-		message.setContent(contenu);
+		message.setContent(content);
 		return message;
 	}
 	

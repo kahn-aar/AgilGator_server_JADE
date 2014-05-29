@@ -7,7 +7,7 @@ import jade.lang.acl.ACLMessage;
 import java.sql.Connection;
 
 import Agents.BDDAgent;
-import Messages.BDDAnwserMessage;
+import Messages.BDDAnswerMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
