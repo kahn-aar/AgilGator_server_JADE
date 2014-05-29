@@ -200,9 +200,9 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append(sousTache.getCurrent_developer())
 			.append(",")
-			.append(sousTache.getCreation_date())
+			.append("CURRENT_TIMESTAMP")
 			.append(",")
-			.append(sousTache.getLast_update())
+			.append("CURRENT_TIMESTAMP")
 			.append(");");
 		return request.toString();
 	}
@@ -243,9 +243,9 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		.append(",")
 		.append(tache.getCurrent_state())
 		.append(",")
-		.append(tache.getCreation_date())
+		.append("CURRENT_TIMESTAMP")
 		.append(",")
-		.append(tache.getLast_update())
+		.append("CURRENT_TIMESTAMP")
 		.append(",")
 		.append(tache.getDifficulty())
 		.append(");");
@@ -314,9 +314,9 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append("'"+projet.getDescription()+"'")
 			.append(",")
-			.append(projet.getCreation_date())
+			.append("CURRENT_TIMESTAMP")
 			.append(",")
-			.append(projet.getLast_update())
+			.append("CURRENT_TIMESTAMP")
 		.append(");");
 		return request.toString();
 	}
