@@ -57,7 +57,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 					type = BDDRequestTypes.INSERT;
 					break;
 				case MODIFIE_TACHE:
-					request = requestModifieTache();
+					request = requestModifieTache(tache);
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case SUPPRIMER_TACHE:
@@ -79,15 +79,41 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestSupprimerTache(int tacheId) {
 		StringBuilder request = new StringBuilder();
-		request.append("DELETE Task id = ")
+		request.append("DELETE FROM Task WHERE id = ")
 				.append(tacheId)
 				.append(";");
 		return request.toString();
 	}
 
-	private String requestModifieTache() {
+	private String requestModifieTache(Task t) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("UPDATE Task")
+			.append("SET name = ")
+			.append("'"+t.getName()+"'")
+			.append(",")
+			.append("description = ")
+			.append("'"+t.getDescription()+"'")
+			.append(",")
+			.append("sprint = ")
+			.append("'"+t.getSprint()+"'")
+			.append(",")
+			.append("creation_date = ")
+			.append(t.getCreation_date())
+			.append(",")
+			.append("last_update = ")
+			.append(t.getLast_update())
+			.append(",")
+			.append("priority = ")
+			.append(t.getPriority())
+			.append(",")
+			.append("difficulty = ")
+			.append(t.getDifficulty())
+			.append(",")
+			.append("current_state = ")
+			.append(t.getCurrent_state())
+			.append("WHERE id = ")
+			.append(t.getId())
+			.append(";");
 		return request.toString();
 	}
 

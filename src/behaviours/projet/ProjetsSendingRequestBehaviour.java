@@ -186,7 +186,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestEffaceProjet(int projetId) {
 		StringBuilder request = new StringBuilder();
-		request.append("DELETE Project WHERE id = ")
+		request.append("DELETE FROM Project WHERE id = ")
 				.append(projetId)
 				.append(";");
 		return request.toString();

@@ -49,14 +49,16 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 	@Override
 	public void action() {
 		String request = null;
+		String request2 = null;
 		BDDRequestTypes type = null;
 		switch(demande){
 				case CREE_SPRINT:
-					request = requestCreeSprint();
+					request = requestCreeSprint(sprint);
+					request2 = requestCreeSprint2();
 					type = BDDRequestTypes.INSERT;
 					break;
 				case EFFACE_SPRINT:
-					request = requestEffaceSprint();
+					request = requestEffaceSprint(sprint.getId());
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case ARCHIVER_SPRINT:
@@ -68,7 +70,7 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 			}// fin switch
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getBddAgent());
-			message.setContent(createContent(request, type, demande));
+			message.setContent(createContent(request, request2, type, demande));
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
@@ -82,22 +84,39 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-	private String requestEffaceSprint() {
+	private String requestEffaceSprint(int tacheId) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("DELETE FROM Sprint WHERE id = ")
+				.append(tacheId)
+				.append(";");
 		return request.toString();
 	}
 
-	private String requestCreeSprint() {
+	private String requestCreeSprint(Sprint s) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("INSERT INTO Task (description, project, end_date, start_date)")
+		.append("VALUES (")
+		.append("'"+s.getDescription()+"'")
+		.append(",")
+		.append(s.getProject())
+		.append(",")
+		.append(s.getEnd_date())
+		.append(",")
+		.append(s.getStart_date())
+		.append(");");
+	return request.toString();
+	}
+
+	private String requestCreeSprint2(){
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT MAX(id) FROM Sprint;");
 		return request.toString();
 	}
 
-
-	private String createContent(String request, BDDRequestTypes type, DeviceInfoTypes demande) {
+	private String createContent(String request, String request2, BDDRequestTypes type, DeviceInfoTypes demande) {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(request);
+		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
 		// Séréalisation JSON

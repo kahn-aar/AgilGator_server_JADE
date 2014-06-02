@@ -57,8 +57,9 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 					type = BDDRequestTypes.INSERT;
 					break;
 				case MODIFIER_SOUS_TACHE:
-					request = requestModifierSousTache();
+					request = requestModifierSousTache(sousTache);
 					type = BDDRequestTypes.UPDATE;
+					break;
 				case SUPPRIMER_SOUS_TACHE:
 					request = requestSupprimerSousTache(sousTache.getId());
 					type = BDDRequestTypes.UPDATE;
@@ -76,9 +77,32 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 	}
 
 
-	private String requestModifierSousTache() {
+	private String requestModifierSousTache(SubTask t) {
 		StringBuilder request = new StringBuilder();
-		// requête à implémenter
+		request.append("UPDATE SubTask")
+			.append("SET name = ")
+			.append("'"+t.getName()+"'")
+			.append(",")
+			.append("description = ")
+			.append("'"+t.getDescription()+"'")
+			.append(",")
+			.append("task = ")
+			.append("'"+t.getTaskId()+"'")
+			.append(",")
+			.append("creation_date = ")
+			.append(t.getCreation_date())
+			.append(",")
+			.append("last_update = ")
+			.append(t.getLast_update())
+			.append(",")
+			.append("current_developer = ")
+			.append(t.getCurrent_developer())
+			.append(",")
+			.append("current_state = ")
+			.append(t.getCurrent_state())
+			.append("WHERE id = ")
+			.append(t.getId())
+			.append(";");
 		return request.toString();
 	}
 
