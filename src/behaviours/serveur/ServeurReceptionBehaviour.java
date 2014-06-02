@@ -67,6 +67,27 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 				}
 				if(demande!=null){
 					switch(demande){
+					case LISTE_MEMBRES:
+						if(projet!=null){
+							ObjectMapper omapLM = new ObjectMapper();
+							ProjetRequestMessage lmMsg= new ProjetRequestMessage();
+							lmMsg.setDemande(demande);
+							lmMsg.setProjet(projet);
+							try {
+								String content4 = omapLM.writeValueAsString(lmMsg);
+								ACLMessage msgLM= new ACLMessage(ACLMessage.REQUEST);
+								msgLM.addReceiver(getProjetAgent());
+								msgLM.setContent(content4);
+								msgLM.setConversationId(conversationId);
+								msgLM.setLanguage("JSON");
+								myAgent.send(msgLM);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						}
+						break;
 					case CONNEXION:
 						// envoie à l'agent User l'utilisateur à ajouter à la liste
 						if(user!=null){
@@ -111,296 +132,328 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						}
 						break;
 					case CREE_PROJET:
-						ObjectMapper omapCreeProjet = new ObjectMapper();
-						ProjetRequestMessage projetMsg= new ProjetRequestMessage();
-						projetMsg.setDemande(demande);
-						projetMsg.setProjet(projet);
-						projetMsg.setUser(user);
-						String content;
-						try {
-							content = omapCreeProjet.writeValueAsString(projetMsg);
-							ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
-							msgCreeProjet.addReceiver(getProjetAgent());
-							msgCreeProjet.setContent(content);
-							msgCreeProjet.setConversationId(conversationId);
-							msgCreeProjet.setLanguage("JSON");
-							myAgent.send(msgCreeProjet);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if (projet != null){
+							ObjectMapper omapCreeProjet = new ObjectMapper();
+							ProjetRequestMessage projetMsg= new ProjetRequestMessage();
+							projetMsg.setDemande(demande);
+							projetMsg.setProjet(projet);
+							projetMsg.setUser(user);
+							String content;
+							try {
+								content = omapCreeProjet.writeValueAsString(projetMsg);
+								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
+								msgCreeProjet.addReceiver(getProjetAgent());
+								msgCreeProjet.setContent(content);
+								msgCreeProjet.setConversationId(conversationId);
+								msgCreeProjet.setLanguage("JSON");
+								myAgent.send(msgCreeProjet);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case EFFACE_PROJET:
-						ObjectMapper omapEffaceProjet = new ObjectMapper();
-						ProjetRequestMessage effaceProjetMsg= new ProjetRequestMessage();
-						effaceProjetMsg.setDemande(demande);
-						effaceProjetMsg.setProjet(projet);
-						try {
-							String content4 = omapEffaceProjet.writeValueAsString(effaceProjetMsg);
-							ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
-							msgCreeProjet.addReceiver(getProjetAgent());
-							msgCreeProjet.setContent(content4);
-							msgCreeProjet.setConversationId(conversationId);
-							msgCreeProjet.setLanguage("JSON");
-							myAgent.send(msgCreeProjet);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(projet!=null){
+							ObjectMapper omapEffaceProjet = new ObjectMapper();
+							ProjetRequestMessage effaceProjetMsg= new ProjetRequestMessage();
+							effaceProjetMsg.setDemande(demande);
+							effaceProjetMsg.setProjet(projet);
+							try {
+								String content4 = omapEffaceProjet.writeValueAsString(effaceProjetMsg);
+								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
+								msgCreeProjet.addReceiver(getProjetAgent());
+								msgCreeProjet.setContent(content4);
+								msgCreeProjet.setConversationId(conversationId);
+								msgCreeProjet.setLanguage("JSON");
+								myAgent.send(msgCreeProjet);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case AJOUT_MEMBRE:
-						ObjectMapper omapAjoutMembre = new ObjectMapper();
-						ProjetRequestMessage ajoutMembreProjetMsg= new ProjetRequestMessage();
-						ajoutMembreProjetMsg.setDemande(demande);
-						ajoutMembreProjetMsg.setProjet(projet);
-						ajoutMembreProjetMsg.setMember(member);
-						try {
-							String content4 = omapAjoutMembre.writeValueAsString(ajoutMembreProjetMsg);
-							ACLMessage msgAM= new ACLMessage(ACLMessage.REQUEST);
-							msgAM.addReceiver(getProjetAgent());
-							msgAM.setContent(content4);
-							msgAM.setConversationId(conversationId);
-							msgAM.setLanguage("JSON");
-							myAgent.send(msgAM);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(member!=null){
+							ObjectMapper omapAjoutMembre = new ObjectMapper();
+							ProjetRequestMessage ajoutMembreProjetMsg= new ProjetRequestMessage();
+							ajoutMembreProjetMsg.setDemande(demande);
+							ajoutMembreProjetMsg.setProjet(projet);
+							ajoutMembreProjetMsg.setMember(member);
+							try {
+								String content4 = omapAjoutMembre.writeValueAsString(ajoutMembreProjetMsg);
+								ACLMessage msgAM= new ACLMessage(ACLMessage.REQUEST);
+								msgAM.addReceiver(getProjetAgent());
+								msgAM.setContent(content4);
+								msgAM.setConversationId(conversationId);
+								msgAM.setLanguage("JSON");
+								myAgent.send(msgAM);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case CREE_COMPTE:
-						ObjectMapper omapCC= new ObjectMapper();
-						ProjetRequestMessage CCMsg= new ProjetRequestMessage();
-						CCMsg.setDemande(demande);
-						CCMsg.setUser(user);
-						try {
-							String content4 = omapCC.writeValueAsString(CCMsg);
-							ACLMessage msgCC= new ACLMessage(ACLMessage.REQUEST);
-							msgCC.addReceiver(getProjetAgent());
-							msgCC.setContent(content4);
-							msgCC.setConversationId(conversationId);
-							msgCC.setLanguage("JSON");
-							myAgent.send(msgCC);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if (user!=null){
+							ObjectMapper omapCC= new ObjectMapper();
+							ProjetRequestMessage CCMsg= new ProjetRequestMessage();
+							CCMsg.setDemande(demande);
+							CCMsg.setUser(user);
+							try {
+								String content4 = omapCC.writeValueAsString(CCMsg);
+								ACLMessage msgCC= new ACLMessage(ACLMessage.REQUEST);
+								msgCC.addReceiver(getProjetAgent());
+								msgCC.setContent(content4);
+								msgCC.setConversationId(conversationId);
+								msgCC.setLanguage("JSON");
+								myAgent.send(msgCC);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case ARCHIVER_SPRINT:
-						ObjectMapper omapArchiverSprint= new ObjectMapper();
-						SprintRequestMessage ArchiverSprintMsg= new SprintRequestMessage();
-						ArchiverSprintMsg.setDemande(demande);
-						ArchiverSprintMsg.setSprint(sprint);
-						try {
-							String content4 = omapArchiverSprint.writeValueAsString(ArchiverSprintMsg);
-							ACLMessage msgArchiverSprint= new ACLMessage(ACLMessage.REQUEST);
-							msgArchiverSprint.addReceiver(getSprintAgent());
-							msgArchiverSprint.setContent(content4);
-							msgArchiverSprint.setConversationId(conversationId);
-							msgArchiverSprint.setLanguage("JSON");
-							myAgent.send(msgArchiverSprint);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(sprint!=null){
+							ObjectMapper omapArchiverSprint= new ObjectMapper();
+							SprintRequestMessage ArchiverSprintMsg= new SprintRequestMessage();
+							ArchiverSprintMsg.setDemande(demande);
+							ArchiverSprintMsg.setSprint(sprint);
+							try {
+								String content4 = omapArchiverSprint.writeValueAsString(ArchiverSprintMsg);
+								ACLMessage msgArchiverSprint= new ACLMessage(ACLMessage.REQUEST);
+								msgArchiverSprint.addReceiver(getSprintAgent());
+								msgArchiverSprint.setContent(content4);
+								msgArchiverSprint.setConversationId(conversationId);
+								msgArchiverSprint.setLanguage("JSON");
+								myAgent.send(msgArchiverSprint);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case CREE_SOUS_TACHE:
-						ObjectMapper omapCreeSubTask = new ObjectMapper();
-						SousTacheRequestMessage creeSubTaskMsg= new SousTacheRequestMessage();
-						creeSubTaskMsg.setDemande(demande);
-						creeSubTaskMsg.setSousTache(soustache);
-						try {
-							String content5 = omapCreeSubTask.writeValueAsString(creeSubTaskMsg);
-							ACLMessage msgCreeSubTask= new ACLMessage(ACLMessage.REQUEST);
-							msgCreeSubTask.addReceiver(getSubTaskAgent());
-							msgCreeSubTask.setContent(content5);
-							msgCreeSubTask.setConversationId(conversationId);
-							msgCreeSubTask.setLanguage("JSON");
-							myAgent.send(msgCreeSubTask);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(soustache !=null){
+							ObjectMapper omapCreeSubTask = new ObjectMapper();
+							SousTacheRequestMessage creeSubTaskMsg= new SousTacheRequestMessage();
+							creeSubTaskMsg.setDemande(demande);
+							creeSubTaskMsg.setSousTache(soustache);
+							try {
+								String content5 = omapCreeSubTask.writeValueAsString(creeSubTaskMsg);
+								ACLMessage msgCreeSubTask= new ACLMessage(ACLMessage.REQUEST);
+								msgCreeSubTask.addReceiver(getSubTaskAgent());
+								msgCreeSubTask.setContent(content5);
+								msgCreeSubTask.setConversationId(conversationId);
+								msgCreeSubTask.setLanguage("JSON");
+								myAgent.send(msgCreeSubTask);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case CREE_SPRINT:
-						ObjectMapper omapSprint = new ObjectMapper();
-						SprintRequestMessage sprintMsg= new SprintRequestMessage();
-						sprintMsg.setDemande(demande);
-						sprintMsg.setSprint(sprint);
-						try {
-							String content5 = omapSprint.writeValueAsString(sprintMsg);
-							ACLMessage msgSprint= new ACLMessage(ACLMessage.REQUEST);
-							msgSprint.addReceiver(getSprintAgent());
-							msgSprint.setContent(content5);
-							msgSprint.setConversationId(conversationId);
-							msgSprint.setLanguage("JSON");
-							myAgent.send(msgSprint);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(sprint!=null){
+							ObjectMapper omapSprint = new ObjectMapper();
+							SprintRequestMessage sprintMsg= new SprintRequestMessage();
+							sprintMsg.setDemande(demande);
+							sprintMsg.setSprint(sprint);
+							try {
+								String content5 = omapSprint.writeValueAsString(sprintMsg);
+								ACLMessage msgSprint= new ACLMessage(ACLMessage.REQUEST);
+								msgSprint.addReceiver(getSprintAgent());
+								msgSprint.setContent(content5);
+								msgSprint.setConversationId(conversationId);
+								msgSprint.setLanguage("JSON");
+								myAgent.send(msgSprint);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case CREE_TACHE:
-						ObjectMapper omapCreeTask = new ObjectMapper();
-						TacheRequestMessage creeTaskMsg= new TacheRequestMessage();
-						creeTaskMsg.setDemande(demande);
-						creeTaskMsg.setTache(tache);
-						try {
-							String content5 = omapCreeTask.writeValueAsString(creeTaskMsg);
-							ACLMessage msgCreeTask= new ACLMessage(ACLMessage.REQUEST);
-							msgCreeTask.addReceiver(getTaskAgent());
-							msgCreeTask.setContent(content5);
-							msgCreeTask.setConversationId(conversationId);
-							msgCreeTask.setLanguage("JSON");
-							myAgent.send(msgCreeTask);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(tache!=null){
+							ObjectMapper omapCreeTask = new ObjectMapper();
+							TacheRequestMessage creeTaskMsg= new TacheRequestMessage();
+							creeTaskMsg.setDemande(demande);
+							creeTaskMsg.setTache(tache);
+							try {
+								String content5 = omapCreeTask.writeValueAsString(creeTaskMsg);
+								ACLMessage msgCreeTask= new ACLMessage(ACLMessage.REQUEST);
+								msgCreeTask.addReceiver(getTaskAgent());
+								msgCreeTask.setContent(content5);
+								msgCreeTask.setConversationId(conversationId);
+								msgCreeTask.setLanguage("JSON");
+								myAgent.send(msgCreeTask);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case EFFACE_SPRINT:
-						ObjectMapper omapEffaceSprint = new ObjectMapper();
-						SprintRequestMessage effaceSprintMsg= new SprintRequestMessage();
-						effaceSprintMsg.setDemande(demande);
-						effaceSprintMsg.setSprint(sprint);
-						try {
-							String content5 = omapEffaceSprint.writeValueAsString(effaceSprintMsg);
-							ACLMessage msgEffaceSprint= new ACLMessage(ACLMessage.REQUEST);
-							msgEffaceSprint.addReceiver(getSprintAgent());
-							msgEffaceSprint.setContent(content5);
-							msgEffaceSprint.setConversationId(conversationId);
-							msgEffaceSprint.setLanguage("JSON");
-							myAgent.send(msgEffaceSprint);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(sprint!=null){
+							ObjectMapper omapEffaceSprint = new ObjectMapper();
+							SprintRequestMessage effaceSprintMsg= new SprintRequestMessage();
+							effaceSprintMsg.setDemande(demande);
+							effaceSprintMsg.setSprint(sprint);
+							try {
+								String content5 = omapEffaceSprint.writeValueAsString(effaceSprintMsg);
+								ACLMessage msgEffaceSprint= new ACLMessage(ACLMessage.REQUEST);
+								msgEffaceSprint.addReceiver(getSprintAgent());
+								msgEffaceSprint.setContent(content5);
+								msgEffaceSprint.setConversationId(conversationId);
+								msgEffaceSprint.setLanguage("JSON");
+								myAgent.send(msgEffaceSprint);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case MODIFIER_SOUS_TACHE:
-						ObjectMapper omapModifySubTask = new ObjectMapper();
-						SousTacheRequestMessage modifySubTaskMsg= new SousTacheRequestMessage();
-						modifySubTaskMsg.setDemande(demande);
-						modifySubTaskMsg.setSousTache(soustache);
-						try {
-							String content5 = omapModifySubTask.writeValueAsString(modifySubTaskMsg);
-							ACLMessage msgModifySubTask= new ACLMessage(ACLMessage.REQUEST);
-							msgModifySubTask.addReceiver(getSubTaskAgent());
-							msgModifySubTask.setContent(content5);
-							msgModifySubTask.setConversationId(conversationId);
-							msgModifySubTask.setLanguage("JSON");
-							myAgent.send(msgModifySubTask);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(soustache!= null){
+							ObjectMapper omapModifySubTask = new ObjectMapper();
+							SousTacheRequestMessage modifySubTaskMsg= new SousTacheRequestMessage();
+							modifySubTaskMsg.setDemande(demande);
+							modifySubTaskMsg.setSousTache(soustache);
+							try {
+								String content5 = omapModifySubTask.writeValueAsString(modifySubTaskMsg);
+								ACLMessage msgModifySubTask= new ACLMessage(ACLMessage.REQUEST);
+								msgModifySubTask.addReceiver(getSubTaskAgent());
+								msgModifySubTask.setContent(content5);
+								msgModifySubTask.setConversationId(conversationId);
+								msgModifySubTask.setLanguage("JSON");
+								myAgent.send(msgModifySubTask);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case MODIFIE_PROJET:
-						ObjectMapper omapModifyProjet = new ObjectMapper();
-						ProjetRequestMessage modifyProjetMsg= new ProjetRequestMessage();
-						modifyProjetMsg.setDemande(demande);
-						modifyProjetMsg.setProjet(projet);
-						try {
-							String content5 = omapModifyProjet.writeValueAsString(modifyProjetMsg);
-							ACLMessage msgModifyProjet= new ACLMessage(ACLMessage.REQUEST);
-							msgModifyProjet.addReceiver(getProjetAgent());
-							msgModifyProjet.setContent(content5);
-							msgModifyProjet.setConversationId(conversationId);
-							msgModifyProjet.setLanguage("JSON");
-							myAgent.send(msgModifyProjet);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(projet!= null){
+							ObjectMapper omapModifyProjet = new ObjectMapper();
+							ProjetRequestMessage modifyProjetMsg= new ProjetRequestMessage();
+							modifyProjetMsg.setDemande(demande);
+							modifyProjetMsg.setProjet(projet);
+							try {
+								String content5 = omapModifyProjet.writeValueAsString(modifyProjetMsg);
+								ACLMessage msgModifyProjet= new ACLMessage(ACLMessage.REQUEST);
+								msgModifyProjet.addReceiver(getProjetAgent());
+								msgModifyProjet.setContent(content5);
+								msgModifyProjet.setConversationId(conversationId);
+								msgModifyProjet.setLanguage("JSON");
+								myAgent.send(msgModifyProjet);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case MODIFIE_TACHE:
-						ObjectMapper omapModifyTask = new ObjectMapper();
-						TacheRequestMessage modifyTaskMsg= new TacheRequestMessage();
-						modifyTaskMsg.setDemande(demande);
-						modifyTaskMsg.setTache(tache);
-						try {
-							String content5 = omapModifyTask.writeValueAsString(modifyTaskMsg);
-							ACLMessage msgModifyTask= new ACLMessage(ACLMessage.REQUEST);
-							msgModifyTask.addReceiver(getTaskAgent());
-							msgModifyTask.setContent(content5);
-							msgModifyTask.setConversationId(conversationId);
-							msgModifyTask.setLanguage("JSON");
-							myAgent.send(msgModifyTask);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(tache!=null){
+							ObjectMapper omapModifyTask = new ObjectMapper();
+							TacheRequestMessage modifyTaskMsg= new TacheRequestMessage();
+							modifyTaskMsg.setDemande(demande);
+							modifyTaskMsg.setTache(tache);
+							try {
+								String content5 = omapModifyTask.writeValueAsString(modifyTaskMsg);
+								ACLMessage msgModifyTask= new ACLMessage(ACLMessage.REQUEST);
+								msgModifyTask.addReceiver(getTaskAgent());
+								msgModifyTask.setContent(content5);
+								msgModifyTask.setConversationId(conversationId);
+								msgModifyTask.setLanguage("JSON");
+								myAgent.send(msgModifyTask);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case RETRAIT_MEMBRE:
-						ObjectMapper omapRetraitMembre = new ObjectMapper();
-						ProjetRequestMessage retraitMembreProjetMsg= new ProjetRequestMessage();
-						retraitMembreProjetMsg.setDemande(demande);
-						retraitMembreProjetMsg.setProjet(projet);
-						retraitMembreProjetMsg.setMember(member);
-						try {
-							String content4 = omapRetraitMembre.writeValueAsString(retraitMembreProjetMsg);
-							ACLMessage msgRM= new ACLMessage(ACLMessage.REQUEST);
-							msgRM.addReceiver(getProjetAgent());
-							msgRM.setContent(content4);
-							msgRM.setConversationId(conversationId);
-							msgRM.setLanguage("JSON");
-							myAgent.send(msgRM);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(member!=null && projet!=null){
+							ObjectMapper omapRetraitMembre = new ObjectMapper();
+							ProjetRequestMessage retraitMembreProjetMsg= new ProjetRequestMessage();
+							retraitMembreProjetMsg.setDemande(demande);
+							retraitMembreProjetMsg.setProjet(projet);
+							retraitMembreProjetMsg.setMember(member);
+							try {
+								String content4 = omapRetraitMembre.writeValueAsString(retraitMembreProjetMsg);
+								ACLMessage msgRM= new ACLMessage(ACLMessage.REQUEST);
+								msgRM.addReceiver(getProjetAgent());
+								msgRM.setContent(content4);
+								msgRM.setConversationId(conversationId);
+								msgRM.setLanguage("JSON");
+								myAgent.send(msgRM);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case AJOUT_MANAGER:
-						ObjectMapper omapManager = new ObjectMapper();
-						ProjetRequestMessage managerMsg= new ProjetRequestMessage();
-						managerMsg.setDemande(demande);
-						managerMsg.setProjet(projet);
-						managerMsg.setUser(user);
-						try {
-							String content4 = omapManager.writeValueAsString(managerMsg);
-							ACLMessage msgManager= new ACLMessage(ACLMessage.REQUEST);
-							msgManager.addReceiver(getProjetAgent());
-							msgManager.setContent(content4);
-							msgManager.setConversationId(conversationId);
-							msgManager.setLanguage("JSON");
-							myAgent.send(msgManager);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(user!=null && projet!=null){
+							ObjectMapper omapManager = new ObjectMapper();
+							ProjetRequestMessage managerMsg= new ProjetRequestMessage();
+							managerMsg.setDemande(demande);
+							managerMsg.setProjet(projet);
+							managerMsg.setUser(user);
+							try {
+								String content4 = omapManager.writeValueAsString(managerMsg);
+								ACLMessage msgManager= new ACLMessage(ACLMessage.REQUEST);
+								msgManager.addReceiver(getProjetAgent());
+								msgManager.setContent(content4);
+								msgManager.setConversationId(conversationId);
+								msgManager.setLanguage("JSON");
+								myAgent.send(msgManager);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case SUPPRIMER_SOUS_TACHE:
-						ObjectMapper omapSuppSubTask = new ObjectMapper();
-						SousTacheRequestMessage suppSubTaskMsg= new SousTacheRequestMessage();
-						suppSubTaskMsg.setDemande(demande);
-						suppSubTaskMsg.setSousTache(soustache);
-						try {
-							String content5 = omapSuppSubTask.writeValueAsString(suppSubTaskMsg);
-							ACLMessage msgSuppSubTask= new ACLMessage(ACLMessage.REQUEST);
-							msgSuppSubTask.addReceiver(getSubTaskAgent());
-							msgSuppSubTask.setContent(content5);
-							msgSuppSubTask.setConversationId(conversationId);
-							msgSuppSubTask.setLanguage("JSON");
-							myAgent.send(msgSuppSubTask);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(soustache!=null){
+							ObjectMapper omapSuppSubTask = new ObjectMapper();
+							SousTacheRequestMessage suppSubTaskMsg= new SousTacheRequestMessage();
+							suppSubTaskMsg.setDemande(demande);
+							suppSubTaskMsg.setSousTache(soustache);
+							try {
+								String content5 = omapSuppSubTask.writeValueAsString(suppSubTaskMsg);
+								ACLMessage msgSuppSubTask= new ACLMessage(ACLMessage.REQUEST);
+								msgSuppSubTask.addReceiver(getSubTaskAgent());
+								msgSuppSubTask.setContent(content5);
+								msgSuppSubTask.setConversationId(conversationId);
+								msgSuppSubTask.setLanguage("JSON");
+								myAgent.send(msgSuppSubTask);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case SUPPRIMER_TACHE:
-						ObjectMapper omapSuppTask = new ObjectMapper();
-						TacheRequestMessage suppTaskMsg= new TacheRequestMessage();
-						suppTaskMsg.setDemande(demande);
-						suppTaskMsg.setTache(tache);
-						try {
-							String content5 = omapSuppTask.writeValueAsString(suppTaskMsg);
-							ACLMessage msgSuppTask= new ACLMessage(ACLMessage.REQUEST);
-							msgSuppTask.addReceiver(getTaskAgent());
-							msgSuppTask.setContent(content5);
-							msgSuppTask.setConversationId(conversationId);
-							msgSuppTask.setLanguage("JSON");
-							myAgent.send(msgSuppTask);
-						} catch (JsonProcessingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if(tache!=null){
+							ObjectMapper omapSuppTask = new ObjectMapper();
+							TacheRequestMessage suppTaskMsg= new TacheRequestMessage();
+							suppTaskMsg.setDemande(demande);
+							suppTaskMsg.setTache(tache);
+							try {
+								String content5 = omapSuppTask.writeValueAsString(suppTaskMsg);
+								ACLMessage msgSuppTask= new ACLMessage(ACLMessage.REQUEST);
+								msgSuppTask.addReceiver(getTaskAgent());
+								msgSuppTask.setContent(content5);
+								msgSuppTask.setConversationId(conversationId);
+								msgSuppTask.setLanguage("JSON");
+								myAgent.send(msgSuppTask);
+							} catch (JsonProcessingException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						break;
 					case SYNCHRONIZE_DOWN:
