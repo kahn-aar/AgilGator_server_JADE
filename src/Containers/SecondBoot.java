@@ -31,6 +31,15 @@ public static String PROPERTIES_FILE = "Ressources/propertiesSecond.properties";
 			AgentController Projet = container.createNewAgent("projets",
 					"Agents.ProjetsAgent", null);
 			Projet.start();
+			AgentController Tache = container.createNewAgent("tache",
+					"Agents.TacheAgent", null);
+			Tache.start();
+			AgentController SousTache = container.createNewAgent("soustache",
+					"Agents.SousTacheAgent", null);
+			SousTache.start();
+			AgentController Sprint = container.createNewAgent("sprint",
+					"Agents.SprintAgent", null);
+			Sprint.start();
 			AgentController Utilisateurs = container.createNewAgent("Utilisateurs",
 					"Agents.UtilisateursAgent", null);
 			Utilisateurs.start();
