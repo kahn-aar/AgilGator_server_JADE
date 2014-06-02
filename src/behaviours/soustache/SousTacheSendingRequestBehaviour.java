@@ -91,10 +91,8 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeSousTache(SubTask sousTache) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO SubTask (id, task, name, description, current_state, current_developper, creation_date, last_update)")
+		request.append("INSERT INTO SubTask (task, name, description, current_state, current_developper, creation_date, last_update)")
 			.append("VALUES (")
-			.append(sousTache.getId())
-			.append(",")
 			.append(sousTache.getTaskId())
 			.append(",")
 			.append(sousTache.getName())
@@ -109,6 +107,12 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append(sousTache.getLast_update())
 			.append(");");
+		return request.toString();
+	}
+	
+	private String requestCreeSousTache2() {
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT MAX(id) FROM SubTask;");
 		return request.toString();
 	}
 

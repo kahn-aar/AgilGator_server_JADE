@@ -92,10 +92,8 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeTache(Task tache) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Task (id, sprint, name, description, priority, current_state, creation_date, last_update, difficulty)")
+		request.append("INSERT INTO Task (sprint, name, description, priority, current_state, creation_date, last_update, difficulty)")
 		.append("VALUES (")
-		.append(tache.getId())
-		.append(",")
 		.append(tache.getSprint())
 		.append(",")
 		.append(tache.getName())
@@ -115,6 +113,11 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 	return request.toString();
 	}
 
+	private String requestCreeTache2() {
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT MAX(id) FROM Task;");
+		return request.toString();
+	}
 
 
 	private String createContent(String request, BDDRequestTypes type, DeviceInfoTypes demande) {
