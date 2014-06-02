@@ -7,6 +7,9 @@ public class Utilisateur {
 	private int id;
 	private AID aid;
 	private String pseudo;
+	private String email;
+	private String pasword;
+	private String salt1;
 
 	public int getId() {
 		return id;
@@ -30,5 +33,29 @@ public class Utilisateur {
 
 	public void setAid(AID aid) {
 		this.aid = aid;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasword() {
+		return pasword;
+	}
+
+	public void setPasword(String pasword) {
+		this.pasword = pasword;
+	}
+
+	public String getSalt1() {
+		return salt1;
+	}
+
+	public void setSalt1(String salt1) {
+		this.salt1 = salt1;
 	}
 }

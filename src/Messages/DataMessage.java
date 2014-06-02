@@ -10,11 +10,14 @@ import Datas.enums.DeviceInfoTypes;
 public class DataMessage {
 
 	private DeviceInfoTypes demande;
+	// Utilisateur, sera le manager dans le cas d'une création de projet
 	private Utilisateur user;
 	private Project projet;
 	private Task tache;
 	private SubTask sousTache;
 	private Sprint sprint;
+	// Membre que l'on veut ajouter au projet ou supprimer du projet
+	private Utilisateur member;
 	
 	public DeviceInfoTypes getDemande() {
 		return demande;
@@ -62,6 +65,14 @@ public class DataMessage {
 
 	public void setSprint(Sprint sprint) {
 		this.sprint = sprint;
+	}
+
+	public Utilisateur getMember() {
+		return member;
+	}
+
+	public void setMember(Utilisateur member) {
+		this.member = member;
 	}
 	
 

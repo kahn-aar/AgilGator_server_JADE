@@ -14,6 +14,7 @@ import jade.lang.acl.MessageTemplate;
 import Datas.Project;
 import Datas.SubTask;
 import Datas.Task;
+import Datas.Utilisateur;
 import Datas.enums.BDDRequestTypes;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
@@ -35,18 +36,16 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
 	private static final long serialVersionUID = 1L;
 	private Project projet;
-	private Task tache;
-	private SubTask sousTache;
 	private DeviceInfoTypes demande;
-	
+	private Utilisateur member;
+	private Utilisateur user;
 	private String conversationId;
 	
-	public ProjetsSendingRequestBehaviour(String conversationId, Project projet, Task tache, SubTask sousTache, DeviceInfoTypes demande) {
+	public ProjetsSendingRequestBehaviour(String conversationId, Project projet, Utilisateur member, Utilisateur user, DeviceInfoTypes demande) {
 		this.conversationId = conversationId;
 		this.projet = projet;
-		this.sousTache = sousTache;
-		this.tache = tache;
 		this.demande = demande;	
+		this.member = member;
 	}
 	
 	@Override
@@ -56,17 +55,13 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		BDDRequestTypes type = null;
 		switch(demande){
 				case CREE_COMPTE: 
-					request = requestCreeCompte();
+					request = requestCreeCompte(user);
 					type = BDDRequestTypes.INSERT;
 					break;
 				case CONNEXION:
 					request = requestConnexion();
 					type = BDDRequestTypes.SELECT;
 					 break;
-				case DECONNEXION: 
-					request = requestDeconnexion();
-					type = BDDRequestTypes.UPDATE;
-					break;
 				case CREE_PROJET:
 					request = requestCreeProjet(projet);
 					request2 = requestCreeProjet2();
@@ -77,15 +72,15 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case MODIFIE_PROJET:
-					request = requestModifieProjet();
+					request = requestModifieProjet(projet);
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case AJOUT_MEMBRE:
-					request = requestAjoutMembre();
+					request = requestAjoutMembre(projet.getId(), member.getId());
 					type = BDDRequestTypes.INSERT;
 					break;
 				case RETRAIT_MEMBRE:
-					request = requestRetraitMembre();
+					request = requestRetraitMembre(member.getId(), projet.getId());
 					type = BDDRequestTypes.UPDATE;
 					break;
 				case SYNCHRONIZE_UP:
@@ -100,6 +95,9 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					request = requestListeMembres(projet.getId());
 					type = BDDRequestTypes.SELECT;
 					break;
+				case AJOUT_MANAGER:
+					request = requestAjoutManager(projet.getId(), user.getId());
+					type = BDDRequestTypes.INSERT;
 				default:
 					break;
 			}// fin switch
@@ -110,6 +108,16 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			message.setLanguage("JSON");
 			myAgent.send(message);
 			myAgent.addBehaviour(new ProjetsWaitingReplyBehaviour(conversationId));
+	}
+
+	private String requestAjoutManager(int projetId, int managerId) {
+		StringBuilder request = new StringBuilder();
+		request.append("INSERT INTO  Member (project, member, manager) VALUES (")
+				.append(projetId)
+				.append(managerId)
+				.append(", 1)")
+				.append(";");
+		return request.toString();
 	}
 
 	private String requestListeMembres(int projetId) {
@@ -132,22 +140,46 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-
-	private String requestRetraitMembre() {
+	private String requestRetraitMembre(int memberId, int projectId) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("DELETE Member WHERE member = ")
+				.append(memberId)
+				.append("AND project = ")
+				.append(projectId)
+				.append(";");
 		return request.toString();
 	}
 
-	private String requestAjoutMembre() {
+	private String requestAjoutMembre(int projectId, int memberId) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("INSERT INTO  Member (project, member, manager) VALUES (")
+				.append(projectId)
+				.append(memberId)
+				.append(", 0)")
+				.append(";");
 		return request.toString();
 	}
 
-	private String requestModifieProjet() {
+	private String requestModifieProjet(Project projet) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("UPDATE Project")
+			.append("SET title = ")
+			.append(projet.getTitle())
+			.append(",")
+			.append("subtitle = ")
+			.append(projet.getSubtitle())
+			.append(",")
+			.append("description = ")
+			.append(projet.getDescription())
+			.append(",")
+			.append("creation_date = ")
+			.append(projet.getCreation_date())
+			.append(",")
+			.append("last_update = ")
+			.append(projet.getLast_update())
+			.append("WHERE id = ")
+			.append(projet.getId())
+			.append(";");
 		return request.toString();
 	}
 
@@ -184,21 +216,24 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-	private String requestDeconnexion() {
-		StringBuilder request = new StringBuilder();
-		// requête à implémenter
-		return request.toString();
-	}
-
 	private String requestConnexion() {
 		StringBuilder request = new StringBuilder();
 		// requête à implémenter
 		return request.toString();
 	}
 
-	private String requestCreeCompte() {
+	private String requestCreeCompte(Utilisateur user) {
 		StringBuilder request = new StringBuilder();
-		// Requête à implémenter
+		request.append("INSERT INTO Users (email, password, pseudo, salt1)")
+			.append("VALUES (")
+			.append(user.getId())
+			.append(",")
+			.append(user.getPasword())
+			.append(",")
+			.append(user.getPseudo())
+			.append(",")
+			.append(user.getSalt1())
+			.append(");");
 		return request.toString();
 	}
 
@@ -216,8 +251,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();}
 		return messageCorps;
-		}
-	
+	}
 	
 	private AID getBddAgent() {
 		DFAgentDescription template = new DFAgentDescription();

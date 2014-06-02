@@ -37,8 +37,9 @@ public class UsersUpdateListBehaviour extends CyclicBehaviour {
 				if (userMsg.getAction().equals("connexion")){
 					((UtilisateursAgent) myAgent).addUtilisateursConnectés(userMsg.getMonUser());
 				}
-				else if (userMsg.getAction().equals("connexion")){
-					((UtilisateursAgent) myAgent).addUtilisateursConnectés(userMsg.getMonUser());
+				// suppression d'utilisateur
+				else if (userMsg.getAction().equals("deconnexion")){
+					((UtilisateursAgent) myAgent).removeUtilisateursConnectés(userMsg.getMonUser());
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();

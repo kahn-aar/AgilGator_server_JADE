@@ -5,6 +5,7 @@ import java.io.IOException;
 import Datas.Project;
 import Datas.SubTask;
 import Datas.Task;
+import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.DataMessage;
 import Messages.ProjetRequestMessage;
@@ -42,10 +43,11 @@ public class ProjetsWaitingRequestBehaviour extends CyclicBehaviour {
 				requestMsg = omap.readValue(msgServeur.getContent(),DataMessage.class);
 				DeviceInfoTypes demande = requestMsg.getDemande();
 				Project projet = requestMsg.getProjet();
-				Task tache = requestMsg.getTache();
-				SubTask sousTache = requestMsg.getSousTache();
+				Utilisateur member = requestMsg.getMember();
+				Utilisateur user = requestMsg.getUser();
+				
 				if (demande != null){
-					myAgent.addBehaviour(new ProjetsSendingRequestBehaviour(conversationId, projet, tache, sousTache, demande));
+					myAgent.addBehaviour(new ProjetsSendingRequestBehaviour(conversationId, projet, member, user, demande));
 				}
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block
