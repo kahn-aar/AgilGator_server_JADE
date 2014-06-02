@@ -5,7 +5,10 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import behaviours.liaison.LiaisonWaitingDeviceMessageBehaviour;
 import behaviours.projet.ProjetsSendingRequestBehaviour;
+import behaviours.projet.ProjetsWaitingReplyBehaviour;
+import behaviours.projet.ProjetsWaitingRequestBehaviour;
 
 public class ProjetsAgent extends Agent {
 
@@ -14,7 +17,10 @@ public class ProjetsAgent extends Agent {
 	@Override
 	public void setup() {
 		super.setup();
-
+		
+		// Ajout des behaviours de type waiting
+		this.addBehaviour(new ProjetsWaitingRequestBehaviour());
+		
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());

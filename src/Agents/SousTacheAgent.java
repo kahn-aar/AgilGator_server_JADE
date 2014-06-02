@@ -1,5 +1,7 @@
 package Agents;
 
+import behaviours.liaison.LiaisonWaitingDeviceMessageBehaviour;
+import behaviours.soustache.SousTacheWaitingRequestBehaviour;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -13,7 +15,8 @@ public class SousTacheAgent extends Agent {
 	@Override
 	public void setup() {
 		super.setup();
-		
+		// Ajout des behaviours de type waiting
+		this.addBehaviour(new SousTacheWaitingRequestBehaviour());
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());

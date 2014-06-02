@@ -1,5 +1,7 @@
 package Agents;
 
+import behaviours.liaison.LiaisonWaitingDeviceMessageBehaviour;
+import behaviours.tache.TacheWaitingRequestBehaviour;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -19,7 +21,8 @@ public class TacheAgent extends Agent {
 	@Override
 	public void setup() {
 		super.setup();
-		
+		// Ajout des behaviours de type waiting
+		this.addBehaviour(new TacheWaitingRequestBehaviour());
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
