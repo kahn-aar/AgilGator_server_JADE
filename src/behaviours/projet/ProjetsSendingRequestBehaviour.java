@@ -155,6 +155,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO  Member (project, member, manager) VALUES (")
 				.append(projectId)
+				.append(",")
 				.append(memberId)
 				.append(", 0)")
 				.append(";");
@@ -163,7 +164,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestModifieProjet(Project projet) {
 		StringBuilder request = new StringBuilder();
-		request.append("UPDATE Project")
+		request.append("UPDATE Project ")
 			.append("SET title = ")
 			.append("'"+projet.getTitle()+"'")
 			.append(",")
