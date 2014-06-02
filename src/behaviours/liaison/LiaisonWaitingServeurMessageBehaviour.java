@@ -55,7 +55,7 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 	private AID getServerAID() {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Server");
+		sd.setType("Serveur");
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(myAgent, template);
