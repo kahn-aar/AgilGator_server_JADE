@@ -43,6 +43,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 	public void action() {
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent())));
 		if (message != null) {
+			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			// Il récupère le résultat de la requête.
 			ObjectMapper omap = new ObjectMapper();
 			try {

@@ -37,27 +37,30 @@ public class ProjetsWaitingRequestBehaviour extends CyclicBehaviour {
 	public void action() {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
 		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
-		ObjectMapper omap = new ObjectMapper();
-		DataMessage requestMsg;
-			try {
-				requestMsg = omap.readValue(msgServeur.getContent(),DataMessage.class);
-				DeviceInfoTypes demande = requestMsg.getDemande();
-				Project projet = requestMsg.getProjet();
-				Utilisateur member = requestMsg.getMember();
-				Utilisateur user = requestMsg.getUser();
-				
-				if (demande != null){
-					myAgent.addBehaviour(new ProjetsSendingRequestBehaviour(conversationId, projet, member, user, demande));
+		if (msgServeur != null){
+			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());
+			ObjectMapper omap = new ObjectMapper();
+			DataMessage requestMsg;
+				try {
+					requestMsg = omap.readValue(msgServeur.getContent(),DataMessage.class);
+					DeviceInfoTypes demande = requestMsg.getDemande();
+					Project projet = requestMsg.getProjet();
+					Utilisateur member = requestMsg.getMember();
+					Utilisateur user = requestMsg.getUser();
+					
+					if (demande != null){
+						myAgent.addBehaviour(new ProjetsSendingRequestBehaviour(conversationId, projet, member, user, demande));
+					}
+				} catch (JsonParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		
