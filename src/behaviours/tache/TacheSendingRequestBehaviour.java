@@ -34,9 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	private Project projet;
 	private Task tache;
-	private SubTask sousTache;
 	private DeviceInfoTypes demande;
 	
 	private String conversationId;
@@ -44,15 +42,18 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 	public TacheSendingRequestBehaviour(String conversationId, Task tache, DeviceInfoTypes demande) {
 		this.conversationId = conversationId;
 		this.tache = tache;
+		this.demande = demande;
 	}
 	
 	@Override
 	public void action() {
 		String request = null;
+		String request2 = null;
 		BDDRequestTypes type = null;
 		switch(demande){
 				case CREE_TACHE:
 					request = requestCreeTache(tache);
+					request2 = requestCreeTache2();
 					type = BDDRequestTypes.INSERT;
 					break;
 				case MODIFIE_TACHE:
@@ -68,7 +69,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 			}// fin switch
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getBddAgent());
-			message.setContent(createContent(request, type, demande));
+			message.setContent(createContent(request,request2,type, demande));
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
@@ -94,11 +95,11 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO Task (sprint, name, description, priority, current_state, creation_date, last_update, difficulty)")
 		.append("VALUES (")
-		.append(tache.getSprint())
+		.append("'"+tache.getSprint()+"'")
 		.append(",")
-		.append(tache.getName())
+		.append("'"+tache.getName()+"'")
 		.append(",")
-		.append(tache.getDescription())
+		.append("'"+tache.getDescription()+"'")
 		.append(",")
 		.append(tache.getPriority())
 		.append(",")
@@ -120,9 +121,10 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 	}
 
 
-	private String createContent(String request, BDDRequestTypes type, DeviceInfoTypes demande) {
+	private String createContent(String request, String request2, BDDRequestTypes type, DeviceInfoTypes demande) {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(request);
+		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
 		// Séréalisation JSON

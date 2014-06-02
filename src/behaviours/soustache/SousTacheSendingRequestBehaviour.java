@@ -48,10 +48,12 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 	@Override
 	public void action() {
 		String request = null;
+		String request2 = null;
 		BDDRequestTypes type = null;
 		switch(demande){
 				case CREE_SOUS_TACHE:
 					request = requestCreeSousTache(sousTache);
+					request2 = requestCreeSousTache2();
 					type = BDDRequestTypes.INSERT;
 					break;
 				case MODIFIER_SOUS_TACHE:
@@ -66,7 +68,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 			}// fin switch
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getBddAgent());
-			message.setContent(createContent(request, type, demande));
+			message.setContent(createContent(request, request2, type, demande));
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
@@ -93,11 +95,11 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO SubTask (task, name, description, current_state, current_developper, creation_date, last_update)")
 			.append("VALUES (")
-			.append(sousTache.getTaskId())
+			.append(sousTache.getTaskId()+"'")
 			.append(",")
-			.append(sousTache.getName())
+			.append("'"+sousTache.getName()+"'")
 			.append(",")
-			.append(sousTache.getDescription())
+			.append("'"+sousTache.getDescription())
 			.append(",")
 			.append(sousTache.getCurrent_state())
 			.append(",")
@@ -116,9 +118,10 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-	private String createContent(String request, BDDRequestTypes type, DeviceInfoTypes demande) {
+	private String createContent(String request, String request2, BDDRequestTypes type, DeviceInfoTypes demande) {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(request);
+		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
 		// Séréalisation JSON

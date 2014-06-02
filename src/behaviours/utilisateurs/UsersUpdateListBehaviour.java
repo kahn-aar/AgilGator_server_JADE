@@ -27,7 +27,7 @@ public class UsersUpdateListBehaviour extends CyclicBehaviour {
 
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getUtilisateursAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getServeurAgent())));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ObjectMapper omap = new ObjectMapper();
@@ -46,10 +46,10 @@ public class UsersUpdateListBehaviour extends CyclicBehaviour {
 			}
 		}
 	}
-	private AID getUtilisateursAgent() {
+	private AID getServeurAgent() {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Utilisateurs");
+		sd.setType("Serveur");
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(myAgent, template);

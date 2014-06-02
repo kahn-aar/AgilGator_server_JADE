@@ -46,6 +46,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		this.projet = projet;
 		this.demande = demande;	
 		this.member = member;
+		this.user = user;
 	}
 	
 	@Override
@@ -164,13 +165,13 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("UPDATE Project")
 			.append("SET title = ")
-			.append(projet.getTitle())
+			.append("'"+projet.getTitle()+"'")
 			.append(",")
 			.append("subtitle = ")
-			.append(projet.getSubtitle())
+			.append("'"+projet.getSubtitle()+"'")
 			.append(",")
 			.append("description = ")
-			.append(projet.getDescription())
+			.append("'"+projet.getDescription()+"'")
 			.append(",")
 			.append("creation_date = ")
 			.append(projet.getCreation_date())
@@ -193,10 +194,8 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeProjet(Project projet) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Project (id, title, subtitle, description, creation_date, last_update)")
+		request.append("INSERT INTO Project (title, subtitle, description, creation_date, last_update)")
 			.append("VALUES (")
-			.append("null")
-			.append(",")
 			.append("'"+projet.getTitle()+"'")
 			.append(",")
 			.append("'"+projet.getSubtitle()+"'")
@@ -226,13 +225,13 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO Users (email, password, pseudo, salt1)")
 			.append("VALUES (")
-			.append(user.getId())
+			.append("'"+user.getEmail()+"'")
 			.append(",")
-			.append(user.getPasword())
+			.append("'"+user.getPassword()+"'")
 			.append(",")
-			.append(user.getPseudo())
+			.append("'"+user.getPseudo()+"'")
 			.append(",")
-			.append(user.getSalt1())
+			.append("'"+user.getSalt1()+"'")
 			.append(");");
 		return request.toString();
 	}

@@ -51,6 +51,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 				Task tache = null;
 				SubTask soustache = null;
 				Sprint sprint = null;
+				Utilisateur member = null;
 				try {
 					DataMessage msg = omap.readValue(message.getContent(),DataMessage.class);
 					demande = msg.getDemande();
@@ -59,6 +60,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 					tache = msg.getTache();
 					soustache = msg.getSousTache();
 					sprint = msg.getSprint();
+					member = msg.getMember();
 					
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -113,6 +115,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						ProjetRequestMessage projetMsg= new ProjetRequestMessage();
 						projetMsg.setDemande(demande);
 						projetMsg.setProjet(projet);
+						projetMsg.setUser(user);
 						String content;
 						try {
 							content = omapCreeProjet.writeValueAsString(projetMsg);
@@ -150,6 +153,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						ProjetRequestMessage ajoutMembreProjetMsg= new ProjetRequestMessage();
 						ajoutMembreProjetMsg.setDemande(demande);
 						ajoutMembreProjetMsg.setProjet(projet);
+						ajoutMembreProjetMsg.setMember(member);
 						try {
 							String content4 = omapAjoutMembre.writeValueAsString(ajoutMembreProjetMsg);
 							ACLMessage msgAM= new ACLMessage(ACLMessage.REQUEST);
@@ -167,7 +171,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						ObjectMapper omapCC= new ObjectMapper();
 						ProjetRequestMessage CCMsg= new ProjetRequestMessage();
 						CCMsg.setDemande(demande);
-						CCMsg.setProjet(projet);
+						CCMsg.setUser(user);
 						try {
 							String content4 = omapCC.writeValueAsString(CCMsg);
 							ACLMessage msgCC= new ACLMessage(ACLMessage.REQUEST);
@@ -330,6 +334,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						ProjetRequestMessage retraitMembreProjetMsg= new ProjetRequestMessage();
 						retraitMembreProjetMsg.setDemande(demande);
 						retraitMembreProjetMsg.setProjet(projet);
+						retraitMembreProjetMsg.setMember(member);
 						try {
 							String content4 = omapRetraitMembre.writeValueAsString(retraitMembreProjetMsg);
 							ACLMessage msgRM= new ACLMessage(ACLMessage.REQUEST);
@@ -348,6 +353,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						ProjetRequestMessage managerMsg= new ProjetRequestMessage();
 						managerMsg.setDemande(demande);
 						managerMsg.setProjet(projet);
+						managerMsg.setUser(user);
 						try {
 							String content4 = omapManager.writeValueAsString(managerMsg);
 							ACLMessage msgManager= new ACLMessage(ACLMessage.REQUEST);

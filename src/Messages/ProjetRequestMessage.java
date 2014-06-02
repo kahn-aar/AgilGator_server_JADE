@@ -12,6 +12,8 @@ public class ProjetRequestMessage {
 	private DeviceInfoTypes demande;
 	// Utilisateur à ajouter ou à retirer d'un projet
 	private Utilisateur member;
+	// Utilisateur sert pour créer compte et ajout_manager
+	private Utilisateur user;
 	
 	public Project getProjet() {
 		return projet;
@@ -30,6 +32,12 @@ public class ProjetRequestMessage {
 	}
 	public void setMember(Utilisateur member) {
 		this.member = member;
+	}
+	public Utilisateur getUser() {
+		return user;
+	}
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 	
 	
