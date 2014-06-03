@@ -153,7 +153,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append("last_update = ")
 			.append(projet.getLast_update())
-			.append("WHERE id = ")
+			.append(" WHERE id = ")
 			.append(projet.getId())
 			.append(";");
 		return request.toString();

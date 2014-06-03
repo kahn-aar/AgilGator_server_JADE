@@ -132,9 +132,9 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 		.append(",")
 		.append(tache.getCurrent_state())
 		.append(",")
-		.append(tache.getCreation_date())
+		.append("CURRENT_TIMESTAMP")
 		.append(",")
-		.append(tache.getLast_update())
+		.append("CURRENT_TIMESTAMP")
 		.append(",")
 		.append(tache.getDifficulty())
 		.append(");");
