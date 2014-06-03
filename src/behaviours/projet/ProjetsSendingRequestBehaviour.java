@@ -117,9 +117,9 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestRetraitMembre(int memberId, int projectId) {
 		StringBuilder request = new StringBuilder();
-		request.append("DELETE Member WHERE member = ")
+		request.append("DELETE FROM Member WHERE member = ")
 				.append(memberId)
-				.append("AND project = ")
+				.append(" AND project = ")
 				.append(projectId)
 				.append(";");
 		return request.toString();
