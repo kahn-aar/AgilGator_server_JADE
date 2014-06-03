@@ -26,6 +26,7 @@ public class ProjetsWaitingSuccessBehaviour extends Behaviour{
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
 			reply.addReceiver(getServeurAgent());
+			myAgent.send(reply);
 		}
 	}
 					

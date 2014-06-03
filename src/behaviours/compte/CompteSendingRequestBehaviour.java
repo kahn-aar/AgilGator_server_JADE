@@ -107,6 +107,7 @@ public class CompteSendingRequestBehaviour extends OneShotBehaviour {
 			message.setLanguage("JSON");
 			myAgent.send(message);
 			myAgent.addBehaviour(new CompteWaitingReplyBehaviour(conversationId));
+			myAgent.addBehaviour(new CompteWaitingSuccessBehaviour(conversationId));
 		}
 	}
 

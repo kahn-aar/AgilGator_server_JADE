@@ -93,6 +93,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			message.setLanguage("JSON");
 			myAgent.send(message);
 			myAgent.addBehaviour(new ProjetsWaitingReplyBehaviour(conversationId));
+			myAgent.addBehaviour(new ProjetsWaitingSuccessBehaviour(conversationId));
 	}
 
 

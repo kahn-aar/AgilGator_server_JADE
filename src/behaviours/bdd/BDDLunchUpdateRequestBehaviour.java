@@ -35,11 +35,12 @@ public class BDDLunchUpdateRequestBehaviour extends OneShotBehaviour  {
 	
 	@Override
 	public void action() {
-		System.out.println("BDD reçu = " + query);
+		System.out.println("BDD Update reçu = " + query);
 		Connection connection = ((BDDAgent)myAgent).connectDatabase();
 		try {
 			Statement statement = connection.createStatement();
 			int result = statement.executeUpdate(query);
+			System.out.println(result);
 			myAgent.send(this.createMessage(result));
 		} catch (SQLException e) {
 			e.printStackTrace();
