@@ -25,12 +25,11 @@ public class BDDAgent extends Agent {
 	private static final long serialVersionUID = 1L;
 	private static final String DATABASE = "//localhost:3306/agilgator"; //Adresse de la BDD
 	private static final String USERNAME = "root"; //Username pour la BDD
-	private static final String PASSWORD = "agilgatormonkey28"; //Mot de passe de la BDD
+	private static final String PASSWORD = ""; //Mot de passe de la BDD agilgatormonkey28
 
 	@Override
 	public void setup() {
 		super.setup();
-		
 		this.addBehaviour(new BDDWaitingRequestBehaviour());
 
 		//Enregistrement de l'agent auprès du DF
@@ -53,7 +52,10 @@ public class BDDAgent extends Agent {
 	{
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql:"+this.DATABASE, this.USERNAME, this.PASSWORD);
-			return connection;
+			if(connection==null){
+				connection = DriverManager.getConnection("jdbc:mysql://172.25.27.53:3306", this.USERNAME, this.PASSWORD);
+			}
+		return connection;
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			return null;

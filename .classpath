@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="src/jar/jackson-core-2.2.0.jar"/>
 	<classpathentry kind="lib" path="src/jar/jackson-databind-2.2.0.jar"/>
 	<classpathentry kind="lib" path="src/jar/jade.jar"/>
+	<classpathentry kind="lib" path="src/jar/mysql-connector-java-5.1.30-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

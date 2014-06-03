@@ -41,21 +41,31 @@ public class BDDLunchInsertRequestBehaviour extends OneShotBehaviour {
 	public void action() {
 		System.out.println("BDD reçu = " + query1);
 		Connection connection = ((BDDAgent)myAgent).connectDatabase();
-		try {
-			Statement statement = connection.createStatement();
-			int result = statement.executeUpdate(query1);
-			if(result == 0)
-				this.id = -1;
-			else
-			{
-				ResultSet resultSet = statement.executeQuery(query2);
-				this.id = resultSet.getInt("id");
+		if (connection != null){
+			System.out.println("Connexion de la database");
+			try {
+				Statement statement = connection.createStatement();
+				if(query1!=null){
+					int result = statement.executeUpdate(query1);
+					if(result == 0)
+						this.id = -1;
+					else
+					{
+						if(query2!=null){
+							ResultSet resultSet = statement.executeQuery(query2);
+							this.id = resultSet.getInt("id");
+						}
+					}
+					myAgent.send(this.createMessage());
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			myAgent.send(this.createMessage());
-		} catch (SQLException e) {
-			e.printStackTrace();
+			((BDDAgent)myAgent).disconnectDatabase(connection);
 		}
-		((BDDAgent)myAgent).disconnectDatabase(connection);
+		else{
+			System.out.println("FAIL");
+		}
 	}
 	
 	private ACLMessage createMessage() {
