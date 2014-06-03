@@ -148,11 +148,8 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			.append("description = ")
 			.append("'"+projet.getDescription()+"'")
 			.append(",")
-			.append("creation_date = ")
-			.append(projet.getCreation_date())
-			.append(",")
 			.append("last_update = ")
-			.append(projet.getLast_update())
+			.append("CURRENT_TIMESTAMP")
 			.append(" WHERE id = ")
 			.append(projet.getId())
 			.append(";");
