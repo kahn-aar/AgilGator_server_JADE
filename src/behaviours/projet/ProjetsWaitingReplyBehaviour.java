@@ -8,9 +8,11 @@ import Agents.UtilisateursAgent;
 import Datas.Utilisateur;
 import Datas.Constantes.ConstantesTables;
 import Messages.BDDAnswerMessage;
+import Messages.ServerLiaisonMessage;
 import Messages.UserListMessage;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +43,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getBDDAgent())));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			// Il récupère le résultat de la requête.
@@ -49,24 +51,30 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 			try {
 				BDDAnswerMessage answer = omap.readValue(message.getContent(),BDDAnswerMessage.class);
 				if(answer !=null){
-					switch(answer.getTable()){
-						case ConstantesTables.PROJECT:
+					switch(answer.getDemande()){
+						case CREE_PROJET:
+							this.createMessage(answer);
 							break;
-						case ConstantesTables.CURRENT_STATE:
+						case MODIFIE_PROJET:
+							this.createMessage(answer);
 							break;
-						case ConstantesTables.MEMBER:
+						case AJOUT_MANAGER:
+							this.createMessage(answer);
 							break;
-						case ConstantesTables.SPRINT:
+						case AJOUT_MEMBRE:
+							this.createMessage(answer);
 							break;
-						case ConstantesTables.SUBTASK:
+						case RETRAIT_MEMBRE:
+							this.createMessage(answer);
 							break;
-						case ConstantesTables.TASK:
+						case EFFACE_PROJET:
+							this.createMessage(answer);
 							break;
-						case ConstantesTables.USERS:
-						// Récupère la liste des utilisateurs du projets (id, pseudo)
-						List<Utilisateur> userListResult = answer.getMesUsers();
-						myAgent.addBehaviour(new ProjetsSendingUserListBehaviour(userListResult, conversationId));
-						break;
+						case MEMBRES_DU_PROJET:
+							// Récupère la liste des utilisateurs du projet
+							List<Utilisateur> userListResult = answer.getMesUsers();
+							myAgent.addBehaviour(new ProjetsSendingUserListBehaviour(userListResult, conversationId));
+							break;
 						default:
 							break;
 							
@@ -83,6 +91,38 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void createMessage(BDDAnswerMessage answer){
+		// ServeurLiaison message model
+		ObjectMapper omapSL = new ObjectMapper();
+		ServerLiaisonMessage sl = new ServerLiaisonMessage();
+		sl.setContent(String.valueOf(answer.getId()));
+		String content ="";
+		try {
+			content = omapSL.writeValueAsString(sl);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Ecriture du message
+		ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
+		reply.addReceiver(getServeurAgent());
+		reply.setContent(content);
+		myAgent.send(reply);
+	}
+	private AID getServeurAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Serveur");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

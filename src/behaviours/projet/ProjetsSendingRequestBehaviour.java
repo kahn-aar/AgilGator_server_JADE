@@ -76,15 +76,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					request = requestRetraitMembre(member.getId(), projet.getId());
 					type = BDDRequestTypes.UPDATE;
 					break;
-				case SYNCHRONIZE_UP:
-					request = requestSynchronizeUp(); //Envoie ses modifs hors lignes
-					type = BDDRequestTypes.UPDATE;
-					break;
-				case SYNCHRONIZE_DOWN: //Récupère toutes les modifs faites
-					request = requestSynchronizeDown();
-					type = BDDRequestTypes.SELECT; 
-					break;
-				case LISTE_MEMBRES:
+				case MEMBRES_DU_PROJET:
 					request = requestListeMembres(projet.getId());
 					type = BDDRequestTypes.SELECT;
 					break;
@@ -119,18 +111,6 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		request.append("SELECT member FROM Member WHERE projet = ")
 				.append(projetId)
 				.append(";");
-		return request.toString();
-	}
-
-	private String requestSynchronizeDown() {
-		StringBuilder request = new StringBuilder();
-		// requête à implémenter
-		return request.toString();
-	}
-
-	private String requestSynchronizeUp() {
-		StringBuilder request = new StringBuilder();
-		// requête à implémenter
 		return request.toString();
 	}
 

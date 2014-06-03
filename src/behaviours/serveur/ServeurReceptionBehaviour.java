@@ -68,7 +68,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 				}
 				if(demande!=null){
 					switch(demande){
-					case LISTE_MEMBRES:
+					case MEMBRES_DU_PROJET:
 						if(projet!=null){
 							ObjectMapper omapLM = new ObjectMapper();
 							ProjetRequestMessage lmMsg= new ProjetRequestMessage();
