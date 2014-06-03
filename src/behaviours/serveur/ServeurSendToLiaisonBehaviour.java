@@ -38,7 +38,6 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 		ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
 		message.addReceiver(getLiasonAgent());
 		message.setContent(writeMessage());
-
 		myAgent.send(message);
 	}
 	
@@ -64,7 +63,7 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 	private AID getLiasonAgent() {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Liason");
+		sd.setType("Liaison");
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(myAgent, template);

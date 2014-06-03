@@ -9,7 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import Agents.BDDAgent;
+import Datas.Utilisateur;
+import Datas.enums.DeviceInfoTypes;
+import Messages.BDDAnswerMessage;
 
 /**
  * Behaviour gérant les requêtes en "insert" : retourne l'ID de l'élément ajouté
@@ -23,23 +29,28 @@ public class BDDLunchInsertRequestBehaviour extends OneShotBehaviour {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 	private String conversationId;
 	private String query1;
 	private String query2;
 	private AID receiver;
-	private int id = -1;
-
-	public BDDLunchInsertRequestBehaviour(String conversationId, String query1, String query2,  AID replyTo) {
+	private DeviceInfoTypes demande;
+	private Utilisateur user;
+	private int id;
+	
+	public BDDLunchInsertRequestBehaviour(String conversationId, String query1, String query2, Utilisateur user, AID replyTo, DeviceInfoTypes demande) {
 		this.conversationId = conversationId;
 		this.query1 = query1;
 		this.query2 = query2;
 		this.receiver = replyTo;
+		this.demande = demande;
+		this.user = user;
 	}
+	
 	
 	@Override
 	public void action() {
 		System.out.println("BDD reçu = " + query1);
+		System.out.println("BDD reçu = " + query2);
 		Connection connection = ((BDDAgent)myAgent).connectDatabase();
 		if (connection != null){
 			System.out.println("Connexion de la database");
@@ -52,8 +63,12 @@ public class BDDLunchInsertRequestBehaviour extends OneShotBehaviour {
 					else
 					{
 						if(query2!=null){
-							ResultSet resultSet = statement.executeQuery(query2);
-							this.id = resultSet.getInt("id");
+							ResultSet rs = statement.executeQuery(query2);
+							if(rs.first()){
+								 do{
+								  this.id = rs.getInt(1);
+								 }while(rs.next());
+								}
 						}
 					}
 					myAgent.send(this.createMessage());
@@ -74,12 +89,23 @@ public class BDDLunchInsertRequestBehaviour extends OneShotBehaviour {
 			message = new ACLMessage(ACLMessage.FAILURE);
 		else
 		{
-			message = new ACLMessage(ACLMessage.CONFIRM);
-			message.setContent(String.valueOf(id));
+			message = new ACLMessage(ACLMessage.INFORM);
+			BDDAnswerMessage answer = new BDDAnswerMessage();
+			answer.setDemande(demande);
+			answer.setId(id);
+			ObjectMapper omap = new ObjectMapper();
+			String messageCorps;
+			try {
+				messageCorps = omap.writeValueAsString(answer);
+				message.setContent(messageCorps);
+				message.addReceiver(receiver);
+				System.out.println(receiver.getName());
+				message.setConversationId(conversationId);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
-		message.addReceiver(receiver);
-		message.setConversationId(conversationId);
 		return message;
 	}
-
 }

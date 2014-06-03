@@ -1,34 +1,27 @@
 package Agents;
 
+import behaviours.compte.CompteWaitingRequestBehaviour;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import behaviours.serveur.ServeurReceptionBehaviour;
-import behaviours.serveur.ServeurWaitingBehaviour;
 
-/**
- * Agent de coordination sur le serveur,
- * toutes les informations transitent par lui.
- * 
- * @author Nicolas
- *
- */
-public class ServeurAgent extends Agent {
+public class CompteAgent extends Agent{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
 	public void setup() {
 		super.setup();
-		
+		// Ajout des behaviours de type waiting
+		this.addBehaviour(new CompteWaitingRequestBehaviour());
 		//Enregistrement de l'agent auprès du DF
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Serveur");
-		sd.setName("Serveur " + getLocalName());
+		sd.setType("Compte");
+		sd.setName(getLocalName());
 		dfd.addServices(sd);
 		try {
 			DFService.register(this, dfd);
@@ -36,9 +29,5 @@ public class ServeurAgent extends Agent {
 		catch (FIPAException fe) {
 			fe.printStackTrace();
 		}
-		//Ajout du behaviour de base
-		this.addBehaviour(new ServeurReceptionBehaviour());
-		this.addBehaviour(new ServeurWaitingBehaviour());
 	}
 }
-

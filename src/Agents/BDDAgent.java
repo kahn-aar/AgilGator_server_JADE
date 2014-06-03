@@ -55,6 +55,10 @@ public class BDDAgent extends Agent {
 			if(connection==null){
 				connection = DriverManager.getConnection("jdbc:mysql://172.25.27.53:3306", this.USERNAME, this.PASSWORD);
 			}
+			if(connection==null){
+				connection = DriverManager.getConnection("jdbc:mysql://192.168.2.83:3306", this.USERNAME, this.PASSWORD);
+			}
+			
 		return connection;
 		} catch (SQLException ex) {
 			ex.printStackTrace();

@@ -24,6 +24,7 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 	public void action() {
 		ACLMessage messageServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getServerAID())));
 		if (messageServeur != null) {
+			System.out.println(myAgent.getLocalName() + " reçu -> " + messageServeur.getContent());
 			// On déséréalise le message
 			ObjectMapper omap = new ObjectMapper();
 			List<AID> destinataires = null;
@@ -32,7 +33,6 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 				ServerLiaisonMessage msg = omap.readValue(messageServeur.getContent(),ServerLiaisonMessage.class);
 				destinataires = msg.getListeDestinataires();
 				content = msg.getContent();
-				
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -44,8 +44,10 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 	
 	private ACLMessage createMessageToDevices(List<AID> destinataires, String content) {
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		for(AID destinataire : destinataires) {
-			message.addReceiver(destinataire);
+		if(destinataires!=null){
+			for(AID destinataire : destinataires) {
+				message.addReceiver(destinataire);
+			}
 		}
 		// Ajout du contenu du message.
 		message.setContent(content);

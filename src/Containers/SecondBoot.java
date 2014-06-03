@@ -43,6 +43,9 @@ public static String PROPERTIES_FILE = "Ressources/propertiesSecond.properties";
 			AgentController Utilisateurs = container.createNewAgent("Utilisateurs",
 					"Agents.UtilisateursAgent", null);
 			Utilisateurs.start();
+			AgentController Compte = container.createNewAgent("Compte",
+					"Agents.CompteAgent", null);
+			Compte.start();
 			
 		}
 		catch (Exception e)

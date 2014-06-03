@@ -9,6 +9,7 @@ import Datas.Task;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.DataMessage;
+import Messages.CompteMessage;
 import Messages.ProjetRequestMessage;
 import Messages.SousTacheRequestMessage;
 import Messages.SprintRequestMessage;
@@ -74,10 +75,10 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							lmMsg.setDemande(demande);
 							lmMsg.setProjet(projet);
 							try {
-								String content4 = omapLM.writeValueAsString(lmMsg);
+								String content = omapLM.writeValueAsString(lmMsg);
 								ACLMessage msgLM= new ACLMessage(ACLMessage.REQUEST);
 								msgLM.addReceiver(getProjetAgent());
-								msgLM.setContent(content4);
+								msgLM.setContent(content);
 								msgLM.setConversationId(conversationId);
 								msgLM.setLanguage("JSON");
 								myAgent.send(msgLM);
@@ -160,10 +161,10 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							effaceProjetMsg.setDemande(demande);
 							effaceProjetMsg.setProjet(projet);
 							try {
-								String content4 = omapEffaceProjet.writeValueAsString(effaceProjetMsg);
+								String content = omapEffaceProjet.writeValueAsString(effaceProjetMsg);
 								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
 								msgCreeProjet.addReceiver(getProjetAgent());
-								msgCreeProjet.setContent(content4);
+								msgCreeProjet.setContent(content);
 								msgCreeProjet.setConversationId(conversationId);
 								msgCreeProjet.setLanguage("JSON");
 								myAgent.send(msgCreeProjet);
@@ -197,14 +198,14 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 					case CREE_COMPTE:
 						if (user!=null){
 							ObjectMapper omapCC= new ObjectMapper();
-							ProjetRequestMessage CCMsg= new ProjetRequestMessage();
+							CompteMessage CCMsg= new CompteMessage();
 							CCMsg.setDemande(demande);
 							CCMsg.setUser(user);
 							try {
-								String content4 = omapCC.writeValueAsString(CCMsg);
+								String content = omapCC.writeValueAsString(CCMsg);
 								ACLMessage msgCC= new ACLMessage(ACLMessage.REQUEST);
-								msgCC.addReceiver(getProjetAgent());
-								msgCC.setContent(content4);
+								msgCC.addReceiver(getCompteAgent());
+								msgCC.setContent(content);
 								msgCC.setConversationId(conversationId);
 								msgCC.setLanguage("JSON");
 								myAgent.send(msgCC);
@@ -212,6 +213,23 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						}
+						break;
+					case ALL_USERS:
+						ObjectMapper omapAll= new ObjectMapper();
+						CompteMessage AllMsg= new CompteMessage();
+						AllMsg.setDemande(demande);
+						try {
+							String content = omapAll.writeValueAsString(AllMsg);
+							ACLMessage msgAll= new ACLMessage(ACLMessage.REQUEST);
+							msgAll.addReceiver(getCompteAgent());
+							msgAll.setContent(content);
+							msgAll.setConversationId(conversationId);
+							msgAll.setLanguage("JSON");
+							myAgent.send(msgAll);
+						} catch (JsonProcessingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 						break;
 					case ARCHIVER_SPRINT:
@@ -341,10 +359,10 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							modifyProjetMsg.setDemande(demande);
 							modifyProjetMsg.setProjet(projet);
 							try {
-								String content5 = omapModifyProjet.writeValueAsString(modifyProjetMsg);
+								String content = omapModifyProjet.writeValueAsString(modifyProjetMsg);
 								ACLMessage msgModifyProjet= new ACLMessage(ACLMessage.REQUEST);
 								msgModifyProjet.addReceiver(getProjetAgent());
-								msgModifyProjet.setContent(content5);
+								msgModifyProjet.setContent(content);
 								msgModifyProjet.setConversationId(conversationId);
 								msgModifyProjet.setLanguage("JSON");
 								myAgent.send(msgModifyProjet);
@@ -361,10 +379,10 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							modifyTaskMsg.setDemande(demande);
 							modifyTaskMsg.setTache(tache);
 							try {
-								String content5 = omapModifyTask.writeValueAsString(modifyTaskMsg);
+								String content = omapModifyTask.writeValueAsString(modifyTaskMsg);
 								ACLMessage msgModifyTask= new ACLMessage(ACLMessage.REQUEST);
 								msgModifyTask.addReceiver(getTaskAgent());
-								msgModifyTask.setContent(content5);
+								msgModifyTask.setContent(content);
 								msgModifyTask.setConversationId(conversationId);
 								msgModifyTask.setLanguage("JSON");
 								myAgent.send(msgModifyTask);
@@ -382,10 +400,10 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							retraitMembreProjetMsg.setProjet(projet);
 							retraitMembreProjetMsg.setMember(member);
 							try {
-								String content4 = omapRetraitMembre.writeValueAsString(retraitMembreProjetMsg);
+								String content = omapRetraitMembre.writeValueAsString(retraitMembreProjetMsg);
 								ACLMessage msgRM= new ACLMessage(ACLMessage.REQUEST);
 								msgRM.addReceiver(getProjetAgent());
-								msgRM.setContent(content4);
+								msgRM.setContent(content);
 								msgRM.setConversationId(conversationId);
 								msgRM.setLanguage("JSON");
 								myAgent.send(msgRM);
@@ -443,10 +461,10 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							suppTaskMsg.setDemande(demande);
 							suppTaskMsg.setTache(tache);
 							try {
-								String content5 = omapSuppTask.writeValueAsString(suppTaskMsg);
+								String content = omapSuppTask.writeValueAsString(suppTaskMsg);
 								ACLMessage msgSuppTask= new ACLMessage(ACLMessage.REQUEST);
 								msgSuppTask.addReceiver(getTaskAgent());
-								msgSuppTask.setContent(content5);
+								msgSuppTask.setContent(content);
 								msgSuppTask.setConversationId(conversationId);
 								msgSuppTask.setLanguage("JSON");
 								myAgent.send(msgSuppTask);
@@ -500,6 +518,20 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 			}
 		}
 		
+		private AID getCompteAgent() {
+			DFAgentDescription template = new DFAgentDescription();
+			ServiceDescription sd = new ServiceDescription();
+			sd.setType("Compte");
+			template.addServices(sd);
+			try {
+				DFAgentDescription[] result = DFService.search(myAgent, template);
+				return result[0].getName();
+			} catch(FIPAException fe) {
+				fe.printStackTrace();
+			}
+			return null;
+		}
+
 		private AID getTaskAgent() {
 			DFAgentDescription template = new DFAgentDescription();
 			ServiceDescription sd = new ServiceDescription();

@@ -23,4 +23,7 @@ public enum DeviceInfoTypes {
 	SYNCHRONIZE_DOWN,
 	LISTE_MEMBRES,
 	AJOUT_MANAGER,
+	ALL_USERS,
+	IS_MEMBER,
+	IS_USER,
 }

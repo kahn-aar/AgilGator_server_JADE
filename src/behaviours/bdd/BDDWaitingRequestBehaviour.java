@@ -1,8 +1,11 @@
 package behaviours.bdd;
 
+import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import Datas.Utilisateur;
+import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,10 +37,10 @@ public class BDDWaitingRequestBehaviour extends CyclicBehaviour {
 				
 				switch(msg.getType()) {
 					case INSERT:
-						myAgent.addBehaviour(new BDDLunchInsertRequestBehaviour(message.getConversationId(), msg.getRequest(), msg.getRequest2(), message.getSender()));
+						myAgent.addBehaviour(new BDDLunchInsertRequestBehaviour(message.getConversationId(), msg.getRequest(), msg.getRequest2(), msg.getUser(), message.getSender(), msg.getDemande()));
 						break;
 					case SELECT:
-						myAgent.addBehaviour(new BDDLunchSelectRequestBehaviour(message.getConversationId(), msg.getRequest(), message.getSender(), msg.getDemande()));
+						myAgent.addBehaviour(new BDDLunchSelectRequestBehaviour(message.getConversationId(), msg.getRequest(), msg.getUser(), message.getSender(), msg.getDemande()));
 						break;
 					case UPDATE:
 						myAgent.addBehaviour(new BDDLunchUpdateRequestBehaviour(message.getConversationId(), msg.getRequest(), message.getSender()));

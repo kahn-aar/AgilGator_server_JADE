@@ -1,5 +1,6 @@
 package Messages;
 
+import Datas.Utilisateur;
 import Datas.enums.BDDRequestTypes;
 import Datas.enums.DeviceInfoTypes;
 
@@ -10,6 +11,7 @@ public class BDDRequestMessage {
 	private DeviceInfoTypes demande;
 	private String request;
 	private String request2;
+	private Utilisateur user;
 	
 	public BDDRequestTypes getType() {
 		return type;
@@ -41,6 +43,14 @@ public class BDDRequestMessage {
 
 	public void setDemande(DeviceInfoTypes demande) {
 		this.demande = demande;
+	}
+
+	public Utilisateur getUser() {
+		return user;
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 
 }

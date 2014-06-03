@@ -55,14 +55,6 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		String request2 = null;
 		BDDRequestTypes type = null;
 		switch(demande){
-				case CREE_COMPTE: 
-					request = requestCreeCompte(user);
-					type = BDDRequestTypes.INSERT;
-					break;
-				case CONNEXION:
-					request = requestConnexion();
-					type = BDDRequestTypes.SELECT;
-					 break;
 				case CREE_PROJET:
 					request = requestCreeProjet(projet);
 					request2 = requestCreeProjet2();
@@ -110,6 +102,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			myAgent.send(message);
 			myAgent.addBehaviour(new ProjetsWaitingReplyBehaviour(conversationId));
 	}
+
 
 	private String requestAjoutManager(int projetId, int managerId) {
 		StringBuilder request = new StringBuilder();
@@ -216,26 +209,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		return request.toString();
 	}
 
-	private String requestConnexion() {
-		StringBuilder request = new StringBuilder();
-		// requête à implémenter
-		return request.toString();
-	}
-
-	private String requestCreeCompte(Utilisateur user) {
-		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Users (email, password, pseudo, salt1)")
-			.append("VALUES (")
-			.append("'"+user.getEmail()+"'")
-			.append(",")
-			.append("'"+user.getPassword()+"'")
-			.append(",")
-			.append("'"+user.getPseudo()+"'")
-			.append(",")
-			.append("'"+user.getSalt1()+"'")
-			.append(");");
-		return request.toString();
-	}
+	
 
 	private String createContent(String request, String request2, BDDRequestTypes type, DeviceInfoTypes demande) {
 		BDDRequestMessage message = new BDDRequestMessage();
