@@ -74,6 +74,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 			message.setLanguage("JSON");
 			myAgent.send(message);
 			myAgent.addBehaviour(new TacheWaitingReplyBehaviour(conversationId));
+			myAgent.addBehaviour(new TacheWaitingSuccessBehaviour(conversationId));
 	}
 
 

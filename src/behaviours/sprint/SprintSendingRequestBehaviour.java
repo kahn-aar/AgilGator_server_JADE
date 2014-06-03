@@ -20,6 +20,7 @@ import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
 import Messages.ProjetRequestMessage;
 import Messages.UserListMessage;
+import behaviours.soustache.SousTacheWaitingReplyBehaviour;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -75,6 +76,7 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 			message.setLanguage("JSON");
 			myAgent.send(message);
 			myAgent.addBehaviour(new SprintWaitingReplyBehaviour(conversationId));
+			myAgent.addBehaviour(new SprintWaitingSuccessBehaviour(conversationId));
 	}
 
 	
