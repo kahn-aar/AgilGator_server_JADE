@@ -11,6 +11,7 @@ import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
 import java.util.List;
+
 import Messages.ServerLiaisonMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,7 @@ public class LiaisonWaitingDeviceMessageBehaviour extends CyclicBehaviour {
 		// A AJOUTER : matche sender device
 		ACLMessage messageDevice = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		if (messageDevice != null) {
+			System.out.println(myAgent.getLocalName() + " reçu -> " + messageDevice.getContent());
 			ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
 			message.addReceiver(getServerAID());
 			message.setContent(messageDevice.getContent());

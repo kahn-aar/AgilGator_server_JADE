@@ -63,6 +63,7 @@ public class CompteWaitingReplyBehaviour extends Behaviour {
 							ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
 							reply.addReceiver(getServeurAgent());
 							reply.setContent(content);
+							reply.setConversationId(conversationId);
 							myAgent.send(reply);
 							break;
 						case IS_USER:

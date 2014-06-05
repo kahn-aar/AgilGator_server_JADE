@@ -24,6 +24,7 @@ public class CompteWaitingSuccessBehaviour extends Behaviour{
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId),MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
+			System.out.println(myAgent.getLocalName() + " conversationId -> " + message.getConversationId());
 			ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
 			reply.addReceiver(getServeurAgent());
 			reply.setConversationId(conversationId);

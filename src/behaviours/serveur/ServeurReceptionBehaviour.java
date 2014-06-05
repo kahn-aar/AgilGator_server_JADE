@@ -37,13 +37,12 @@ import jade.lang.acl.MessageTemplate;
 public class ServeurReceptionBehaviour extends CyclicBehaviour{
 
 	private static final long serialVersionUID = 1L;
-	
-	private String conversationId;
 
 		@Override
 		public void action() {
-			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getLiaisonAgent()))));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getLiaisonAgent())));
 			if (message != null) {
+				String conversationId = message.getConversationId();
 				System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 				ObjectMapper omap = new ObjectMapper();
 				DeviceInfoTypes demande = null;

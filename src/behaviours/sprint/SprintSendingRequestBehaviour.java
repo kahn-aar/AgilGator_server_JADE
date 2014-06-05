@@ -95,11 +95,11 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeSprint(Sprint s) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Task (description, project, end_date, start_date)")
+		request.append("INSERT INTO Sprint (project, description, end_date, start_date)")
 		.append("VALUES (")
-		.append("'"+s.getDescription()+"'")
-		.append(",")
 		.append(s.getProject())
+		.append(",")
+		.append("'"+s.getDescription()+"'")
 		.append(",")
 		.append(s.getEnd_date())
 		.append(",")

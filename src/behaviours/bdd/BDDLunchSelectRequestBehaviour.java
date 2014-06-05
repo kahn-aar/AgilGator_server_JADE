@@ -46,6 +46,7 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 	@Override
 	public void action() {
 		System.out.println("BDD Select reçu -> " + query);
+		System.out.println("BDD Select conversationId -> " + conversationId);
 		Connection connection = ((BDDAgent)myAgent).connectDatabase();
 		try {
 			Statement statement = connection.createStatement();
