@@ -22,7 +22,6 @@ import jade.lang.acl.ACLMessage;
 public class BDDLunchUpdateRequestBehaviour extends OneShotBehaviour  {
 	
 	private static final long serialVersionUID = 1L;
-
 	private String conversationId;
 	private String query;
 	private AID receiver;

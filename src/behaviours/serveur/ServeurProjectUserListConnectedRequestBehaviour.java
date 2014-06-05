@@ -31,7 +31,7 @@ public class ServeurProjectUserListConnectedRequestBehaviour extends OneShotBeha
 
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getProjetsAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getProjetsAgent()))));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ObjectMapper omap = new ObjectMapper();

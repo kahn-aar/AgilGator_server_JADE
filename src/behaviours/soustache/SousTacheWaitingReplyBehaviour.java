@@ -41,7 +41,7 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
 			// Il récupère le résultat de la requête.
 			ObjectMapper omap = new ObjectMapper();

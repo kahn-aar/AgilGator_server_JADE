@@ -22,8 +22,11 @@ public class LiaisonPropagateInformationToDeviceBehaviour extends OneShotBehavio
 	public void action() {
 		// Attend un message de serveur
 		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),MessageTemplate.MatchSender(getServeur())));
-		ACLMessage message = createMessage(msgServeur.getContent());
-		myAgent.send(message);
+		if(msgServeur!=null){
+			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());
+			ACLMessage message = createMessage(msgServeur.getConversationId(), msgServeur.getContent());
+			myAgent.send(message);
+		}
 	}
 	
 	private AID getDevice() {
@@ -55,10 +58,11 @@ public class LiaisonPropagateInformationToDeviceBehaviour extends OneShotBehavio
 		return null;
 	}
 	
-	private ACLMessage createMessage(String content) {
+	private ACLMessage createMessage(String conversationId, String content) {
 		ACLMessage newMessage = new ACLMessage(ACLMessage.PROPAGATE);
 		newMessage.addReceiver(getDevice());
 		newMessage.setContent(content);
+		newMessage.setConversationId(conversationId);
 		return newMessage;
 	}
 	

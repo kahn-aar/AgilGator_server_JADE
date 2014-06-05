@@ -27,11 +27,13 @@ public class LiaisonWaitingDeviceMessageBehaviour extends CyclicBehaviour {
 
 	@Override
 	public void action() {
+		// A AJOUTER : matche sender device
 		ACLMessage messageDevice = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		if (messageDevice != null) {
 			ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
 			message.addReceiver(getServerAID());
 			message.setContent(messageDevice.getContent());
+			message.setConversationId(messageDevice.getConversationId());
 			myAgent.send(message);
 		}
 	}

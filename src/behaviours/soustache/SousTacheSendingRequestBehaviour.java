@@ -1,7 +1,5 @@
 package behaviours.soustache;
 
-import java.io.IOException;
-import java.sql.Time;
 
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -10,19 +8,11 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import Datas.Project;
 import Datas.SubTask;
-import Datas.Task;
 import Datas.enums.BDDRequestTypes;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
-import Messages.ProjetRequestMessage;
-import Messages.UserListMessage;
-
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -36,7 +26,6 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 	private static final long serialVersionUID = 1L;
 	private SubTask sousTache;
 	private DeviceInfoTypes demande;
-	
 	private String conversationId;
 	
 	public SousTacheSendingRequestBehaviour(String conversationId, SubTask sousTache, DeviceInfoTypes demande) {

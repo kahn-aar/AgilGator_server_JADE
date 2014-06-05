@@ -34,8 +34,8 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 	private int nbMessages;
 	private List<String> updates = new ArrayList<>();
 	
-	public SynchroTransactionToBDDBehaviour(String conversationId2, int userId2, int timeStamp2) {
-		this.conversationId = conversationId2;
+	public SynchroTransactionToBDDBehaviour(String conversationId, int userId2, int timeStamp2) {
+		this.conversationId = conversationId;
 		this.userId = userId2;
 		this.timeStamp = timeStamp2;
 		this.step = 0;
@@ -51,7 +51,7 @@ public class SynchroTransactionToBDDBehaviour extends Behaviour {
 		}
 		else if (step == 1) {
 			//Step 1 => Attente de reception des messages.
-			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getServeurAgent())));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getServeurAgent()))));
 			if (message != null) {
 				//On récupère la réponse de la BDD, et on l'enregistre
 				ObjectMapper omap = new ObjectMapper();

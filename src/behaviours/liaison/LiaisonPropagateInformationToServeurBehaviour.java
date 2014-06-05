@@ -1,6 +1,7 @@
 package behaviours.liaison;
 
 import jade.core.AID;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -14,7 +15,7 @@ import jade.lang.acl.MessageTemplate;
  * @author Léa
  *
  */
-public class LiaisonPropagateInformationToServeurBehaviour extends OneShotBehaviour{
+public class LiaisonPropagateInformationToServeurBehaviour extends CyclicBehaviour{
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,8 +23,12 @@ public class LiaisonPropagateInformationToServeurBehaviour extends OneShotBehavi
 	public void action() {
 		// Attend un message de serveur
 		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),MessageTemplate.MatchSender(getDevice())));
-		ACLMessage message = createMessage(msgServeur.getContent());
-		myAgent.send(message);
+		if (msgServeur!=null){
+			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());
+			ACLMessage message = createMessage(msgServeur.getContent());
+			message.setConversationId(msgServeur.getConversationId());
+			myAgent.send(message);
+		}
 	}
 	
 	private AID getDevice() {

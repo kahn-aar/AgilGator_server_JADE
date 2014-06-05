@@ -38,7 +38,6 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 	private static final long serialVersionUID = 1L;
 	private Sprint sprint;
 	private DeviceInfoTypes demande;
-	
 	private String conversationId;
 	
 	public SprintSendingRequestBehaviour(String conversationId, Sprint sprint, DeviceInfoTypes demande) {
