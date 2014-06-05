@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class SubTask {
 	private int id ;
-	private int taskId;
+	private int task;
 	private String name ;
 	private String description ;
 	private int current_state ;
@@ -17,11 +17,11 @@ public class SubTask {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getTaskId() {
-		return taskId;
+	public int getTask() {
+		return task;
 	}
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
+	public void setTask(int task) {
+		this.task = task;
 	}
 	public String getDescription() {
 		return description;

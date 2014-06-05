@@ -8,9 +8,11 @@ import Agents.UtilisateursAgent;
 import Datas.Utilisateur;
 import Datas.Constantes.ConstantesTables;
 import Messages.BDDAnswerMessage;
+import Messages.ServerLiaisonMessage;
 import Messages.UserListMessage;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,18 +43,27 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent()))));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
 			// Il récupère le résultat de la requête.
 			ObjectMapper omap = new ObjectMapper();
 			try {
 				BDDAnswerMessage answer = omap.readValue(message.getContent(),BDDAnswerMessage.class);
 				if(answer !=null){
-					switch(answer.getTable()){
-						case ConstantesTables.SUBTASK:
-							break;
-						default:
-							break;
+					if(answer !=null){
+						switch(answer.getDemande()){
+							case CREE_SOUS_TACHE:
+								this.createMessage(answer);
+								break;
+							case MODIFIER_SOUS_TACHE:
+								this.createMessage(answer);
+								break;
+							case SUPPRIMER_SOUS_TACHE:
+								this.createMessage(answer);
+								break;
+							default:
+								break;
+						}
 					}
 				}
 			} catch (JsonParseException e) {
@@ -68,6 +79,26 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 		}
 	}
 
+	private void createMessage(BDDAnswerMessage answer){
+		// ServeurLiaison message model
+		ObjectMapper omapSL = new ObjectMapper();
+		ServerLiaisonMessage sl = new ServerLiaisonMessage();
+		sl.setContent(String.valueOf(answer.getId()));
+		String content ="";
+		try {
+			content = omapSL.writeValueAsString(sl);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Ecriture du message
+		ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
+		reply.addReceiver(getServeurAgent());
+		reply.setContent(content);
+		reply.setConversationId(conversationId);
+		myAgent.send(reply);
+	}
+
 	@Override
 	public boolean done() {
 		if (step == 1) {
@@ -80,6 +111,19 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("BDD");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
+	}
+	private AID getServeurAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Serveur");
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(myAgent, template);
