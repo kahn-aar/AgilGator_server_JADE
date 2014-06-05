@@ -2,6 +2,8 @@ package behaviours.serveur;
 
 import java.io.IOException;
 
+import Agents.ServeurAgent;
+import Agents.UtilisateursAgent;
 import Datas.Project;
 import Datas.Sprint;
 import Datas.SubTask;
@@ -19,6 +21,7 @@ import Messages.clientcontent.ClientSynchronizeMessage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.Module.SetupContext;
 
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
@@ -56,6 +59,8 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 					DataMessage msg = omap.readValue(message.getContent(),DataMessage.class);
 					demande = msg.getDemande();
 					user = msg.getUser();
+					// Enregistrement du user qui fait la demande
+					((ServeurAgent) myAgent).setUser(user);
 					projet = msg.getProjet();
 					tache = msg.getTache();
 					soustache = msg.getSousTache();

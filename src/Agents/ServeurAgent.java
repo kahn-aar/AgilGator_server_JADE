@@ -5,6 +5,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import Datas.Utilisateur;
 import behaviours.serveur.ServeurReceptionBehaviour;
 import behaviours.serveur.ServeurWaitingBehaviour;
 
@@ -17,6 +18,7 @@ import behaviours.serveur.ServeurWaitingBehaviour;
  */
 public class ServeurAgent extends Agent {
 
+	private Utilisateur user; // garde en mémoire l'utilisateur qui fait la demande
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -39,6 +41,14 @@ public class ServeurAgent extends Agent {
 		//Ajout du behaviour de base
 		this.addBehaviour(new ServeurReceptionBehaviour());
 		this.addBehaviour(new ServeurWaitingBehaviour());
+	}
+
+	public Utilisateur getUser() {
+		return user;
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 }
 

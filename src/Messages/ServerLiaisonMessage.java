@@ -4,6 +4,8 @@ import jade.core.AID;
 
 import java.util.List;
 
+import Datas.enums.DeviceInfoTypes;
+
 /**
  * Message
  * Server => Liaison
@@ -15,7 +17,7 @@ public class ServerLiaisonMessage {
 
 	private List<AID> listeDestinataires;
 	private String content;
-	private String typeOfMessage;
+	private DeviceInfoTypes demande;
 	
 	
 	public List<AID> getListeDestinataires() {
@@ -33,13 +35,13 @@ public class ServerLiaisonMessage {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	public String getTypeOfMessage() {
-		return typeOfMessage;
+
+	public DeviceInfoTypes getDemande() {
+		return demande;
 	}
-	
-	public void setTypeOfMessage(String typeOfMessage) {
-		this.typeOfMessage = typeOfMessage;
+
+	public void setDemande(DeviceInfoTypes demande) {
+		this.demande = demande;
 	}
 	
 	
