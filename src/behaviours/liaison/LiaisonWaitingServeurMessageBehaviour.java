@@ -38,11 +38,11 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 			}
 			
 			// Ecriture de message
-			myAgent.send(createMessageToDevices(destinataires, content));
+			myAgent.send(createMessageToDevices(destinataires, content, messageServeur.getConversationId()));
 		}
 	}
 	
-	private ACLMessage createMessageToDevices(List<AID> destinataires, String content) {
+	private ACLMessage createMessageToDevices(List<AID> destinataires, String content, String conversationId) {
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
 		if(destinataires!=null){
 			for(AID destinataire : destinataires) {
@@ -50,6 +50,7 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 			}
 		}
 		// Ajout du contenu du message.
+		message.setConversationId(conversationId);
 		message.setContent(content);
 		return message;
 	}

@@ -24,11 +24,13 @@ import Messages.ServerLiaisonMessage;
 public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	
+	private String conversationId;
+	// Tous les utilisateurs connectés liés au projets
 	private List<AID> destinataires;
 	private String content;
 	
-	public ServeurSendToLiaisonBehaviour(List<AID> destinataires, String content) {
+	public ServeurSendToLiaisonBehaviour(String conversationId, List<AID> destinataires, String content) {
+		this.conversationId = conversationId;
 		this.destinataires = destinataires;
 		this.content = content;
 	}
@@ -38,6 +40,7 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 		ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
 		message.addReceiver(getLiasonAgent());
 		message.setContent(writeMessage());
+		message.setConversationId(conversationId);
 		myAgent.send(message);
 	}
 	

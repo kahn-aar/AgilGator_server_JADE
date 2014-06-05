@@ -44,7 +44,7 @@ public class CompteWaitingReplyBehaviour extends Behaviour {
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getBDDAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			// Il récupère le résultat de la requête.
@@ -84,6 +84,7 @@ public class CompteWaitingReplyBehaviour extends Behaviour {
 						case ALL_USERS:
 							ACLMessage reply2 = new ACLMessage(ACLMessage.CONFIRM);
 							reply2.addReceiver(getServeurAgent());
+							reply2.setConversationId(conversationId);
 							myAgent.send(reply2);
 							break;
 						default:

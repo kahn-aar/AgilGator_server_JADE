@@ -44,7 +44,6 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 				ServerSynchronistMessage propagate = new ServerSynchronistMessage();
 				ObjectMapper omap = new ObjectMapper();
 				String msg = null;
-				
 				propagate.setContent(message.getContent());
 				propagate.setType(ServerToDeviceTypes.SYNCHRO);
 				try {
@@ -53,10 +52,9 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 				catch (Exception e) {
 					
 				}
-				
 				List<AID> destinataire = new ArrayList<AID>(1);
 				destinataire.add(user);
-				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(destinataire, msg));
+				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataire, msg));
 				step++;
 			}
 		}

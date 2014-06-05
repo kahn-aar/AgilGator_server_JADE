@@ -32,13 +32,13 @@ import jade.lang.acl.MessageTemplate;
 public class SprintWaitingRequestBehaviour extends CyclicBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	private String conversationId;
 
 	@Override
 	public void action() {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
 		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
 		if( msgServeur != null) {
+			String conversationId = msgServeur.getConversationId();
 			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());
 			ObjectMapper omap = new ObjectMapper();
 			SprintRequestMessage requestMsg;

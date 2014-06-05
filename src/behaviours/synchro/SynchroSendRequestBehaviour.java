@@ -21,8 +21,8 @@ public class SynchroSendRequestBehaviour extends OneShotBehaviour {
 	private String message;
 	
 
-	public SynchroSendRequestBehaviour(String conversationId2, String message) {
-		this.conversationId = conversationId2;
+	public SynchroSendRequestBehaviour(String conversationId, String message) {
+		this.conversationId = conversationId;
 		this.message = message;
 	}
 

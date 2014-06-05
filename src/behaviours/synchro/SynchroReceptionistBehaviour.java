@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class SynchroReceptionistBehaviour extends CyclicBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	private String conversationId;
 	private int userId;
 	private int timeStamp;
 	
@@ -30,6 +29,7 @@ public class SynchroReceptionistBehaviour extends CyclicBehaviour {
 	public void action() {
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
 		if (message != null) {
+			String conversationId = message.getConversationId();
 			// Déséréalisation JSON
 			ObjectMapper omap = new ObjectMapper();
 			SynchroMessage msg = null;

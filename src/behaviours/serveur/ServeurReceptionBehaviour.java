@@ -42,7 +42,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 
 		@Override
 		public void action() {
-			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getLiaisonAgent())));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getLiaisonAgent()))));
 			if (message != null) {
 				System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 				ObjectMapper omap = new ObjectMapper();

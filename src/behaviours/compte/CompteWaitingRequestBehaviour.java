@@ -33,13 +33,13 @@ import jade.lang.acl.MessageTemplate;
 public class CompteWaitingRequestBehaviour extends CyclicBehaviour {
 
 	private static final long serialVersionUID = 1L;
-	private String conversationId;
 
 	@Override
 	public void action() {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
 		ACLMessage msgServeur = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		if (msgServeur != null){
+			String conversationId = msgServeur.getConversationId();
 			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());
 			ObjectMapper omap = new ObjectMapper();
 			CompteMessage requestMsg;

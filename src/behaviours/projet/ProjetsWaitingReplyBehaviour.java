@@ -43,7 +43,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getBDDAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId),MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			// Il récupère le résultat de la requête.
@@ -109,6 +109,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
 		reply.addReceiver(getServeurAgent());
 		reply.setContent(content);
+		reply.setConversationId(conversationId);
 		myAgent.send(reply);
 	}
 	private AID getServeurAgent() {

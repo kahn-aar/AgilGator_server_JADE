@@ -36,7 +36,7 @@ public class ProjetsWaitingRequestBehaviour extends CyclicBehaviour {
 	@Override
 	public void action() {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
-		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
+		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId),MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent()))));
 		if (msgServeur != null){
 			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());
 			ObjectMapper omap = new ObjectMapper();

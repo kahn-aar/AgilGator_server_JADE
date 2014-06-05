@@ -21,11 +21,13 @@ public class SousTacheWaitingSuccessBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchSender(getBDDAgent())));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId),MessageTemplate.MatchPerformative(ACLMessage.CONFIRM)), MessageTemplate.MatchSender(getBDDAgent())));
 		if (message != null) {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
 			reply.addReceiver(getServeurAgent());
+			reply.setConversationId(conversationId);
+			myAgent.send(reply);
 		}
 	}
 					
