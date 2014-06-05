@@ -24,8 +24,8 @@ public class BDDAgent extends Agent {
 	
 	private static final long serialVersionUID = 1L;
 	private static final String DATABASE = "//localhost:3306/agilgator"; //Adresse de la BDD
-	private static final String USERNAME = "root"; //Username pour la BDD
-	private static final String PASSWORD = ""; //Mot de passe de la BDD agilgatormonkey28
+	private static final String USERNAME = "agilgator"; //Username pour la BDD
+	private static final String PASSWORD = "agilgatormonkey28"; //Mot de passe de la BDD agilgatormonkey28
 
 	@Override
 	public void setup() {
