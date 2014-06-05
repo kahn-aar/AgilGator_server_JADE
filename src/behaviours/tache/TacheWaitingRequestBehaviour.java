@@ -35,7 +35,7 @@ public class TacheWaitingRequestBehaviour extends CyclicBehaviour {
 	@Override
 	public void action() {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
-		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getServeurAgent())));
+		ACLMessage msgServeur = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getServeurAgent())));
 		if (msgServeur != null){
 			String conversationId = msgServeur.getConversationId();
 			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());

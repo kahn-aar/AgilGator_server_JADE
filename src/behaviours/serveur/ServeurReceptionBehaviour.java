@@ -40,7 +40,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 
 		@Override
 		public void action() {
-			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE), MessageTemplate.MatchSender(getLiaisonAgent())));
+			ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchSender(getLiaisonAgent())));
 			if (message != null) {
 				String conversationId = message.getConversationId();
 				System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
@@ -75,7 +75,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							lmMsg.setProjet(projet);
 							try {
 								String content = omapLM.writeValueAsString(lmMsg);
-								ACLMessage msgLM= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgLM= new ACLMessage(ACLMessage.PROPAGATE);
 								msgLM.addReceiver(getProjetAgent());
 								msgLM.setContent(content);
 								msgLM.setConversationId(conversationId);
@@ -141,7 +141,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							String content;
 							try {
 								content = omapCreeProjet.writeValueAsString(projetMsg);
-								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.PROPAGATE);
 								msgCreeProjet.addReceiver(getProjetAgent());
 								msgCreeProjet.setContent(content);
 								msgCreeProjet.setConversationId(conversationId);
@@ -161,7 +161,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							effaceProjetMsg.setProjet(projet);
 							try {
 								String content = omapEffaceProjet.writeValueAsString(effaceProjetMsg);
-								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.PROPAGATE);
 								msgCreeProjet.addReceiver(getProjetAgent());
 								msgCreeProjet.setContent(content);
 								msgCreeProjet.setConversationId(conversationId);
@@ -182,7 +182,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							ajoutMembreProjetMsg.setMember(member);
 							try {
 								String content4 = omapAjoutMembre.writeValueAsString(ajoutMembreProjetMsg);
-								ACLMessage msgAM= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgAM= new ACLMessage(ACLMessage.PROPAGATE);
 								msgAM.addReceiver(getProjetAgent());
 								msgAM.setContent(content4);
 								msgAM.setConversationId(conversationId);
@@ -202,7 +202,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							CCMsg.setUser(user);
 							try {
 								String content = omapCC.writeValueAsString(CCMsg);
-								ACLMessage msgCC= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgCC= new ACLMessage(ACLMessage.PROPAGATE);
 								msgCC.addReceiver(getCompteAgent());
 								msgCC.setContent(content);
 								msgCC.setConversationId(conversationId);
@@ -220,7 +220,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						AllMsg.setDemande(demande);
 						try {
 							String content = omapAll.writeValueAsString(AllMsg);
-							ACLMessage msgAll= new ACLMessage(ACLMessage.REQUEST);
+							ACLMessage msgAll= new ACLMessage(ACLMessage.PROPAGATE);
 							msgAll.addReceiver(getCompteAgent());
 							msgAll.setContent(content);
 							msgAll.setConversationId(conversationId);
@@ -239,7 +239,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							ArchiverSprintMsg.setSprint(sprint);
 							try {
 								String content4 = omapArchiverSprint.writeValueAsString(ArchiverSprintMsg);
-								ACLMessage msgArchiverSprint= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgArchiverSprint= new ACLMessage(ACLMessage.PROPAGATE);
 								msgArchiverSprint.addReceiver(getSprintAgent());
 								msgArchiverSprint.setContent(content4);
 								msgArchiverSprint.setConversationId(conversationId);
@@ -259,7 +259,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							creeSubTaskMsg.setSousTache(soustache);
 							try {
 								String content5 = omapCreeSubTask.writeValueAsString(creeSubTaskMsg);
-								ACLMessage msgCreeSubTask= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgCreeSubTask= new ACLMessage(ACLMessage.PROPAGATE);
 								msgCreeSubTask.addReceiver(getSubTaskAgent());
 								msgCreeSubTask.setContent(content5);
 								msgCreeSubTask.setConversationId(conversationId);
@@ -279,7 +279,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							sprintMsg.setSprint(sprint);
 							try {
 								String content5 = omapSprint.writeValueAsString(sprintMsg);
-								ACLMessage msgSprint= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgSprint= new ACLMessage(ACLMessage.PROPAGATE);
 								msgSprint.addReceiver(getSprintAgent());
 								msgSprint.setContent(content5);
 								msgSprint.setConversationId(conversationId);
@@ -299,7 +299,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							creeTaskMsg.setTache(tache);
 							try {
 								String content5 = omapCreeTask.writeValueAsString(creeTaskMsg);
-								ACLMessage msgCreeTask= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgCreeTask= new ACLMessage(ACLMessage.PROPAGATE);
 								msgCreeTask.addReceiver(getTaskAgent());
 								msgCreeTask.setContent(content5);
 								msgCreeTask.setConversationId(conversationId);
@@ -319,7 +319,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							effaceSprintMsg.setSprint(sprint);
 							try {
 								String content5 = omapEffaceSprint.writeValueAsString(effaceSprintMsg);
-								ACLMessage msgEffaceSprint= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgEffaceSprint= new ACLMessage(ACLMessage.PROPAGATE);
 								msgEffaceSprint.addReceiver(getSprintAgent());
 								msgEffaceSprint.setContent(content5);
 								msgEffaceSprint.setConversationId(conversationId);
@@ -339,7 +339,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							modifySubTaskMsg.setSousTache(soustache);
 							try {
 								String content5 = omapModifySubTask.writeValueAsString(modifySubTaskMsg);
-								ACLMessage msgModifySubTask= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgModifySubTask= new ACLMessage(ACLMessage.PROPAGATE);
 								msgModifySubTask.addReceiver(getSubTaskAgent());
 								msgModifySubTask.setContent(content5);
 								msgModifySubTask.setConversationId(conversationId);
@@ -359,7 +359,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							modifyProjetMsg.setProjet(projet);
 							try {
 								String content = omapModifyProjet.writeValueAsString(modifyProjetMsg);
-								ACLMessage msgModifyProjet= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgModifyProjet= new ACLMessage(ACLMessage.PROPAGATE);
 								msgModifyProjet.addReceiver(getProjetAgent());
 								msgModifyProjet.setContent(content);
 								msgModifyProjet.setConversationId(conversationId);
@@ -379,7 +379,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							modifyTaskMsg.setTache(tache);
 							try {
 								String content = omapModifyTask.writeValueAsString(modifyTaskMsg);
-								ACLMessage msgModifyTask= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgModifyTask= new ACLMessage(ACLMessage.PROPAGATE);
 								msgModifyTask.addReceiver(getTaskAgent());
 								msgModifyTask.setContent(content);
 								msgModifyTask.setConversationId(conversationId);
@@ -400,7 +400,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							retraitMembreProjetMsg.setMember(member);
 							try {
 								String content = omapRetraitMembre.writeValueAsString(retraitMembreProjetMsg);
-								ACLMessage msgRM= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgRM= new ACLMessage(ACLMessage.PROPAGATE);
 								msgRM.addReceiver(getProjetAgent());
 								msgRM.setContent(content);
 								msgRM.setConversationId(conversationId);
@@ -421,7 +421,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							managerMsg.setUser(user);
 							try {
 								String content4 = omapManager.writeValueAsString(managerMsg);
-								ACLMessage msgManager= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgManager= new ACLMessage(ACLMessage.PROPAGATE);
 								msgManager.addReceiver(getProjetAgent());
 								msgManager.setContent(content4);
 								msgManager.setConversationId(conversationId);
@@ -441,7 +441,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							suppSubTaskMsg.setSousTache(soustache);
 							try {
 								String content5 = omapSuppSubTask.writeValueAsString(suppSubTaskMsg);
-								ACLMessage msgSuppSubTask= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgSuppSubTask= new ACLMessage(ACLMessage.PROPAGATE);
 								msgSuppSubTask.addReceiver(getSubTaskAgent());
 								msgSuppSubTask.setContent(content5);
 								msgSuppSubTask.setConversationId(conversationId);
@@ -461,7 +461,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							suppTaskMsg.setTache(tache);
 							try {
 								String content = omapSuppTask.writeValueAsString(suppTaskMsg);
-								ACLMessage msgSuppTask= new ACLMessage(ACLMessage.REQUEST);
+								ACLMessage msgSuppTask= new ACLMessage(ACLMessage.PROPAGATE);
 								msgSuppTask.addReceiver(getTaskAgent());
 								msgSuppTask.setContent(content);
 								msgSuppTask.setConversationId(conversationId);
@@ -480,7 +480,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						downMsg.setProjet(projet);
 						try {
 							String content4 = omapDown.writeValueAsString(downMsg);
-							ACLMessage msgDown= new ACLMessage(ACLMessage.REQUEST);
+							ACLMessage msgDown= new ACLMessage(ACLMessage.PROPAGATE);
 							msgDown.addReceiver(getProjetAgent());
 							msgDown.setContent(content4);
 							msgDown.setConversationId(conversationId);
@@ -498,7 +498,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 						upMsg.setProjet(projet);
 						try {
 							String content4 = omapUP.writeValueAsString(upMsg);
-							ACLMessage msgUP= new ACLMessage(ACLMessage.REQUEST);
+							ACLMessage msgUP= new ACLMessage(ACLMessage.PROPAGATE);
 							msgUP.addReceiver(getProjetAgent());
 							msgUP.setContent(content4);
 							msgUP.setConversationId(conversationId);
