@@ -15,6 +15,7 @@ import Datas.Project;
 import Datas.Sprint;
 import Datas.SubTask;
 import Datas.Task;
+import Datas.Utilisateur;
 import Datas.enums.BDDRequestTypes;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
@@ -39,11 +40,13 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 	private Sprint sprint;
 	private DeviceInfoTypes demande;
 	private String conversationId;
+	private Utilisateur user;
 	
-	public SprintSendingRequestBehaviour(String conversationId, Sprint sprint, DeviceInfoTypes demande) {
+	public SprintSendingRequestBehaviour(String conversationId, Sprint sprint, DeviceInfoTypes demande, Utilisateur user) {
 		this.conversationId = conversationId;
 		this.sprint = sprint;
 		this.demande = demande;	
+		this.user = user;
 	}
 	
 	@Override
@@ -120,6 +123,7 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
+		message.setUser(user);
 		// Séréalisation JSON
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

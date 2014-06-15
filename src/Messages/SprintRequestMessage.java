@@ -1,12 +1,14 @@
 package Messages;
 
 import Datas.Sprint;
+import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 
 public class SprintRequestMessage {
 
 	private Sprint sprint;
 	private DeviceInfoTypes demande;
+	private Utilisateur user;
 	
 	public Sprint getSprint() {
 		return sprint;
@@ -19,6 +21,12 @@ public class SprintRequestMessage {
 	}
 	public void setDemande(DeviceInfoTypes demande) {
 		this.demande = demande;
+	}
+	public Utilisateur getUser() {
+		return user;
+	}
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 	
 }

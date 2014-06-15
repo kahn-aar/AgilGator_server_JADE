@@ -98,6 +98,10 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		ObjectMapper omapSL = new ObjectMapper();
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setContent(String.valueOf(answer.getId()));
+		sl.setDemande(answer.getDemande());
+		List<AID> listeDestinataires = new ArrayList<AID>();
+		listeDestinataires.add(answer.getUser().getAid());
+		sl.setListeDestinataires(listeDestinataires);
 		String content ="";
 		try {
 			content = omapSL.writeValueAsString(sl);

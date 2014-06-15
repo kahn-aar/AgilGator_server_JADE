@@ -6,6 +6,7 @@ import Datas.Project;
 import Datas.Sprint;
 import Datas.SubTask;
 import Datas.Task;
+import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.DataMessage;
 import Messages.ProjetRequestMessage;
@@ -46,8 +47,9 @@ public class SprintWaitingRequestBehaviour extends CyclicBehaviour {
 					requestMsg = omap.readValue(msgServeur.getContent(),SprintRequestMessage.class);
 					DeviceInfoTypes demande = requestMsg.getDemande();
 					Sprint sprint = requestMsg.getSprint();
+					Utilisateur user = requestMsg.getUser();
 					if (demande != null){
-						myAgent.addBehaviour(new SprintSendingRequestBehaviour(conversationId, sprint, demande));
+						myAgent.addBehaviour(new SprintSendingRequestBehaviour(conversationId, sprint, demande, user));
 					}
 				} catch (JsonParseException e) {
 					// TODO Auto-generated catch block

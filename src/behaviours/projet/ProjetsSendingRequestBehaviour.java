@@ -195,6 +195,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
+		message.setUser(user);
 		// Séréalisation JSON
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;
