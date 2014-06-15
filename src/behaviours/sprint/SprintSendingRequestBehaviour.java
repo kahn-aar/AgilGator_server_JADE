@@ -106,7 +106,7 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 		.append(",")
 		.append(s.getEnd_date())
 		.append(",")
-		.append(s.getStart_date())
+		.append("CURRENT_TIMESTAMP")
 		.append(");");
 	return request.toString();
 	}

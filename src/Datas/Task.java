@@ -7,11 +7,11 @@ public class Task {
 	private int sprint;
 	private String name;
 	private String description;
-	private int priorite;
+	private int priority;
 	private int current_state;
 	private Timestamp creation_date;
 	private Timestamp last_update;
-	private int difficulte;
+	private int difficulty;
 	private int notifications;
 	
 	public int getId() {
@@ -39,10 +39,10 @@ public class Task {
 		this.description = description;
 	}
 	public int getPriorite() {
-		return priorite;
+		return priority;
 	}
 	public void setPriorite(int priority) {
-		this.priorite = priority;
+		this.priority = priority;
 	}
 	public Timestamp getCreation_date() {
 		return creation_date;
@@ -63,10 +63,10 @@ public class Task {
 		this.last_update = last_update;
 	}
 	public int getDifficulte() {
-		return difficulte;
+		return difficulty;
 	}
 	public void setDifficulte(int difficulty) {
-		this.difficulte = difficulty;
+		this.difficulty = difficulty;
 	}
 	public int getNotifications() {
 		return notifications;
