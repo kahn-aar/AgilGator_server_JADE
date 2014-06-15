@@ -208,7 +208,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 							CCMsg.setUser(user);
 							try {
 								String content = omapCC.writeValueAsString(CCMsg);
-								ACLMessage msgCC= new ACLMessage(ACLMessage.PROPAGATE);
+								ACLMessage msgCC= new ACLMessage(ACLMessage.REQUEST);
 								msgCC.addReceiver(getCompteAgent());
 								msgCC.setContent(content);
 								msgCC.setConversationId(conversationId);

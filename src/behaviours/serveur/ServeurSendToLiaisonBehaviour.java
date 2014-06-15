@@ -13,6 +13,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Datas.enums.DeviceInfoTypes;
 import Messages.ServerLiaisonMessage;
 
 /**
@@ -28,11 +29,13 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 	// Tous les utilisateurs connectés liés au projets
 	private List<AID> destinataires;
 	private String content;
+	private DeviceInfoTypes demande;
 	
-	public ServeurSendToLiaisonBehaviour(String conversationId, List<AID> destinataires, String content) {
+	public ServeurSendToLiaisonBehaviour(String conversationId, List<AID> destinataires, String content, DeviceInfoTypes demande) {
 		this.conversationId = conversationId;
 		this.destinataires = destinataires;
 		this.content = content;
+		this.demande = demande;
 	}
 	
 	@Override
@@ -48,6 +51,7 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 		ServerLiaisonMessage message = new ServerLiaisonMessage();
 		message.setListeDestinataires(destinataires);
 		message.setContent(content);
+		message.setDemande(demande);
 		
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

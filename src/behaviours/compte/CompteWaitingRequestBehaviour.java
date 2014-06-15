@@ -38,7 +38,7 @@ public class CompteWaitingRequestBehaviour extends CyclicBehaviour {
 	public void action() {
 		// Attends un message de serveur qui lui demandera les actions à exécuter
 		// il peut également attendre un message de lui même (requête de vérification)
-		ACLMessage msgServeur = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE));
+		ACLMessage msgServeur = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		if (msgServeur != null){
 			String conversationId = msgServeur.getConversationId();
 			System.out.println(myAgent.getLocalName() + " reçu -> " + msgServeur.getContent());

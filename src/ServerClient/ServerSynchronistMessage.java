@@ -1,18 +1,19 @@
 package ServerClient;
 
-import Datas.enums.ServerToDeviceTypes;
+import Datas.enums.DeviceInfoTypes;
+
 
 public class ServerSynchronistMessage {
 
-	private ServerToDeviceTypes type;
+	private DeviceInfoTypes type;
 	private String content;
 	
 	
-	public ServerToDeviceTypes getType() {
+	public DeviceInfoTypes getType() {
 		return type;
 	}
 	
-	public void setType(ServerToDeviceTypes type) {
+	public void setType(DeviceInfoTypes type) {
 		this.type = type;
 	}
 	

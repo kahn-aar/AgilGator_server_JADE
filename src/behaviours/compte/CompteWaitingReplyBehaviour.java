@@ -58,6 +58,7 @@ public class CompteWaitingReplyBehaviour extends Behaviour {
 							ObjectMapper omapSL = new ObjectMapper();
 							ServerLiaisonMessage sl = new ServerLiaisonMessage();
 							sl.setContent(String.valueOf(answer.getId()));
+							sl.setDemande(answer.getDemande());
 							String content = omapSL.writeValueAsString(sl);
 							// Ecriture du message
 							ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);

@@ -8,11 +8,9 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import Datas.enums.ServerToDeviceTypes;
+import Datas.enums.DeviceInfoTypes;
 import ServerClient.ServerSynchronistMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +43,7 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 				ObjectMapper omap = new ObjectMapper();
 				String msg = null;
 				propagate.setContent(message.getContent());
-				propagate.setType(ServerToDeviceTypes.SYNCHRO);
+				propagate.setType(DeviceInfoTypes.SYNCHRONIZE_UP);
 				try {
 					msg = omap.writeValueAsString(propagate);
 				}
@@ -54,7 +52,7 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 				}
 				List<AID> destinataire = new ArrayList<AID>(1);
 				destinataire.add(user);
-				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataire, msg));
+				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataire, msg, DeviceInfoTypes.SYNCHRONIZE_UP));
 				step++;
 			}
 		}

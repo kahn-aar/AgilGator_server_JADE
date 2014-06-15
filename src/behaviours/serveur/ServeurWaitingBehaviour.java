@@ -95,7 +95,7 @@ public class ServeurWaitingBehaviour extends CyclicBehaviour{
 						break;
 				
 				}
-				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataires, content));
+				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataires, content, demande));
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

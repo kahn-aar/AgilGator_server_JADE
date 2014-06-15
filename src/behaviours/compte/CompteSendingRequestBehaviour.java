@@ -67,7 +67,6 @@ public class CompteSendingRequestBehaviour extends OneShotBehaviour {
 						ACLMessage msg= new ACLMessage(ACLMessage.REQUEST);
 						msg.addReceiver(getCompteAgent());
 						msg.setContent(content);
-						System.out.println(content);
 						msg.setConversationId(conversationId);
 						msg.setLanguage("JSON");
 						myAgent.send(msg);
