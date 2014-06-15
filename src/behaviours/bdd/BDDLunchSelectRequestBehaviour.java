@@ -74,6 +74,7 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 			case ALL_USERS:
 				corps.setMesUsers(handleResultSetUser(result));
 				corps.setDemande(demande);
+				corps.setUser(user);
 				corps.setTable("Users");
 				break;
 			case IS_USER:

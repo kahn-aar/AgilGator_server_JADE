@@ -92,6 +92,7 @@ public class BDDLunchInsertRequestBehaviour extends OneShotBehaviour {
 			message = new ACLMessage(ACLMessage.INFORM);
 			BDDAnswerMessage answer = new BDDAnswerMessage();
 			answer.setDemande(demande);
+			answer.setUser(user);
 			answer.setId(id);
 			ObjectMapper omap = new ObjectMapper();
 			String messageCorps;
