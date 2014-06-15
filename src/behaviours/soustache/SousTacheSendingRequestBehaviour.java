@@ -9,9 +9,11 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import Datas.SubTask;
+import Datas.Utilisateur;
 import Datas.enums.BDDRequestTypes;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,11 +29,13 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 	private SubTask sousTache;
 	private DeviceInfoTypes demande;
 	private String conversationId;
+	private Utilisateur user;
 	
-	public SousTacheSendingRequestBehaviour(String conversationId, SubTask sousTache, DeviceInfoTypes demande) {
+	public SousTacheSendingRequestBehaviour(String conversationId, SubTask sousTache, DeviceInfoTypes demande, Utilisateur user) {
 		this.conversationId = conversationId;
 		this.sousTache = sousTache;
 		this.demande = demande;	
+		this.user = user;
 	}
 	
 	@Override
@@ -135,6 +139,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
+		message.setUser(user);
 		// Séréalisation JSON
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

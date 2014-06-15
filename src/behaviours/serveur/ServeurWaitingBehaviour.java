@@ -41,59 +41,45 @@ public class ServeurWaitingBehaviour extends CyclicBehaviour{
 				String content = msgToLiaison.getContent();
 				DeviceInfoTypes demande = msgToLiaison.getDemande();
 				List<AID> destinataires = new ArrayList<AID>();
-				// WTF ??? Faut faire une demande
-				List<Utilisateur> utilisateurs = null;//((UtilisateursAgent) myAgent).getUtilisateursConnectés();
 				// Définit la liste des destinataires en fonction de la demande
-				switch(demande){
-					case CREE_COMPTE:
-						destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
-						break;
-					case AJOUT_MEMBRE:
-						// destinataires = tous les membres du projets
-						break;
-					case AJOUT_MANAGER:
-						destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
-						break;
-					case CREE_PROJET:
-						destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
-						break;
-					case CREE_TACHE:
-						for(Utilisateur user : utilisateurs){
-							destinataires.add(user.getAid());
-						}
-						break;
-					case CREE_SOUS_TACHE:
-						destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
-						break;
-					case CREE_SPRINT:
-						for(Utilisateur user : utilisateurs){
-							destinataires.add(user.getAid());
-						}
-						break;
-					case EFFACE_PROJET:
-						for(Utilisateur user : utilisateurs){
-							destinataires.add(user.getAid());
-						}
-						break;
-					case SUPPRIMER_TACHE:
-						for(Utilisateur user : utilisateurs){
-							destinataires.add(user.getAid());
-						}
-						break;
-					case SUPPRIMER_SOUS_TACHE:
-						for(Utilisateur user : utilisateurs){
-							destinataires.add(user.getAid());
-						}
-						break;
-					case EFFACE_SPRINT:
-						
-						for(Utilisateur user : utilisateurs){
-							destinataires.add(user.getAid());
-						}
-						break;
-					default:
-						break;
-				
+				if(demande!=null){
+					switch(demande){
+						case CREE_COMPTE:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case AJOUT_MEMBRE:
+							// destinataires = tous les membres du projets
+							break;
+						case AJOUT_MANAGER:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case CREE_PROJET:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case CREE_TACHE:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case CREE_SOUS_TACHE:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case CREE_SPRINT:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case EFFACE_PROJET:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case SUPPRIMER_TACHE:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case SUPPRIMER_SOUS_TACHE:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						case EFFACE_SPRINT:
+							destinataires.add(((ServeurAgent) myAgent).getUser().getAid());
+							break;
+						default:
+							break;
+					}
 				}
 				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataires, content, demande));
 			} catch (JsonParseException e) {
@@ -105,10 +91,7 @@ public class ServeurWaitingBehaviour extends CyclicBehaviour{
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
-		}
-		
+			}	
+		}	
 	}
-
 }

@@ -1,10 +1,12 @@
 package Messages;
 
 import Datas.SubTask;
+import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 
 public class SousTacheRequestMessage {
 	private DeviceInfoTypes demande;
+	private Utilisateur user;
 	private SubTask sousTache;
 	
 	public DeviceInfoTypes getDemande() {
@@ -21,6 +23,14 @@ public class SousTacheRequestMessage {
 
 	public void setSousTache(SubTask sousTache) {
 		this.sousTache = sousTache;
+	}
+
+	public Utilisateur getUser() {
+		return user;
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 }
 

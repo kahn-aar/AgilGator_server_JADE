@@ -62,10 +62,10 @@ public class Task {
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
-	public int getDifficulte() {
+	public int getDifficulty() {
 		return difficulty;
 	}
-	public void setDifficulte(int difficulty) {
+	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 	public int getNotifications() {

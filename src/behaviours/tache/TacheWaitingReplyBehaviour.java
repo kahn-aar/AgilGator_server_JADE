@@ -45,6 +45,7 @@ public class TacheWaitingReplyBehaviour extends Behaviour {
 	public void action() {
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent())));
 		if (message != null) {
+			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			// Il récupère le résultat de la requête.
 			ObjectMapper omap = new ObjectMapper();
 			try {
@@ -82,7 +83,11 @@ public class TacheWaitingReplyBehaviour extends Behaviour {
 		// ServeurLiaison message model
 		ObjectMapper omapSL = new ObjectMapper();
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
+		sl.setDemande(answer.getDemande());
 		sl.setContent(String.valueOf(answer.getId()));
+		List<AID> listeDestinataires = new ArrayList<AID>();
+		listeDestinataires.add(answer.getUser().getAid());
+		sl.setListeDestinataires(listeDestinataires);
 		String content ="";
 		try {
 			content = omapSL.writeValueAsString(sl);

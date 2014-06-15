@@ -9,9 +9,11 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import Datas.Task;
+import Datas.Utilisateur;
 import Datas.enums.BDDRequestTypes;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDRequestMessage;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,11 +29,12 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 	private Task tache;
 	private DeviceInfoTypes demande;
 	private String conversationId;
-	
-	public TacheSendingRequestBehaviour(String conversationId, Task tache, DeviceInfoTypes demande) {
+	private Utilisateur user;	
+	public TacheSendingRequestBehaviour(String conversationId, Task tache, DeviceInfoTypes demande, Utilisateur user) {
 		this.conversationId = conversationId;
 		this.tache = tache;
 		this.demande = demande;
+		this.user = user;
 	}
 	
 	@Override
@@ -58,7 +61,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 			}// fin switch
 			ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 			message.addReceiver(getBddAgent());
-			message.setContent(createContent(request,request2,type, demande));
+			message.setContent(createContent(request,request2,type));
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
@@ -94,7 +97,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append(t.getPriorite())
 			.append(",")
 			.append("difficulty = ")
-			.append(t.getDifficulte())
+			.append(t.getDifficulty())
 			.append(",")
 			.append("current_state = ")
 			.append(t.getCurrent_state())
@@ -122,7 +125,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 		.append(",")
 		.append("CURRENT_TIMESTAMP")
 		.append(",")
-		.append(tache.getDifficulte())
+		.append(tache.getDifficulty())
 		.append(");");
 	return request.toString();
 	}
@@ -134,12 +137,13 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 	}
 
 
-	private String createContent(String request, String request2, BDDRequestTypes type, DeviceInfoTypes demande) {
+	private String createContent(String request, String request2, BDDRequestTypes type) {
 		BDDRequestMessage message = new BDDRequestMessage();
 		message.setRequest(request);
 		message.setRequest2(request2);
 		message.setType(type);
 		message.setDemande(demande);
+		message.setUser(user);
 		// Séréalisation JSON
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;
