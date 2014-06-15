@@ -103,7 +103,7 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 				  u.setId(result.getInt(1));
 				  u.setEmail(result.getString(2));
 				  u.setPassword(result.getString(3));
-				  u.setPseudo(result.getString(4));
+				  u.setFirstname(result.getString(4));
 				  u.setSalt1(result.getString(5));
 				  userList.add(u);
 				 }while(result.next());

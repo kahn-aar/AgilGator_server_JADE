@@ -6,9 +6,11 @@ public class Utilisateur {
 
 	private int id;
 	private AID aid;
-	private String pseudo;
+	private String firstname;
+	private String name;
 	private String email;
 	private String password;
+	private String tag;
 	private String salt1;
 
 	public int getId() {
@@ -19,12 +21,28 @@ public class Utilisateur {
 		this.id = id;
 	}
 
-	public String getPseudo() {
-		return pseudo;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setPseudo(String login) {
-		this.pseudo = login;
+	public void setFirstname(String login) {
+		this.firstname = login;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
 	public AID getAid() {

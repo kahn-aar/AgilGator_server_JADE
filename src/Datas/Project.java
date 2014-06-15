@@ -6,10 +6,11 @@ public class Project {
 	
 	private int id ;
 	private String title ;
-	private String subtitle ;
+	private String subTitle ;
 	private String description ;
 	private Timestamp creation_date ;
 	private Timestamp last_update ;
+	private Utilisateur chef ;
 	
 	public int getId() {
 		return id;
@@ -23,11 +24,11 @@ public class Project {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getSubtitle() {
-		return subtitle;
+	public String getSubTitle() {
+		return subTitle;
 	}
-	public void setSubtitle(String subtitle) {
-		this.subtitle = subtitle;
+	public void setSubTitle(String subtitle) {
+		this.subTitle = subtitle;
 	}
 	public String getDescription() {
 		return description;
@@ -46,6 +47,12 @@ public class Project {
 	}
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
+	}
+	public Utilisateur getChef() {
+		return chef;
+	}
+	public void setChef(Utilisateur chef) {
+		this.chef = chef;
 	}
 	
 

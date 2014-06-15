@@ -41,7 +41,8 @@ public class ServeurWaitingBehaviour extends CyclicBehaviour{
 				String content = msgToLiaison.getContent();
 				DeviceInfoTypes demande = msgToLiaison.getDemande();
 				List<AID> destinataires = new ArrayList<AID>();
-				List<Utilisateur> utilisateurs = ((UtilisateursAgent) myAgent).getUtilisateursConnectés();
+				// WTF ??? Faut faire une demande
+				List<Utilisateur> utilisateurs = null;//((UtilisateursAgent) myAgent).getUtilisateursConnectés();
 				// Définit la liste des destinataires en fonction de la demande
 				switch(demande){
 					case CREE_COMPTE:

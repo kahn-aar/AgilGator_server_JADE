@@ -149,6 +149,7 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 								ACLMessage msgCreeProjet= new ACLMessage(ACLMessage.PROPAGATE);
 								msgCreeProjet.addReceiver(getProjetAgent());
 								msgCreeProjet.setContent(content);
+								System.out.println(content);
 								msgCreeProjet.setConversationId(conversationId);
 								msgCreeProjet.setLanguage("JSON");
 								myAgent.send(msgCreeProjet);

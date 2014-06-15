@@ -67,6 +67,7 @@ public class CompteSendingRequestBehaviour extends OneShotBehaviour {
 						ACLMessage msg= new ACLMessage(ACLMessage.REQUEST);
 						msg.addReceiver(getCompteAgent());
 						msg.setContent(content);
+						System.out.println(content);
 						msg.setConversationId(conversationId);
 						msg.setLanguage("JSON");
 						myAgent.send(msg);
@@ -126,13 +127,15 @@ public class CompteSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeCompte(Utilisateur user) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Users (email, password, pseudo, salt1)")
+		request.append("INSERT INTO Users (email, password, firstname, name, salt1)")
 			.append("VALUES (")
 			.append("'"+user.getEmail()+"'")
 			.append(",")
 			.append("'"+user.getPassword()+"'")
 			.append(",")
-			.append("'"+user.getPseudo()+"'")
+			.append("'"+user.getFirstname()+"'")
+			.append(",")
+			.append("'"+user.getName()+"'")
 			.append(",")
 			.append("'"+user.getSalt1()+"'")
 			.append(");");
