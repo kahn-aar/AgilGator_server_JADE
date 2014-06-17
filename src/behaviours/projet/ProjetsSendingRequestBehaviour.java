@@ -102,6 +102,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO  Member (project, member, manager) VALUES (")
 				.append(projetId)
+				.append(",")
 				.append(managerId)
 				.append(", 1)")
 				.append(";");
