@@ -81,7 +81,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append("'"+t.getDescription()+"'")
 			.append(",")
 			.append("task = ")
-			.append(t.getTask())
+			.append(t.getTask().getId())
 			.append(",")
 			.append("last_update = ")
 			.append("CURRENT_TIMESTAMP")
@@ -110,7 +110,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 		StringBuilder request = new StringBuilder();
 		request.append("INSERT INTO SubTask (task, name, description, current_state, current_developer, creation_date, last_update)")
 			.append("VALUES (")
-			.append(sousTache.getTask())
+			.append(sousTache.getTask().getId())
 			.append(",")
 			.append("'"+sousTache.getTitre()+"'")
 			.append(",")

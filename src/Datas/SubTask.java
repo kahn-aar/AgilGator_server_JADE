@@ -6,7 +6,7 @@ import Datas.enums.SousTacheEtat;
 
 public class SubTask {
 	private int id ;
-	private int task;
+	private Task task;
 	private String titre ;
 	private String description ;
 	private SousTacheEtat etat ;
@@ -20,10 +20,10 @@ public class SubTask {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getTask() {
+	public Task getTask() {
 		return task;
 	}
-	public void setTask(int task) {
+	public void setTask(Task task) {
 		this.task = task;
 	}
 	public String getDescription() {
