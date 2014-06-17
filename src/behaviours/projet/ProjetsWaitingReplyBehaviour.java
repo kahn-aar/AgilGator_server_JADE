@@ -1,21 +1,5 @@
 package behaviours.projet;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import Agents.UtilisateursAgent;
-import Datas.Utilisateur;
-import Datas.Constantes.ConstantesTables;
-import Messages.BDDAnswerMessage;
-import Messages.ServerLiaisonMessage;
-import Messages.UserListMessage;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
@@ -24,6 +8,21 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import Agents.UtilisateursAgent;
+import Datas.Utilisateur;
+import Messages.BDDAnswerMessage;
+import Messages.ServerLiaisonMessage;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Behaviour attendant une réponse à sa request
@@ -36,6 +35,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 	private static final long serialVersionUID = 1L;
 	private int step = 0;
 	private String conversationId;
+	List<Utilisateur> connectedUsers = null;
 	
 	public ProjetsWaitingReplyBehaviour(String conversationId) {
 		this.conversationId = conversationId;
@@ -62,6 +62,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 							this.createMessage(answer);
 							break;
 						case AJOUT_MEMBRE:
+							this.connectedUsers = UtilisateursAgent.getUtilisateursConnectés();
 							this.createMessage(answer);
 							break;
 						case RETRAIT_MEMBRE:
@@ -99,12 +100,26 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setContent(String.valueOf(answer.getId()));
 		sl.setDemande(answer.getDemande());
+		
 		List<AID> listeDestinataires = new ArrayList<AID>();
-		listeDestinataires.add(answer.getUser().getAid());
+		if(connectedUsers != null)
+		{
+			for(Iterator<Utilisateur> it = connectedUsers.iterator(); it.hasNext(); )
+			{
+				Utilisateur u = it.next();
+				listeDestinataires.add(u.getAid());
+			}
+		}
+		else
+			listeDestinataires.add(answer.getUser().getAid());
+		
 		sl.setListeDestinataires(listeDestinataires);
 		String content ="";
 		try {
-			content = omapSL.writeValueAsString(sl);
+			if(connectedUsers != null)
+				content = omapSL.writeValueAsString(answer.getProject());
+			else
+				content = omapSL.writeValueAsString(sl);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,4 +166,5 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		}
 		return null;
 	}
+	
 }

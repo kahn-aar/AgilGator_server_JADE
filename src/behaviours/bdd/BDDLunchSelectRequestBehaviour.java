@@ -3,7 +3,6 @@ package behaviours.bdd;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.util.leap.Iterator;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Agents.BDDAgent;
+import Datas.Project;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDAnswerMessage;
@@ -83,6 +83,12 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 				corps.setTable("Users");
 				corps.setUser(user);
 				break;
+			case GET_PROJECT:
+				corps.setProject(this.handleResultSetProject(result));
+				corps.setDemande(demande);
+				corps.setTable("Users");
+				corps.setUser(user);
+				break;
 			default:
 				break;
 		}
@@ -93,6 +99,25 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 			e.printStackTrace();
 		}
 		return messageCorps;	
+	}
+	
+	private Project handleResultSetProject(ResultSet result)
+	{
+		Project proj = new Project();
+		try {
+			if(result.first())
+			{
+				proj.setId(result.getInt(1));
+				proj.setTitle(result.getString(2));
+				proj.setSubTitle(result.getString(3));
+				proj.setDescription(result.getString(4));
+				proj.setCreation_date(result.getTimestamp(5));
+				proj.setLast_update(result.getTimestamp(6));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return proj;
 	}
 	
 	private List<Utilisateur> handleResultSetUser(ResultSet result){

@@ -15,7 +15,8 @@ public enum DeviceInfoTypes {
 	AJOUT_MEMBRE,
 	RETRAIT_MEMBRE,
 	MEMBRES_DU_PROJET,
-	AJOUT_MANAGER, // ajoute un chef de projet lors de la création d'un projet
+	AJOUT_MANAGER,
+	GET_PROJECT,// ajoute un chef de projet lors de la création d'un projet
 	// Action pour l'agent SPRINT
 	CREE_SPRINT,
 	EFFACE_SPRINT,

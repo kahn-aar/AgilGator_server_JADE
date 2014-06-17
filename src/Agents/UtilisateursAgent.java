@@ -22,7 +22,7 @@ import Datas.Utilisateur;
 public class UtilisateursAgent extends Agent {
 
 	private static final long serialVersionUID = 1L;
-	private List<Utilisateur> utilisateurConnectés;
+	private static List<Utilisateur> utilisateurConnectés;
 	
 	@Override
 	public void setup() {
@@ -45,7 +45,7 @@ public class UtilisateursAgent extends Agent {
 		}
 	}
 	
-	public List<Utilisateur> getUtilisateursConnectés(){
+	public static List<Utilisateur> getUtilisateursConnectés(){
 		return utilisateurConnectés;
 		
 	}
