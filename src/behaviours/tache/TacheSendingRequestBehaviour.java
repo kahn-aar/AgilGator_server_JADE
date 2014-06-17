@@ -97,7 +97,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append(t.getPriorite())
 			.append(",")
 			.append("difficulty = ")
-			.append(t.getDifficulty())
+			.append(t.getDifficulte())
 			.append(",")
 			.append("current_state = ")
 			.append(t.getCurrent_state())
@@ -125,7 +125,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 		.append(",")
 		.append("CURRENT_TIMESTAMP")
 		.append(",")
-		.append(tache.getDifficulty())
+		.append(tache.getDifficulte())
 		.append(");");
 	return request.toString();
 	}

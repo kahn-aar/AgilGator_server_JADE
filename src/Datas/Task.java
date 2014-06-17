@@ -8,11 +8,11 @@ public class Task {
 	private int sprint;
 	private String name;
 	private String description;
-	private int priority;
+	private int priorite;
 	private int current_state;
 	private Timestamp creation_date;
 	private Timestamp last_update;
-	private int difficulty;
+	private int difficulte;
 	private int notifications;
 	private List<SubTask> sousTaches;
 	
@@ -41,10 +41,10 @@ public class Task {
 		this.description = description;
 	}
 	public int getPriorite() {
-		return priority;
+		return priorite;
 	}
 	public void setPriorite(int priority) {
-		this.priority = priority;
+		this.priorite = priority;
 	}
 	public Timestamp getCreation_date() {
 		return creation_date;
@@ -64,11 +64,11 @@ public class Task {
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
-	public int getDifficulty() {
-		return difficulty;
+	public int getDifficulte() {
+		return difficulte;
 	}
-	public void setDifficulty(int difficulty) {
-		this.difficulty = difficulty;
+	public void setDifficulte(int difficulty) {
+		this.difficulte = difficulty;
 	}
 	public int getNotifications() {
 		return notifications;

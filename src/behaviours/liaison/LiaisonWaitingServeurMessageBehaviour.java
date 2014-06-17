@@ -10,6 +10,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Messages.ServerLiaisonMessage;
@@ -44,10 +45,13 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 	
 	private ACLMessage createMessageToDevices(List<AID> destinataires, String content, String conversationId) {
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		if(destinataires!=null){
+		/*if(destinataires!=null){
 			for(AID destinataire : destinataires) {
 				message.addReceiver(destinataire);
 			}
+		}*/
+		for(AID destinataire : addDevicesRecivers()) {
+			message.addReceiver(destinataire);
 		}
 		// Ajout du contenu du message.
 		message.setConversationId(conversationId);
@@ -67,6 +71,23 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 			fe.printStackTrace();
 		}
 		return null;
+	}
+	
+	private List<AID> addDevicesRecivers() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Device");
+		template.addServices(sd);
+		List<AID> aids = new ArrayList<>();
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			for (DFAgentDescription agentd : result) {
+				aids.add(agentd.getName());
+			}
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return aids;
 	}
 
 }
