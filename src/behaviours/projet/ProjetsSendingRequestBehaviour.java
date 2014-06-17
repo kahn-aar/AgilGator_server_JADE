@@ -70,7 +70,8 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 					break;
 				case AJOUT_MEMBRE:
 					request = requestAjoutMembre(projet.getId(), member.getId());
-					type = BDDRequestTypes.INSERT;
+					request2 = requestGetProject(projet.getId());
+					type = BDDRequestTypes.SELECT;
 					break;
 				case RETRAIT_MEMBRE:
 					request = requestRetraitMembre(member.getId(), projet.getId());
@@ -104,6 +105,15 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 				.append(managerId)
 				.append(", 1)")
 				.append(";");
+		return request.toString();
+	}
+	
+	private String requestGetProject(int projectId)
+	{
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT * FROM Project WHERE Project.id = ")
+		.append(projectId)
+		.append(";");
 		return request.toString();
 	}
 
