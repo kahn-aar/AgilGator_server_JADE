@@ -2,15 +2,18 @@ package Datas;
 
 import java.sql.Timestamp;
 
+import Datas.enums.SousTacheEtat;
+
 public class SubTask {
 	private int id ;
 	private int task;
-	private String name ;
+	private String titre ;
 	private String description ;
-	private int current_state ;
-	private int current_developer;
+	private SousTacheEtat etat ;
+	private Utilisateur effecteur;
 	private Timestamp creation_date ;
 	private Timestamp last_update;
+	
 	public int getId() {
 		return id;
 	}
@@ -41,22 +44,22 @@ public class SubTask {
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
-	public String getName() {
-		return name;
+	public String getTitre() {
+		return titre;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTitre(String name) {
+		this.titre = name;
 	}
-	public int getCurrent_state() {
-		return current_state;
+	public SousTacheEtat getEtat() {
+		return etat;
 	}
-	public void setCurrent_state(int current_state) {
-		this.current_state = current_state;
+	public void setEtat(SousTacheEtat current_state) {
+		this.etat = current_state;
 	}
-	public int getCurrent_developer() {
-		return current_developer;
+	public Utilisateur getEffecteur() {
+		return effecteur;
 	}
-	public void setCurrent_developer(int current_developer) {
-		this.current_developer = current_developer;
+	public void setEffecteur(Utilisateur current_developer) {
+		this.effecteur = current_developer;
 	}
 }

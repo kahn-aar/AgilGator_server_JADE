@@ -1,6 +1,7 @@
 package Datas;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Task {
 	private int id;
@@ -13,6 +14,7 @@ public class Task {
 	private Timestamp last_update;
 	private int difficulty;
 	private int notifications;
+	private List<SubTask> sousTaches;
 	
 	public int getId() {
 		return id;
@@ -73,6 +75,12 @@ public class Task {
 	}
 	public void setNotifications(int notifications) {
 		this.notifications = notifications;
+	}
+	public List<SubTask> getSousTaches() {
+		return sousTaches;
+	}
+	public void setSousTaches(List<SubTask> sousTaches) {
+		this.sousTaches = sousTaches;
 	}
 	
 }
