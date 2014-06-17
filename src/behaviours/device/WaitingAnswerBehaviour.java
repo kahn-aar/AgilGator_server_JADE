@@ -1,23 +1,29 @@
 package behaviours.device;
 
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+
 import java.io.IOException;
 
-import Agents.ServeurAgent;
 import Datas.Project;
 import Datas.Sprint;
 import Datas.SubTask;
 import Datas.Task;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
-import Messages.DataMessage;
+import Messages.BDDAnswerMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jade.core.behaviours.CyclicBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-
 public class WaitingAnswerBehaviour extends CyclicBehaviour {
+	
+	public Object objectWaitingId;
+	
+	public WaitingAnswerBehaviour(Object o)
+	{
+		this.objectWaitingId = o;
+	}
 
 	@Override
 	public void action() {
@@ -27,29 +33,21 @@ public class WaitingAnswerBehaviour extends CyclicBehaviour {
 			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
 			ObjectMapper omap = new ObjectMapper();
 			DeviceInfoTypes demande = null;
-			Utilisateur user = null;
-			Project projet = null;
-			Task tache = null;
-			SubTask soustache = null;
-			Sprint sprint = null;
-			Utilisateur member = null;
+			int id = -1;
+			
 			try {
-				DataMessage msg = omap.readValue(message.getContent(),DataMessage.class);
+				BDDAnswerMessage msg = omap.readValue(message.getContent(),BDDAnswerMessage.class);
 				demande = msg.getDemande();
-				user = msg.getUser();
-				projet = msg.getProjet();
-				tache = msg.getTache();
-				soustache = msg.getSousTache();
-				sprint = msg.getSprint();
-				member = msg.getMember();
+				id = msg.getId();
 				
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			if(demande!=null){
 				switch(demande){
-				//Attend un boolean
+				//Attend un boolean ou rien
 				case CONNEXION:
+					//Send OK to connexion function
 					break;
 				case EFFACE_PROJET:
 					break;
@@ -73,25 +71,30 @@ public class WaitingAnswerBehaviour extends CyclicBehaviour {
 					break;
 				case AJOUT_MANAGER:
 					break;
+				case DECONNEXION:
+					break;
 					
 				//Attend un ID 
 				case CREE_PROJET:
+					((Project)this.objectWaitingId).setId(id);
 					break;
 				case CREE_COMPTE:
+					((Utilisateur)this.objectWaitingId).setId(id);
 					break;
 				case CREE_SOUS_TACHE:
+					((SubTask)this.objectWaitingId).setId(id);
 					break;
 				case CREE_SPRINT:
+					((Sprint)this.objectWaitingId).setId(id);
 					break;
 				case CREE_TACHE:
+					((Task)this.objectWaitingId).setId(id);
 					break;
 					
 				//Attend un contenu
 				case MEMBRES_DU_PROJET:
 					break;
 				case ALL_USERS:
-					break;
-				case DECONNEXION:
 					break;
 				case SYNCHRONIZE_DOWN:
 					break;
