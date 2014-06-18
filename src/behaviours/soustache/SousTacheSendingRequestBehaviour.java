@@ -66,7 +66,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
-			myAgent.addBehaviour(new SousTacheWaitingReplyBehaviour(conversationId));
+			myAgent.addBehaviour(new SousTacheWaitingReplyBehaviour(conversationId, sousTache));
 			myAgent.addBehaviour(new SousTacheWaitingSuccessBehaviour(conversationId));
 	}
 

@@ -33,7 +33,6 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 			try {
 				ServerLiaisonMessage msg = omap.readValue(messageServeur.getContent(),ServerLiaisonMessage.class);
 				destinataires = msg.getListeDestinataires();
-				content = msg.getContent();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

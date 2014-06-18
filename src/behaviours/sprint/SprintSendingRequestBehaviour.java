@@ -77,7 +77,7 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
-			myAgent.addBehaviour(new SprintWaitingReplyBehaviour(conversationId));
+			myAgent.addBehaviour(new SprintWaitingReplyBehaviour(conversationId, sprint));
 			myAgent.addBehaviour(new SprintWaitingSuccessBehaviour(conversationId));
 	}
 

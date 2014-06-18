@@ -52,7 +52,7 @@ public class ServerWaitingSynchronistBehaviour extends Behaviour {
 				}
 				List<AID> destinataire = new ArrayList<AID>(1);
 				destinataire.add(user);
-				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataire, msg, DeviceInfoTypes.SYNCHRONIZE_UP));
+				//myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataire, msg, DeviceInfoTypes.SYNCHRONIZE_UP));
 				step++;
 			}
 		}

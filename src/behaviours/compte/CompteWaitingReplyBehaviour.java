@@ -57,7 +57,6 @@ public class CompteWaitingReplyBehaviour extends Behaviour {
 							// ServeurLiaison message model
 							ObjectMapper omapSL = new ObjectMapper();
 							ServerLiaisonMessage sl = new ServerLiaisonMessage();
-							sl.setContent(String.valueOf(answer.getId()));
 							sl.setDemande(answer.getDemande());
 							List<AID> listeDestinataires = new ArrayList<AID>();
 							listeDestinataires.add(answer.getUser().getAid());

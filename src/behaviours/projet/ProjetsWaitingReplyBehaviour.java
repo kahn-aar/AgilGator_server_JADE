@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Agents.UtilisateursAgent;
+import Datas.Project;
 import Datas.Utilisateur;
 import Messages.BDDAnswerMessage;
 import Messages.ServerLiaisonMessage;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jmx.snmp.Timestamp;
 
 /**
  * Behaviour attendant une réponse à sa request
@@ -36,9 +38,11 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 	private int step = 0;
 	private String conversationId;
 	List<Utilisateur> connectedUsers = null;
+	private Project projet;
 	
-	public ProjetsWaitingReplyBehaviour(String conversationId) {
+	public ProjetsWaitingReplyBehaviour(String conversationId, Project projet) {
 		this.conversationId = conversationId;
+		this.projet = projet;
 	}
 	
 	@Override
@@ -98,7 +102,10 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		// ServeurLiaison message model
 		ObjectMapper omapSL = new ObjectMapper();
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
-		sl.setContent(String.valueOf(answer.getId()));
+		projet.setId(answer.getId());
+		projet.setLast_update((java.sql.Timestamp) new java.util.Date( ));
+		projet.setCreation_date((java.sql.Timestamp) new java.util.Date( ));
+		sl.setProjet(projet);
 		sl.setDemande(answer.getDemande());
 		
 		List<AID> listeDestinataires = new ArrayList<AID>();

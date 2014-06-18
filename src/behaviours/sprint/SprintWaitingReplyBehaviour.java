@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Agents.UtilisateursAgent;
+import Datas.Sprint;
 import Datas.Utilisateur;
 import Datas.Constantes.ConstantesTables;
 import Messages.BDDAnswerMessage;
+import Messages.ServerLiaisonMessage;
 import Messages.UserListMessage;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,9 +37,11 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 	private static final long serialVersionUID = 1L;
 	private int step = 0;
 	private String conversationId;
+	private Sprint sprint;
 	
-	public SprintWaitingReplyBehaviour(String conversationId) {
+	public SprintWaitingReplyBehaviour(String conversationId, Sprint sprint) {
 		this.conversationId = conversationId;
+		this.sprint = sprint;
 	}
 	
 	@Override
@@ -48,8 +53,9 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 			try {
 				BDDAnswerMessage answer = omap.readValue(message.getContent(),BDDAnswerMessage.class);
 				if(answer !=null){
-					switch(answer.getTable()){
-						case ConstantesTables.SPRINT:
+					switch(answer.getDemande()){
+						case CREE_TACHE:
+							this.createMessage(answer);
 							break;
 						default:
 							break;
@@ -68,6 +74,32 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 		}
 	}
 
+	private void createMessage(BDDAnswerMessage answer){
+		// ServeurLiaison message model
+		ObjectMapper omapSL = new ObjectMapper();
+		ServerLiaisonMessage sl = new ServerLiaisonMessage();
+		sl.setDemande(answer.getDemande());
+		sprint.setId(answer.getId());
+		sprint.setStart_date((java.sql.Timestamp) new java.util.Date( ));
+		sl.setSprint(sprint);
+		List<AID> listeDestinataires = new ArrayList<AID>();
+		listeDestinataires.add(answer.getUser().getAid());
+		sl.setListeDestinataires(listeDestinataires);
+		String content ="";
+		try {
+			content = omapSL.writeValueAsString(sl);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Ecriture du message
+		ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
+		reply.addReceiver(getServeurAgent());
+		reply.setContent(content);
+		reply.setConversationId(conversationId);
+		myAgent.send(reply);
+	}
+
 	@Override
 	public boolean done() {
 		if (step == 1) {
@@ -80,6 +112,20 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("BDD");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(myAgent, template);
+			return result[0].getName();
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return null;
+	}
+	
+	private AID getServeurAgent() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Serveur");
 		template.addServices(sd);
 		try {
 			DFAgentDescription[] result = DFService.search(myAgent, template);

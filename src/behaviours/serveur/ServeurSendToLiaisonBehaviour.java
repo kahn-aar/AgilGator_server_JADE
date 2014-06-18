@@ -13,6 +13,10 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Datas.Project;
+import Datas.Sprint;
+import Datas.SubTask;
+import Datas.Task;
 import Datas.enums.DeviceInfoTypes;
 import Messages.ServerLiaisonMessage;
 
@@ -28,14 +32,20 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 	private String conversationId;
 	// Tous les utilisateurs connectés liés au projets
 	private List<AID> destinataires;
-	private String content;
 	private DeviceInfoTypes demande;
+	private Project projet;
+	private Sprint sprint;
+	private Task tache;
+	private SubTask soustache;
 	
-	public ServeurSendToLiaisonBehaviour(String conversationId, List<AID> destinataires, String content, DeviceInfoTypes demande) {
+	public ServeurSendToLiaisonBehaviour(String conversationId, List<AID> destinataires, DeviceInfoTypes demande, Project projet, Task tache, SubTask soustache, Sprint sprint){
 		this.conversationId = conversationId;
 		this.destinataires = destinataires;
-		this.content = content;
 		this.demande = demande;
+		this.projet = projet;
+		this.tache = tache;
+		this.soustache = soustache;
+		this.sprint = sprint;
 	}
 	
 	@Override
@@ -50,8 +60,11 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 	private String writeMessage() {
 		ServerLiaisonMessage message = new ServerLiaisonMessage();
 		message.setListeDestinataires(destinataires);
-		message.setContent(content);
 		message.setDemande(demande);
+		message.setProjet(projet);
+		message.setSprint(sprint);
+		message.setTache(tache);
+		message.setSoustache(soustache);
 		
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

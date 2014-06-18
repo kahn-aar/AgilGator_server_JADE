@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Agents.UtilisateursAgent;
+import Datas.SubTask;
 import Datas.Utilisateur;
 import Datas.Constantes.ConstantesTables;
 import Messages.BDDAnswerMessage;
@@ -36,9 +37,11 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 	private static final long serialVersionUID = 1L;
 	private int step = 0;
 	private String conversationId;
+	private SubTask soustache;
 	
-	public SousTacheWaitingReplyBehaviour(String conversationId) {
+	public SousTacheWaitingReplyBehaviour(String conversationId, SubTask soustache) {
 		this.conversationId = conversationId;
+		this.soustache = soustache;
 	}
 	
 	@Override
@@ -85,7 +88,8 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 		ObjectMapper omapSL = new ObjectMapper();
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setDemande(answer.getDemande());
-		sl.setContent(String.valueOf(answer.getId()));
+		soustache.setId(answer.getId());
+		sl.setSoustache(soustache);
 		List<AID> listeDestinataires = new ArrayList<AID>();
 		listeDestinataires.add(answer.getUser().getAid());
 		sl.setListeDestinataires(listeDestinataires);

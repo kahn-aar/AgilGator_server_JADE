@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Agents.UtilisateursAgent;
+import Datas.Task;
 import Datas.Utilisateur;
 import Datas.Constantes.ConstantesTables;
 import Messages.BDDAnswerMessage;
@@ -36,9 +37,11 @@ public class TacheWaitingReplyBehaviour extends Behaviour {
 	private static final long serialVersionUID = 1L;
 	private int step = 0;
 	private String conversationId;
+	private Task tache;
 	
-	public TacheWaitingReplyBehaviour(String conversationId) {
+	public TacheWaitingReplyBehaviour(String conversationId, Task tache) {
 		this.conversationId = conversationId;
+		this.tache = tache;
 	}
 	
 	@Override
@@ -84,7 +87,10 @@ public class TacheWaitingReplyBehaviour extends Behaviour {
 		ObjectMapper omapSL = new ObjectMapper();
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setDemande(answer.getDemande());
-		sl.setContent(String.valueOf(answer.getId()));
+		tache.setId(answer.getId());
+		tache.setLast_update((java.sql.Timestamp) new java.util.Date( ));
+		tache.setCreation_date((java.sql.Timestamp) new java.util.Date( ));
+		sl.setTache(tache);
 		List<AID> listeDestinataires = new ArrayList<AID>();
 		listeDestinataires.add(answer.getUser().getAid());
 		sl.setListeDestinataires(listeDestinataires);

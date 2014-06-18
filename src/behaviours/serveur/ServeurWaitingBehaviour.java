@@ -10,6 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Agents.ServeurAgent;
 import Agents.UtilisateursAgent;
+import Datas.Project;
+import Datas.Sprint;
+import Datas.SubTask;
+import Datas.Task;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.DataMessage;
@@ -38,8 +42,11 @@ public class ServeurWaitingBehaviour extends CyclicBehaviour{
 			ObjectMapper omap = new ObjectMapper();
 			try {
 				ServerLiaisonMessage msgToLiaison = omap.readValue(message.getContent(),ServerLiaisonMessage.class);
-				String content = msgToLiaison.getContent();
 				DeviceInfoTypes demande = msgToLiaison.getDemande();
+				Project projet = msgToLiaison.getProjet();
+				Task tache = msgToLiaison.getTache();
+				SubTask soustache = msgToLiaison.getSoustache();
+				Sprint sprint = msgToLiaison.getSprint();
 				List<AID> destinataires = new ArrayList<AID>();
 				// Définit la liste des destinataires en fonction de la demande
 				if(demande!=null){
@@ -81,7 +88,7 @@ public class ServeurWaitingBehaviour extends CyclicBehaviour{
 							break;
 					}
 				}
-				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataires, content, demande));
+				myAgent.addBehaviour(new ServeurSendToLiaisonBehaviour(conversationId, destinataires,  demande, projet, tache, soustache, sprint));
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
