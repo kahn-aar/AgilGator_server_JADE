@@ -19,21 +19,11 @@ import Datas.enums.DeviceInfoTypes;
  */
 public class ServerLiaisonMessage {
 
-	private List<AID> listeDestinataires;
 	private DeviceInfoTypes demande;
 	private Task tache;
 	private Project projet;
-	private SubTask soustache;
+	private SubTask sousTache;
 	private Sprint sprint;
-	
-	
-	public List<AID> getListeDestinataires() {
-		return listeDestinataires;
-	}
-	
-	public void setListeDestinataires(List<AID> listeDestinataires) {
-		this.listeDestinataires = listeDestinataires;
-	}
 	
 
 	public DeviceInfoTypes getDemande() {
@@ -60,12 +50,12 @@ public class ServerLiaisonMessage {
 		this.projet = projet;
 	}
 
-	public SubTask getSoustache() {
-		return soustache;
+	public SubTask getSousTache() {
+		return sousTache;
 	}
 
-	public void setSoustache(SubTask soustache) {
-		this.soustache = soustache;
+	public void setSousTache(SubTask soustache) {
+		this.sousTache = soustache;
 	}
 
 	public Sprint getSprint() {

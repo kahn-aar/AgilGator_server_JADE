@@ -22,6 +22,8 @@ public class BDDAnswerMessage {
 
 	private Utilisateur user;
 	private Project project;
+	private Sprint sprint;
+	
 	public Project getProject() {
 		return project;
 	}
@@ -65,6 +67,14 @@ public class BDDAnswerMessage {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Sprint getSprint() {
+		return sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
 	}
 
 }
