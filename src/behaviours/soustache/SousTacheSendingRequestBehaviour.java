@@ -83,14 +83,11 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append("task = ")
 			.append(t.getTask().getId())
 			.append(",")
-			.append("last_update = ")
-			.append("CURRENT_TIMESTAMP")
-			.append(",")
 			.append("current_developer = ")
 			.append(t.getEffecteur().getId())
 			.append(",")
 			.append("current_state = ")
-			.append("'"+t.getEtat()+"'")
+			.append("'"+t.getEtat().name()+"'")
 			.append("WHERE id = ")
 			.append(t.getId())
 			.append(";");
@@ -108,7 +105,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeSousTache(SubTask sousTache) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO SubTask (task, name, description, current_state, current_developer, creation_date, last_update)")
+		request.append("INSERT INTO SubTask (task, name, description, current_state) ")
 			.append("VALUES (")
 			.append(sousTache.getTask().getId())
 			.append(",")
@@ -116,13 +113,7 @@ public class SousTacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append(",")
 			.append("'"+sousTache.getDescription()+"'")
 			.append(",")
-			.append("'"+sousTache.getEtat()+"'")
-			.append(",")
-			.append(sousTache.getEffecteur().getId())
-			.append(",")
-			.append("CURRENT_TIMESTAMP")
-			.append(",")
-			.append("CURRENT_TIMESTAMP")
+			.append("'"+sousTache.getEtat().name()+"'")
 			.append(");");
 		return request.toString();
 	}

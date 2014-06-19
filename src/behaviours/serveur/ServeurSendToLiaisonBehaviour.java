@@ -30,17 +30,14 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 
 	private static final long serialVersionUID = 1L;
 	private String conversationId;
-	// Tous les utilisateurs connectés liés au projets
-	private List<AID> destinataires;
 	private DeviceInfoTypes demande;
 	private Project projet;
 	private Sprint sprint;
 	private Task tache;
 	private SubTask soustache;
 	
-	public ServeurSendToLiaisonBehaviour(String conversationId, List<AID> destinataires, DeviceInfoTypes demande, Project projet, Task tache, SubTask soustache, Sprint sprint){
+	public ServeurSendToLiaisonBehaviour(String conversationId, DeviceInfoTypes demande, Project projet, Task tache, SubTask soustache, Sprint sprint){
 		this.conversationId = conversationId;
-		this.destinataires = destinataires;
 		this.demande = demande;
 		this.projet = projet;
 		this.tache = tache;
@@ -59,12 +56,11 @@ public class ServeurSendToLiaisonBehaviour extends OneShotBehaviour {
 	
 	private String writeMessage() {
 		ServerLiaisonMessage message = new ServerLiaisonMessage();
-		message.setListeDestinataires(destinataires);
 		message.setDemande(demande);
 		message.setProjet(projet);
 		message.setSprint(sprint);
 		message.setTache(tache);
-		message.setSoustache(soustache);
+		message.setSousTache(soustache);
 		
 		ObjectMapper omap = new ObjectMapper();
 		String messageCorps = null;

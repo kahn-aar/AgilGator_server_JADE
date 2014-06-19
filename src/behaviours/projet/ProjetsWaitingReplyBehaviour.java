@@ -49,7 +49,7 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 	public void action() {
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId),MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
-			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
+			System.out.println(myAgent.getLocalName() + " reçu lol -> " + message.getContent());
 			// Il récupère le résultat de la requête.
 			ObjectMapper omap = new ObjectMapper();
 			try {
@@ -67,7 +67,8 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 							break;
 						case AJOUT_MEMBRE:
 							this.connectedUsers = UtilisateursAgent.getUtilisateursConnectés();
-							this.createMessage(answer);
+							System.out.println("ajout membre");
+							this.createMessageMember(answer);
 							break;
 						case RETRAIT_MEMBRE:
 							this.createMessage(answer);
@@ -103,29 +104,35 @@ public class ProjetsWaitingReplyBehaviour extends Behaviour {
 		ObjectMapper omapSL = new ObjectMapper();
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		projet.setId(answer.getId());
-		projet.setLast_update((java.sql.Timestamp) new java.util.Date( ));
-		projet.setCreation_date((java.sql.Timestamp) new java.util.Date( ));
 		sl.setProjet(projet);
 		sl.setDemande(answer.getDemande());
-		
-		List<AID> listeDestinataires = new ArrayList<AID>();
-		if(connectedUsers != null)
-		{
-			for(Iterator<Utilisateur> it = connectedUsers.iterator(); it.hasNext(); )
-			{
-				Utilisateur u = it.next();
-				listeDestinataires.add(u.getAid());
-			}
-		}
-		else
-			listeDestinataires.add(answer.getUser().getAid());
-		
-		sl.setListeDestinataires(listeDestinataires);
 		String content ="";
 		try {
 			if(connectedUsers != null)
 				content = omapSL.writeValueAsString(answer.getProject());
 			else
+				content = omapSL.writeValueAsString(sl);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Ecriture du message
+		ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
+		reply.addReceiver(getServeurAgent());
+		reply.setContent(content);
+		reply.setConversationId(conversationId);
+		myAgent.send(reply);
+	}
+	
+	private void createMessageMember(BDDAnswerMessage answer){
+		// ServeurLiaison message model
+		ObjectMapper omapSL = new ObjectMapper();
+		ServerLiaisonMessage sl = new ServerLiaisonMessage();
+		sl.setProjet(projet);
+		System.out.println(sl.getProjet().getTitle());
+		sl.setDemande(answer.getDemande());
+		String content ="";
+		try {
 				content = omapSL.writeValueAsString(sl);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block

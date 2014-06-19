@@ -23,7 +23,7 @@ public class ProjetsWaitingSuccessBehaviour extends Behaviour{
 	public void action() {
 		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
-			System.out.println(myAgent.getLocalName() + " reçu -> " + message.getContent());
+			System.out.println(myAgent.getLocalName() + " reçu kikou -> " + message.getContent());
 			ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
 			reply.addReceiver(getServeurAgent());
 			reply.setConversationId(conversationId);

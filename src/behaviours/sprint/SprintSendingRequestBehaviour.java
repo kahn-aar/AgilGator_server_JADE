@@ -41,12 +41,14 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 	private DeviceInfoTypes demande;
 	private String conversationId;
 	private Utilisateur user;
+	private Project project;
 	
-	public SprintSendingRequestBehaviour(String conversationId, Sprint sprint, DeviceInfoTypes demande, Utilisateur user) {
+	public SprintSendingRequestBehaviour(String conversationId, Sprint sprint, DeviceInfoTypes demande, Utilisateur user, Project project) {
 		this.conversationId = conversationId;
 		this.sprint = sprint;
 		this.demande = demande;	
 		this.user = user;
+		this.project = project;
 	}
 	
 	@Override
@@ -55,6 +57,10 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 		String request2 = null;
 		BDDRequestTypes type = null;
 		switch(demande){
+				case SELECT_LAST_SPRINT:
+					request = requestSelectSprint(project);
+					type =  BDDRequestTypes.SELECT;
+					break;
 				case CREE_SPRINT:
 					request = requestCreeSprint(sprint);
 					request2 = requestCreeSprint2();
@@ -82,6 +88,15 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 	}
 
 	
+	private String requestSelectSprint(Project project) {
+		StringBuilder request = new StringBuilder();
+		request.append("SELECT * FROM Sprint WHERE Sprint.project = ")
+				.append(project.getId())
+				.append(" ORDER BY Sprint.number DESC")
+				.append(";");
+		return request.toString();
+	}
+
 	private String requestArchiverSprint() {
 		StringBuilder request = new StringBuilder();
 		// Requête à implémenter
@@ -98,11 +113,11 @@ public class SprintSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeSprint(Sprint s) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Sprint (project, description, end_date, start_date)")
+		request.append("INSERT INTO Sprint (project, number, end_date, start_date)")
 		.append("VALUES (")
 		.append(s.getProject())
 		.append(",")
-		.append("'"+s.getDescription()+"'")
+		.append(s.getNumber())
 		.append(",")
 		.append(s.getEnd_date())
 		.append(",")

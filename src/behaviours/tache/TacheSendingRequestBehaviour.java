@@ -90,17 +90,13 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 			.append("sprint = ")
 			.append("'"+t.getSprint()+"'")
 			.append(",")
-			.append("last_update = ")
-			.append("CURRENT_TIMESTAMP")
 			.append(",")
-			.append("priority = ")
+			.append("priorite = ")
 			.append(t.getPriorite())
 			.append(",")
-			.append("difficulty = ")
+			.append("difficulte = ")
 			.append(t.getDifficulte())
 			.append(",")
-			.append("current_state = ")
-			.append(t.getCurrent_state())
 			.append("WHERE id = ")
 			.append(t.getId())
 			.append(";");
@@ -109,7 +105,7 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 
 	private String requestCreeTache(Task tache) {
 		StringBuilder request = new StringBuilder();
-		request.append("INSERT INTO Task (sprint, name, description, priority, current_state, creation_date, last_update, difficulty)")
+		request.append("INSERT INTO Task (sprint, name, description, priorite, difficulte)")
 		.append("VALUES (")
 		.append("'"+tache.getSprint()+"'")
 		.append(",")
@@ -118,12 +114,6 @@ public class TacheSendingRequestBehaviour extends OneShotBehaviour {
 		.append("'"+tache.getDescription()+"'")
 		.append(",")
 		.append(tache.getPriorite())
-		.append(",")
-		.append(tache.getCurrent_state())
-		.append(",")
-		.append("CURRENT_TIMESTAMP")
-		.append(",")
-		.append("CURRENT_TIMESTAMP")
 		.append(",")
 		.append(tache.getDifficulte())
 		.append(");");

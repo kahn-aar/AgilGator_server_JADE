@@ -46,16 +46,20 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 	
 	@Override
 	public void action() {
-		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent()))));
+		ACLMessage message = myAgent.receive(MessageTemplate.and(MessageTemplate.MatchConversationId(conversationId), MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), MessageTemplate.MatchConversationId(conversationId)), MessageTemplate.MatchSender(getBDDAgent()))));
 		if (message != null) {
+			System.out.println(myAgent.getLocalName() + " reçu lol -> " + message.getContent());
 			// Il récupère le résultat de la requête.
 			ObjectMapper omap = new ObjectMapper();
 			try {
 				BDDAnswerMessage answer = omap.readValue(message.getContent(),BDDAnswerMessage.class);
 				if(answer !=null){
 					switch(answer.getDemande()){
-						case CREE_TACHE:
+						case CREE_SPRINT:
 							this.createMessage(answer);
+							break;
+						case SELECT_LAST_SPRINT:
+							this.createMessageSelect(answer);
 							break;
 						default:
 							break;
@@ -73,6 +77,26 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 			}
 		}
 	}
+	private void createMessageSelect(BDDAnswerMessage answer){
+		// ServeurLiaison message model
+		ObjectMapper omapSL = new ObjectMapper();
+		ServerLiaisonMessage sl = new ServerLiaisonMessage();
+		sl.setDemande(answer.getDemande());
+		sl.setSprint(answer.getSprint());
+		String content ="";
+		try {
+			content = omapSL.writeValueAsString(sl);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Ecriture du message
+		ACLMessage reply = new ACLMessage(ACLMessage.CONFIRM);
+		reply.addReceiver(getServeurAgent());
+		reply.setContent(content);
+		reply.setConversationId(conversationId);
+		myAgent.send(reply);
+	}
 
 	private void createMessage(BDDAnswerMessage answer){
 		// ServeurLiaison message model
@@ -80,11 +104,7 @@ public class SprintWaitingReplyBehaviour extends Behaviour {
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setDemande(answer.getDemande());
 		sprint.setId(answer.getId());
-		sprint.setStart_date((java.sql.Timestamp) new java.util.Date( ));
 		sl.setSprint(sprint);
-		List<AID> listeDestinataires = new ArrayList<AID>();
-		listeDestinataires.add(answer.getUser().getAid());
-		sl.setListeDestinataires(listeDestinataires);
 		String content ="";
 		try {
 			content = omapSL.writeValueAsString(sl);

@@ -13,6 +13,7 @@ import java.util.List;
 
 import Agents.BDDAgent;
 import Datas.Project;
+import Datas.Sprint;
 import Datas.Utilisateur;
 import Datas.enums.DeviceInfoTypes;
 import Messages.BDDAnswerMessage;
@@ -89,6 +90,11 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 				corps.setTable("Users");
 				corps.setUser(user);
 				break;
+			case SELECT_LAST_SPRINT:
+				corps.setSprint(this.handleResultSetSprint(result));
+				corps.setDemande(demande);
+				corps.setTable("Users");
+				corps.setUser(user);
 			default:
 				break;
 		}
@@ -101,6 +107,21 @@ public class BDDLunchSelectRequestBehaviour extends OneShotBehaviour {
 		return messageCorps;	
 	}
 	
+	private Sprint handleResultSetSprint(ResultSet result) {
+		Sprint sprint = new Sprint();
+		try {
+			if(result.first())
+			{
+				sprint.setId(result.getInt(1));
+				sprint.setProject(result.getInt(2));
+				sprint.setNumber(result.getInt(5));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sprint;
+	}
+
 	private Project handleResultSetProject(ResultSet result)
 	{
 		Project proj = new Project();

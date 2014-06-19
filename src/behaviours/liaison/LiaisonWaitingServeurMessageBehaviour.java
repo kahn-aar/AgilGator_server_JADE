@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Datas.enums.DeviceInfoTypes;
 import Messages.ServerLiaisonMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,27 +29,21 @@ public class LiaisonWaitingServeurMessageBehaviour extends CyclicBehaviour{
 			System.out.println(myAgent.getLocalName() + " reçu -> " + messageServeur.getContent());
 			// On déséréalise le message
 			ObjectMapper omap = new ObjectMapper();
-			List<AID> destinataires = null;
-			String content = null;
 			try {
 				ServerLiaisonMessage msg = omap.readValue(messageServeur.getContent(),ServerLiaisonMessage.class);
-				destinataires = msg.getListeDestinataires();
+				
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			
 			// Ecriture de message
-			myAgent.send(createMessageToDevices(destinataires, content, messageServeur.getConversationId()));
+			ACLMessage message = createMessageToDevices(messageServeur.getContent(), messageServeur.getConversationId());
+			myAgent.send(message);
+			System.out.println(myAgent.getLocalName() + " envoyé -> " + message.getContent());
 		}
 	}
 	
-	private ACLMessage createMessageToDevices(List<AID> destinataires, String content, String conversationId) {
+	private ACLMessage createMessageToDevices(String content, String conversationId) {
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		/*if(destinataires!=null){
-			for(AID destinataire : destinataires) {
-				message.addReceiver(destinataire);
-			}
-		}*/
 		for(AID destinataire : addDevicesRecivers()) {
 			message.addReceiver(destinataire);
 		}

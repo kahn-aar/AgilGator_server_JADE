@@ -89,10 +89,8 @@ public class SousTacheWaitingReplyBehaviour extends Behaviour {
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setDemande(answer.getDemande());
 		soustache.setId(answer.getId());
-		sl.setSoustache(soustache);
-		List<AID> listeDestinataires = new ArrayList<AID>();
-		listeDestinataires.add(answer.getUser().getAid());
-		sl.setListeDestinataires(listeDestinataires);
+		sl.setSousTache(soustache);
+	
 		String content ="";
 		try {
 			content = omapSL.writeValueAsString(sl);

@@ -72,6 +72,27 @@ public class ServeurReceptionBehaviour extends CyclicBehaviour{
 				}
 				if(demande!=null){
 					switch(demande){
+					case SELECT_LAST_SPRINT:
+						if(projet!=null){
+								ObjectMapper omapSprint= new ObjectMapper();
+								SprintRequestMessage SprintMsg= new SprintRequestMessage();
+								SprintMsg.setDemande(demande);
+								SprintMsg.setSprint(sprint);
+								SprintMsg.setUser(user);
+								SprintMsg.setProject(projet);
+								try {
+									String content4 = omapSprint.writeValueAsString(SprintMsg);
+									ACLMessage msgArchiverSprint= new ACLMessage(ACLMessage.PROPAGATE);
+									msgArchiverSprint.addReceiver(getSprintAgent());
+									msgArchiverSprint.setContent(content4);
+									msgArchiverSprint.setConversationId(conversationId);
+									msgArchiverSprint.setLanguage("JSON");
+									myAgent.send(msgArchiverSprint);
+								} catch (JsonProcessingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
 					case MEMBRES_DU_PROJET:
 						if(projet!=null){
 							ObjectMapper omapLM = new ObjectMapper();

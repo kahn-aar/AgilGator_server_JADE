@@ -88,12 +88,7 @@ public class TacheWaitingReplyBehaviour extends Behaviour {
 		ServerLiaisonMessage sl = new ServerLiaisonMessage();
 		sl.setDemande(answer.getDemande());
 		tache.setId(answer.getId());
-		tache.setLast_update((java.sql.Timestamp) new java.util.Date( ));
-		tache.setCreation_date((java.sql.Timestamp) new java.util.Date( ));
 		sl.setTache(tache);
-		List<AID> listeDestinataires = new ArrayList<AID>();
-		listeDestinataires.add(answer.getUser().getAid());
-		sl.setListeDestinataires(listeDestinataires);
 		String content ="";
 		try {
 			content = omapSL.writeValueAsString(sl);

@@ -71,7 +71,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 				case AJOUT_MEMBRE:
 					request = requestAjoutMembre(projet.getId(), member.getId());
 					request2 = requestGetProject(projet.getId());
-					type = BDDRequestTypes.SELECT;
+					type = BDDRequestTypes.INSERT;
 					break;
 				case RETRAIT_MEMBRE:
 					request = requestRetraitMembre(member.getId(), projet.getId());
@@ -93,6 +93,7 @@ public class ProjetsSendingRequestBehaviour extends OneShotBehaviour {
 			message.setConversationId(conversationId);
 			message.setLanguage("JSON");
 			myAgent.send(message);
+			System.out.println(projet.getTitle());
 			myAgent.addBehaviour(new ProjetsWaitingReplyBehaviour(conversationId, projet));
 			myAgent.addBehaviour(new ProjetsWaitingSuccessBehaviour(conversationId));
 	}

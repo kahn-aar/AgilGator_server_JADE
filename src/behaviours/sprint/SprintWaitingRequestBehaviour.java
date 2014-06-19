@@ -47,9 +47,10 @@ public class SprintWaitingRequestBehaviour extends CyclicBehaviour {
 					requestMsg = omap.readValue(msgServeur.getContent(),SprintRequestMessage.class);
 					DeviceInfoTypes demande = requestMsg.getDemande();
 					Sprint sprint = requestMsg.getSprint();
+					Project project = requestMsg.getProject();
 					Utilisateur user = requestMsg.getUser();
 					if (demande != null){
-						myAgent.addBehaviour(new SprintSendingRequestBehaviour(conversationId, sprint, demande, user));
+						myAgent.addBehaviour(new SprintSendingRequestBehaviour(conversationId, sprint, demande, user, project));
 					}
 				} catch (JsonParseException e) {
 					// TODO Auto-generated catch block
