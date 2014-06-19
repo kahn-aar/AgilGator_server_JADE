@@ -10,7 +10,6 @@ public class Utilisateur {
 	private String name;
 	private String email;
 	private String password;
-	private String tag;
 	private String salt1;
 
 	public int getId() {
@@ -35,14 +34,6 @@ public class Utilisateur {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	public AID getAid() {

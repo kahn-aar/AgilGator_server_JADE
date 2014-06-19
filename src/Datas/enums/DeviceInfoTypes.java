@@ -21,6 +21,7 @@ public enum DeviceInfoTypes {
 	CREE_SPRINT,
 	EFFACE_SPRINT,
 	ARCHIVER_SPRINT,
+	SELECT_LAST_SPRINT,
 	// Action pour l'agent TACHE
 	CREE_TACHE,
 	MODIFIE_TACHE,
